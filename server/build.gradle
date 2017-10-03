@@ -25,7 +25,7 @@ dependencies {
 task runServerTests {
     group = "application"
 }
-runServerTests.dependsOn testClasses
+runServerTests.dependsOn test
 
 //Both karma and junit tests
 task runAllTests {
@@ -37,6 +37,6 @@ task buildExecutable {
 }
 buildExecutable.dependsOn(build)
 
-runAllTests.dependsOn test
+runAllTests.dependsOn check
 
-test.dependsOn(":client:runClientTests")
+check.dependsOn(":client:runClientTests")
