@@ -60,7 +60,7 @@ public class Server {
         //List users, filtered using query parameters
 
         get("api/users", userController::getUsers);
-        get("api/users/:id", userController::getUser);
+        get("api/users/:id", userController::getUserJSON);
         post("api/users/new", userController::addNewUser);
 
         // An example of throwing an unhandled exception so you can see how the

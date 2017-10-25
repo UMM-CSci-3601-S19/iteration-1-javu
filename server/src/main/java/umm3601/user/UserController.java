@@ -44,12 +44,12 @@ public class UserController {
      * @param res the HTTP response
      * @return one user in JSON formatted string and if it fails it will return text with a different HTTP status code
      */
-    public String getUser(Request req, Response res){
+    public String getUserJSON(Request req, Response res){
         res.type("application/json");
         String id = req.params("id");
         String user;
         try {
-            user = getUser(id);
+            user = getUserJSON(id);
         } catch (IllegalArgumentException e) {
             // This is thrown if the ID doesn't have the appropriate
             // form for a Mongo Object ID.
@@ -76,7 +76,8 @@ public class UserController {
      * @return the desired user as a JSON object if the user with that ID is found,
      * and `null` if no user with that ID is found
      */
-    public String getUser(String id) {
+
+    public String getUserJSON(String id) {
         FindIterable<Document> jsonUsers
             = userCollection
             .find(eq("_id", new ObjectId(id)));
@@ -90,7 +91,6 @@ public class UserController {
             return null;
         }
     }
-
 
     /**
      * @param req
