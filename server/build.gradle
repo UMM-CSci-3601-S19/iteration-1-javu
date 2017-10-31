@@ -15,7 +15,6 @@ dependencies {
     compile 'com.sparkjava:spark-debug-tools:0.5'
     compile 'org.slf4j:slf4j-simple:1.7.25'
     compile 'com.google.code.gson:gson:2.8.1'
-    compile files('./src/libs/3601-lab3-todos.jar')
     compile 'org.mongodb:mongodb-driver:3.4.2'
 
     testCompile 'junit:junit:4.12'
@@ -30,6 +29,7 @@ runServerTests.dependsOn test
 //Both karma and junit tests
 task runAllTests {
     group = "application"
+    description = "Runs the server as a JVM application after testing both it and the client"
 }
 
 task buildExecutable {
