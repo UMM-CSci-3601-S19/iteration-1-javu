@@ -126,7 +126,7 @@ public class UserControllerSpec
 
     @Test
     public void getSamById() {
-        String jsonResult = userController.getUser(samsId.toHexString());
+        String jsonResult = userController.getUserJSON(samsId.toHexString());
         Document sam = Document.parse(jsonResult);
         assertEquals("Name should match", "Sam", sam.get("name"));
     }
