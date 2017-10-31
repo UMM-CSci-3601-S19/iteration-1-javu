@@ -13,10 +13,6 @@ node {
     nodeModulesDir = file("${project.projectDir}/")
 }
 
-task clean(type: Delete) {
-    delete 'build'
-}
-
 task runClient(type: Exec, dependsOn: yarn_install) {
     group = 'application'
     executable "ng"
@@ -45,19 +41,3 @@ task runE2ETest(type:Exec){
 task runClientTests(dependsOn: yarn_run_test) {
     group = 'application'
 }
-
-task build(type:NodeTask) {
-    group = 'application'
-    description = 'Builds the client side of the application using ng build'
-
-    def build = file("build")
-    outputs.dir build
-
-    script = file("node_modules/@angular/cli/bin/ng")
-    args = ["build","--environment=prod", "--output-path=build", "--prod"]
-}
-
-//Client build files won't build after changes, so delete them after build
-build.dependsOn(clean)
-build.dependsOn(yarn_install)
-build.dependsOn(runClientTests)

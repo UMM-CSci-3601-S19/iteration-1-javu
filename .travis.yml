@@ -9,7 +9,8 @@ cache:
 jdk:
   - oraclejdk8
 
-before_script:
-    - npm install -g @angular/cli
+#TODO:Needed in production template I cant remember if we need it here
+#before_script:
+#    - npm install -g @angular/cli
 
 services: mongodb
