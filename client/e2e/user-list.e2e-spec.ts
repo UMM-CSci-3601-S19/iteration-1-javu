@@ -31,8 +31,11 @@ describe('angular-spark-lab', () => {
 
     it('should type something in filer name box and check that it returned correct element', () => {
         page.navigateTo();
-        page.typeAName("Lynn");
-        expect(page.getFirstUser()).toEqual("Lynn Ferguson is 25 years old");
+        page.typeAName("t");
+        expect(page.getUniqueUser("kittypage@surelogic.com")).toEqual("Kitty Page is 33 years old");
+        page.backspace();
+        page.typeAName("lynn")
+        expect(page.getUniqueUser("lynnferguson@niquent.com")).toEqual("Lynn Ferguson is 25 years old");
     });
 
     it('should click on the age 27 times and return 3 elements then ', () => {
@@ -42,11 +45,9 @@ describe('angular-spark-lab', () => {
             page.selectUpKey();
         }
 
-        expect(page.getFirstUser()).toEqual("Stokes Clayton is 27 years old");
+        expect(page.getUniqueUser("stokesclayton@momentia.com")).toEqual("Stokes Clayton is 27 years old");
 
-        page.typeAName("Merrill");
-
-        expect(page.getFirstUser()).toEqual("Merrill Parker is 27 years old");
+        expect(page.getUniqueUser("merrillparker@escenta.com")).toEqual("Merrill Parker is 27 years old");
 
     });
 });

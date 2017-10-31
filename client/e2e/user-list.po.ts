@@ -37,15 +37,19 @@ export class UserPage {
         browser.actions().sendKeys(Key.ARROW_UP).perform();
     }
 
+    backspace(){
+        browser.actions().sendKeys(Key.BACK_SPACE).perform();
+    }
+
     getUserByAge() {
         let input = element(by.id('userName'));
         input.click();
         input.sendKeys(Key.TAB);
     }
 
-    getFirstUser() {
-        let user = element(by.id('users')).getText();
-        this.highlightElement(by.id('users'));
+    getUniqueUser(email:string) {
+        let user = element(by.id(email)).getText();
+        this.highlightElement(by.id(email));
 
         return user;
     }

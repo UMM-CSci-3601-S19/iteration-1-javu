@@ -37,7 +37,7 @@
                 </mat-form-field>
 
                 <mat-list *ngIf="users; else usersError">
-                    <mat-list-item id="users" *ngFor="let user of this.filterUsers(userName, userAge)" class="list-group-item">
+                    <mat-list-item #elem [id]="user.email" *ngFor="let user of this.filterUsers(userName, userAge)" class="list-group-item">
                         {{ user.name }} is {{ user.age }} years old
                     </mat-list-item>
                 </mat-list>
