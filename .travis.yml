@@ -7,10 +7,18 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 jdk:
-  - oraclejdk8
+    - oraclejdk8
 
-#TODO:Needed in production template I cant remember if we need it here
-#before_script:
-#    - npm install -g @angular/cli
+env:
+    - MONGODB=3.4.7
 
-services: mongodb
+install:
+    - wget http://fastd1.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz
+    - tar xzf mongodb-linux-x86_64-${MONGODB}.tgz
+    - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongodb --version
+
+before_script:
+    - mkdir ${PWD}/mongodb-linux-x86_64-${MONGODB}/data
+    - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/data --logpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/mongodb.log --fork
+     - npm install -g @angular/cli
+
