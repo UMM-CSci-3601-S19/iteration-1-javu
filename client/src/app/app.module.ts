@@ -13,7 +13,7 @@ import {UserListService} from './users/user-list.service';
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from "@angular/common";
 
-import {SharedModule} from "./shared.module";
+import {CustomModule} from "./custom.module";
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import {SharedModule} from "./shared.module";
         HttpModule,
         JsonpModule,
         Routing,
-        SharedModule,
+        CustomModule,
     ],
     declarations: [
         AppComponent,

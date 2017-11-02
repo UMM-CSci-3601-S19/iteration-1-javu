@@ -4,7 +4,7 @@ import {DebugElement} from '@angular/core';
 
 import {AppModule} from "./app.module";
 import {AppComponent} from './app.component';
-import {SharedModule} from "./shared.module";
+import {CustomModule} from "./custom.module";
 import {MATERIAL_COMPATIBILITY_MODE} from "@angular/material";
 
 describe('AppComponent', () => {
@@ -15,7 +15,7 @@ describe('AppComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                SharedModule,
+                CustomModule,
                 AppModule
             ],
             providers: [{provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}],

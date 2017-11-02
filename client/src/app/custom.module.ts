@@ -60,5 +60,5 @@ const COVALENT_MODULES: any[] = [
     ]
 })
 
-export class SharedModule {
+export class CustomModule {
 }

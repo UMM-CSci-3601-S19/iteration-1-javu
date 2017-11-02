@@ -4,7 +4,7 @@ import {UserListComponent} from "./user-list.component";
 import {UserListService} from "./user-list.service";
 import {Observable} from "rxjs";
 import {FormsModule} from "@angular/forms";
-import {SharedModule} from "../shared.module";
+import {CustomModule} from "../custom.module";
 import {MATERIAL_COMPATIBILITY_MODE} from "@angular/material";
 
 
@@ -46,7 +46,7 @@ describe("User list", () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [SharedModule],
+            imports: [CustomModule],
             declarations: [UserListComponent],
             // providers:    [ UserListService ]  // NO! Don't provide the real service!
             // Provide a test-double instead
@@ -136,7 +136,7 @@ describe("Misbehaving User List", () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [FormsModule, SharedModule],
+            imports: [FormsModule, CustomModule],
             declarations: [UserListComponent],
             providers: [{provide: UserListService, useValue: userListServiceStub},
                 {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
