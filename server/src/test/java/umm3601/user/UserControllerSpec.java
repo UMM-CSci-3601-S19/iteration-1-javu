@@ -18,6 +18,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * JUnit tests for the UserController.
@@ -129,5 +131,28 @@ public class UserControllerSpec
         String jsonResult = userController.getUserJSON(samsId.toHexString());
         Document sam = Document.parse(jsonResult);
         assertEquals("Name should match", "Sam", sam.get("name"));
+        String noJsonResult = userController.getUserJSON(new ObjectId().toString());
+        assertNull("No name should match",noJsonResult);
+
     }
+
+    @Test
+    public void addUserTest(){
+        boolean bool = userController.addNewUser("Brian",22,"umm", "brian@yahoo.com");
+
+        assertTrue("Add new user should return true when user is added,",bool);
+        Map<String, String[]> argMap = new HashMap<>();
+        argMap.put("age", new String[] { "22" });
+        String jsonResult = userController.getUsers(argMap);
+        BsonArray docs = parseJsonArray(jsonResult);
+
+        List<String> name = docs
+            .stream()
+            .map(UserControllerSpec::getName)
+            .sorted()
+            .collect(Collectors.toList());
+        assertEquals("Should return name of new user", "Brian", name.get(0));
+    }
+
+
 }
