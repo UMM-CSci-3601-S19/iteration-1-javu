@@ -24,6 +24,8 @@ export class UserListComponent implements OnInit {
     public newUserCompany: string;
     public newUserEmail: string;
 
+    public loadReady: boolean = false;
+
 
     //Inject the UserListService into this component.
     //That's what happens in the following constructor.
@@ -79,6 +81,11 @@ export class UserListComponent implements OnInit {
         return this.filteredUsers;
     }
 
+    contentChange(contentString): void {
+        this.userListService.serviceContent = contentString;
+    }
+
+
     /**
      * Starts an asynchronous operation to update the users list
      *
@@ -100,6 +107,20 @@ export class UserListComponent implements OnInit {
                 console.log(err);
             });
         return users;
+    }
+
+    loadService(): void {
+        console.log("yay");
+        this.loadReady = true;
+        this.userListService.getUsers().subscribe(
+            users => {
+                this.users = users;
+                this.filteredUsers = this.users;
+            },
+            err => {
+                console.log(err);
+            }
+        );
     }
 
     ngOnInit(): void {

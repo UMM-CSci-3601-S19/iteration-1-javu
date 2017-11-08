@@ -116,6 +116,14 @@ public class UserController {
             filterDoc = filterDoc.append("age", targetAge);
         }
 
+        if (queryParams.containsKey("company")) {
+            String targetContent = (queryParams.get("company")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("company", contentRegQuery);
+        }
+
         //FindIterable comes from mongo, Document comes from Gson
         FindIterable<Document> matchingUsers = userCollection.find(filterDoc);
 

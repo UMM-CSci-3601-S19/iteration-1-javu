@@ -35,10 +35,18 @@
                 <mat-form-field>
                     <input matInput id="userAge" #input type="number" placeholder="Filter by age" (input)="userAge = $event.target.value">
                 </mat-form-field>
+                <mat-form-field>
+                    <input matInput id="userCompany" #input type="text" placeholder="Search for company" (input)="contentChange($event.target.value)">
+                </mat-form-field>
+                <button mat-raised-button color="primary" #input type="button" (click)="loadService()">Submit</button>
+
+
 
                 <mat-list *ngIf="users; else usersError">
                     <mat-list-item #elem [id]="user.email" *ngFor="let user of this.filterUsers(userName, userAge)" class="list-group-item">
-                        {{ user.name }} is {{ user.age }} years old
+                        {{ user.name }} is {{ user.age }} years old:
+                        <br>
+                        Works for: {{user.company}}
                     </mat-list-item>
                 </mat-list>
                 <!-- Maybe this should be a pop-up instead of just a text message? Not sure. -->
