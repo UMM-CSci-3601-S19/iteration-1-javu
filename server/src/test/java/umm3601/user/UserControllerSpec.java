@@ -154,5 +154,25 @@ public class UserControllerSpec
         assertEquals("Should return name of new user", "Brian", name.get(0));
     }
 
+    @Test
+    public void getUserByCompany(){
+        Map<String, String[]> argMap = new HashMap<>();
+        //Mongo in UserController is doing a regex search so can just take a Java Reg. Expression
+        //This will search the company starting with an I or an F
+        argMap.put("company", new String[] { "[I,F]" });
+        String jsonResult = userController.getUsers(argMap);
+        BsonArray docs = parseJsonArray(jsonResult);
+        assertEquals("Should be 3 users", 3, docs.size());
+        List<String> name = docs
+            .stream()
+            .map(UserControllerSpec::getName)
+            .sorted()
+            .collect(Collectors.toList());
+        List<String> expectedName = Arrays.asList("Jamie","Pat","Sam");
+        assertEquals("Names should match", expectedName, name);
+
+    }
+
+
 
 }
