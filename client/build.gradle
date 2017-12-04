@@ -41,3 +41,5 @@ task runE2ETest(type:Exec){
 task runClientTests(dependsOn: yarn_run_test) {
     group = 'application'
 }
+
+runClientTests.finalizedBy(runE2ETest)
