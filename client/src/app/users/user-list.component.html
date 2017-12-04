@@ -1,28 +1,10 @@
-<div layout-gt-sm="row">
-    <div flex-gt-sm="80" flex-offset-gt-sm="10">
-        <mat-card>
-            <mat-card-title>New User</mat-card-title>
-            <mat-divider></mat-divider>
-            <mat-card-content>
-                    <mat-form-field>
-                        <input matInput #input type="text" placeholder="Name" [(ngModel)]="newUserName">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput #input type="number" placeholder="Age" [(ngModel)]="newUserAge">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput #input type="text" placeholder="Company" [(ngModel)]="newUserCompany">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput #input type="text" placeholder="Email" [(ngModel)]="newUserEmail">
-                    </mat-form-field>
-
-                    <button mat-raised-button color="primary" #input type="button"
-                            (click)="this.addNewUser(newUserName, newUserAge, newUserCompany, newUserEmail)">Add User</button>
-            </mat-card-content>
-        </mat-card>
-    </div>
+<div>
+    <ol>
+    <button mat-raised-button (click)="openDialog()">Add A New User</button>
+    </ol>
 </div>
+
+
 <div layout-gt-sm="row">
     <div flex-gt-sm="80" flex-offset-gt-sm="10">
         <mat-card>
@@ -40,24 +22,26 @@
                 </mat-form-field>
                 <button mat-raised-button color="primary" #input type="button" (click)="loadService()">Submit</button>
 
+                <mat-accordion *ngIf="users; else usersError" >
+                <mat-expansion-panel #elem [id]="user.email" *ngFor="let user of this.filterUsers(userName, userAge)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title  matTooltip="email: {{user.email}}" >{{user.name}}</mat-panel-title>
+                        <mat-panel-description>Works for {{user.company}}</mat-panel-description>
+                    </mat-expansion-panel-header>
 
+                     <mat-panel-description>Age: {{user.age}} years old</mat-panel-description>
 
-                <mat-list *ngIf="users; else usersError">
-                    <mat-list-item #elem [id]="user.email" *ngFor="let user of this.filterUsers(userName, userAge)" class="list-group-item">
-                        {{ user.name }} is {{ user.age }} years old:
-                        <br>
-                        Works for: {{user.company}}
-                    </mat-list-item>
-                </mat-list>
+                </mat-expansion-panel>
+                </mat-accordion>
                 <!-- Maybe this should be a pop-up instead of just a text message? Not sure. -->
                 <ng-template #usersError>
-                    <p>
+                    <mat-error>
                         There was a problem loading the users. Possibly the server is down or perhaps there are network
                         issues.
-                    </p>
-                    <p>
+                    </mat-error>
+                    <mat-error>
                         Please wait a bit and try again or start the server.
-                    </p>
+                    </mat-error>
                 </ng-template>
             </mat-card-content>
         </mat-card>

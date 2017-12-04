@@ -14,6 +14,7 @@ import {Routing} from './app.routes';
 import {APP_BASE_HREF} from "@angular/common";
 
 import {CustomModule} from "./custom.module";
+import {AddUserComponent} from "./users/add-user.component";
 
 
 @NgModule({
@@ -28,12 +29,16 @@ import {CustomModule} from "./custom.module";
         AppComponent,
         HomeComponent,
         UserListComponent,
-        UserComponent
+        UserComponent,
+        AddUserComponent
     ],
     providers: [
         UserListService,
         {provide: APP_BASE_HREF, useValue: '/'},
         {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}
+    ],
+    entryComponents:[
+      AddUserComponent,
     ],
     bootstrap: [AppComponent]
 })

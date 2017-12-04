@@ -1,0 +1,27 @@
+<div layout-gt-sm="row">
+    <div flex-gt-sm="80" flex-offset-gt-sm="10">
+        <mat-card>
+            <mat-card-title>New User</mat-card-title>
+                <mat-divider></mat-divider>
+            <mat-card-content>
+            <mat-form-field>
+                <input matInput #input type="text" placeholder="Name" [(ngModel)]="newUserName">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput #input type="number" placeholder="Age" [(ngModel)]="newUserAge">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput #input type="text" placeholder="Company" [(ngModel)]="newUserCompany">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput #input type="text" placeholder="Email" [(ngModel)]="newUserEmail">
+            </mat-form-field>
+
+                <button mat-raised-button color="primary" #input type="button"
+                    (click)="this.addNewUser(newUserName, newUserAge, newUserCompany, newUserEmail)">Add User</button>
+            </mat-card-content>
+        </mat-card>
+        <button mat-raised-button (click)="onNoClick()" type="button">Exit</button>
+    </div>
+</div>
+
