@@ -1,6 +1,10 @@
-# CSCI 3601 Production Template Fall 2017
-[![Build Status](https://travis-ci.org/UMM-CSci-3601/production-template-F17.svg?branch=master)](https://github.com/UMM-CSci-3601/production-template-F17)
+# CSCI 3601 Lab #4 - Mongo, Spark and Angular
+[![Build Status](https://travis-ci.org/UMM-CSci-3601/3601-lab4_mongo.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601/3601-lab4_mongo)
 
+In this lab, you'll be working to re-implement the ToDo API, this time pulling data from a Mongo Database rather than a flat JSON file. You will also be implementing a new summary API which returns results of processing ToDo data. You will also be implementing a simple client-side application to view this data.
+
+Your specific tasks for this lab can be found in the [LABTASKS.md][labtasks]
+file in this repository.
 
 <!-- TOC depthFrom:1 depthTo:5 withLinks:1 updateOnSave:1 orderedList:0 -->
 ## Table of Contents
@@ -16,7 +20,7 @@
 
 ## Setup
 
-As in the labs, you'll be using IntelliJ. Once you've all joined your
+As in the previous labs, you'll be using IntelliJ. Once you've all joined your
 group using GitHub classroom, you can clone your repository using IntelliJ:
 
 - When prompted to create a new IntelliJ project, select **yes**.
@@ -38,14 +42,21 @@ tools.
 
 - The familiar **run** Gradle task will still run your SparkJava server.
 (which is available at ``localhost:4567``)
-- The **build** task will still _build_ the entire project (but not run it)
+- The **build** (or its' alias **buildExecutable**) task will still _build_ the entire project (but not run it)
 - The **runClient** task will build and run the client side of your project (available at ``localhost:9000``)
-- The **build.sh** is a script that calls upon gradle build to build the entire project which creates an executable to be able to launch the
-project in production mode. To run **build.sh**, go to your project directory in a terminal and enter:``./build ``
 
-When **build.sh** is run the script **.sage_run.sh** is copied to ~/**sage.sh** that when launched i.e. ``./sage.sh``
-will run your project in production mode. The API_URL within the _environment.prod.ts_ should reflect the url to get to your server e.g. 
-``http://localhost:4567`` or ``http://acooldomainname.com``
+The major difference between this lab and lab #3 is that, here, your data
+(users and todos) will be stored in a database rather than as "flat" JSON files
+within the server source code.
+
+For the most part, you will be using a local installation of Mongo as a
+`dev` (development) database. You don't *really* need to worry about how this is set up,
+but you *do* need to know a couple of tricks to help you use it:
+
+- To load new seed data into your local dev database, use the gradle task:
+**seedMongoDB**.
+- *Seed* data is stored in the correspondingly named JSON files at the top
+level (e.g., `users.seed.json`).
 
 :exclamation: Pro-tip: IntelliJ comes with a nice view to see the mongo databases setup.
 To access this click on File -> Settings -> Plugins, type Mongo and make sure the Mongo Plugin is installed.
@@ -57,13 +68,13 @@ and hit the <span style="color:green">green :heavy_plus_sign:</span>, to add you
 
 Testing options are still integrated in this lab so you can test the client, or the server or both.
 Testing client:
-* `runAllTests` runs both the server tests and the clients tests once.
-* `runClientTests` runs the client tests once.
-* `runClientTestsAndWatch` runs the client tests every time that the code changes after a save.
-* `runClientTestsWithCoverage` runs the client tests and deposits code coverage statistics into a new directory within `client` called `coverage`. In there you will find an `index.html`. Right click on `index.html` and select `Open in Browser` with your browser of choice. For Chrome users, you can drag and drop index.html onto chrome and it will open it.  
-* `runE2ETest` runs end to end test for the client side. NOTE: Two Gradle tasks _must_ be run before you can run the e2e tests. 
+* runAllTests runs both the server tests and the clients tests once.
+* runClientTests runs the client tests once.
+* runClientTestsAndWatch runs the client tests every time that the code changes after a save.
+* runClientTestsWithCoverage runs the client tests (once?) and deposits code coverage statistics into a new directory within `client` called `coverage`. In there you will find an `index.html`. Right click on `index.html` and select `Open in Browser` with your browser of choice. For Chrome users, you can drag and drop index.html onto chrome and it will open it.  
+* runE2ETest runs end to end test for the client side. What are e2e tests? They are tests that run the real application and simulate user behavior. They assert that the app is running as expected. NOTE: Two Gradle tasks _must_ be run before you can run the e2e tests.
 The server (`run`) needs to be on for this test to work, and you have to
-need to have data in the `dev` database before running the e2e tests!
+run the `seedMongoDB` task before running the e2e tests!
 * runServerTests runs the server tests.
 
 Turn on your repo in [Travis CI][travis], replace the build status image in this README, and push your changes. That will trigger a build with Travis.
@@ -76,6 +87,7 @@ Turn on your repo in [Travis CI][travis], replace the build status image in this
 - [Testing Angular 4 with Karma/Jasmine][angular4-karma-jasmine]
 - [End to end testing (e2e) with protactor and Angular CLI][e2e-testing]
 - [Angular CLI commands](https://github.com/angular/angular-cli/wiki)
+- [Angular Material Design][angular-md]
 
 ### SparkJava
 - [Spark documentation][spark-documentation]
@@ -85,12 +97,13 @@ Turn on your repo in [Travis CI][travis], replace the build status image in this
 ### MongoDB
 - [Mongo's Java Drivers (Mongo JDBC)][mongo-jdbc]
 
-
+[angular-md]:(https://material.angular.io/)
 [angular-cli]: https://idyllic.co/blog/beginners-guide-angular-cli/
 [angular-2-4]: https://www.technicaldiary.com/angular-2-tutorial-for-beginners-angular-4-tutorial-for-beginners/
 [angular4-karma-jasmine]: https://codecraft.tv/courses/angular/unit-testing/jasmine-and-karma/
 [e2e-testing]: https://coryrylan.com/blog/introduction-to-e2e-testing-with-the-angular-cli-and-protractor
 [environments]: http://tattoocoder.com/angular-cli-using-the-environment-option/
+[bootstrap]: https://getbootstrap.com/components/
 [spark-documentation]: http://sparkjava.com/documentation.html
 [status-codes]: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 [lab2]: https://github.com/UMM-CSci-3601/3601-lab2_client-server/blob/master/README.md#resources

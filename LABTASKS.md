@@ -67,22 +67,15 @@ organize, and count them yourself.
 
 ### Make it pretty
 
-- Use the front-end tools you've learned about to build a nice interface for
+- Use the Angular Material Design tools you've learned about to build a nice interface for
 accessing these APIs:
-  - You must use [Glyphicons][glyphicons] somewhere
-  - You must use at least two of the following nifty Bootstrap features:
-    - [Navs](http://getbootstrap.com/components/#nav)
-    - [Pagination](http://getbootstrap.com/components/#pagination)
-    - [Progress Bars](http://getbootstrap.com/components/#progress)
-    - [Badges](http://getbootstrap.com/components/#badges) or [Labels](http://getbootstrap.com/components/#labels)
-    - [ngStyle directive](https://docs.angularjs.org/api/ng/directive/ngStyle)
-
-[glyphicons]: https://getbootstrap.com/components/#glyphicons
+  - You must use at least two of the following nifty Angular Material features:
+  - There are so many too choose from just explore them [here](https://material.angular.io/components/categories)!
 
 
 ## Remember to test!
 
-Test test and more test! Your project again should have tests. You should contiue expanding  upon your previous end-to-end test as well as implement Unit Test for both your client-side **and**
+Test test and more test! Your project again should have tests. You should continue expanding  upon your previous end-to-end test as well as implement Unit Test for both your client-side **and**
 the server-side.
 
 ### Client-side testing
