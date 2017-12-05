@@ -1,5 +1,6 @@
 import {UserPage} from './user-list.po';
 import {browser, protractor} from 'protractor';
+import {Key} from "selenium-webdriver";
 
 let origFn = browser.driver.controlFlow().execute;
 
@@ -32,10 +33,10 @@ describe('angular-spark-lab', () => {
     it('should type something in filer name box and check that it returned correct element', () => {
         page.navigateTo();
         page.typeAName("t");
-        expect(page.getUniqueUser("kittypage@surelogic.com")).toEqual("Kitty Page is 33 years old");
+        expect(page.getUniqueUser("kittypage@surelogic.com")).toEqual("Kitty Page");
         page.backspace();
         page.typeAName("lynn")
-        expect(page.getUniqueUser("lynnferguson@niquent.com")).toEqual("Lynn Ferguson is 25 years old");
+        expect(page.getUniqueUser("lynnferguson@niquent.com")).toEqual("Lynn Ferguson");
     });
 
     it('should click on the age 27 times and return 3 elements then ', () => {
@@ -45,9 +46,26 @@ describe('angular-spark-lab', () => {
             page.selectUpKey();
         }
 
-        expect(page.getUniqueUser("stokesclayton@momentia.com")).toEqual("Stokes Clayton is 27 years old");
+        expect(page.getUniqueUser("stokesclayton@momentia.com")).toEqual("Stokes Clayton");
 
-        expect(page.getUniqueUser("merrillparker@escenta.com")).toEqual("Merrill Parker is 27 years old");
+        expect(page.getUniqueUser("merrillparker@escenta.com")).toEqual("Merrill Parker");
 
     });
+
+    it("Should open the expansion panel and get the company", ()=>{
+        page.navigateTo();
+        page.getCompany("DATA");
+        browser.actions().sendKeys(Key.ENTER).perform();
+
+
+        expect(page.getUniqueUser("valerieerickson@datagene.com")).toEqual("Valerie Erickson");
+
+
+        //This is just to show that the panels can be opened
+        browser.actions().sendKeys(Key.TAB).perform();
+        browser.actions().sendKeys(Key.ENTER).perform();
+
+
+
+    })
 });

@@ -1,6 +1,6 @@
 <div>
     <ol>
-    <button mat-raised-button (click)="openDialog()">Add A New User</button>
+    <button id = "addNewUser" mat-raised-button (click)="openDialog()">Add A New User</button>
     </ol>
 </div>
 
@@ -26,9 +26,9 @@
                 <mat-expansion-panel #elem [id]="user.email" *ngFor="let user of this.filterUsers(userName, userAge)">
                     <mat-expansion-panel-header>
                         <mat-panel-title  matTooltip="email: {{user.email}}" >{{user.name}}</mat-panel-title>
-                        <mat-panel-description>Works for {{user.company}}</mat-panel-description>
-                    </mat-expansion-panel-header>
 
+                    </mat-expansion-panel-header>
+                    <mat-panel-description >Works for {{user.company}}</mat-panel-description>
                      <mat-panel-description>Age: {{user.age}} years old</mat-panel-description>
 
                 </mat-expansion-panel>
