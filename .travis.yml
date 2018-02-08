@@ -9,6 +9,8 @@ cache:
 jdk:
     - oraclejdk8
 
+sudo: required
+
 env:
     - MONGODB=3.4.7
 
