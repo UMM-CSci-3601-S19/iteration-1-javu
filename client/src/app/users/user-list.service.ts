@@ -29,13 +29,26 @@ export class UserListService {
     filterByCompany(): void{
 
         if(this.serviceContent !== ""){
-            console.log("I got here");
             if (this.userUrl.indexOf('&') !== -1) {
+                //there was already some information passed in this url
                 this.userUrl += 'company=' + this.serviceContent + '&';
             }
             else {
+                //this was the first bit of information to pass in the url
                 this.userUrl += "?company=" + this.serviceContent + "&";
             }
+        }
+        else {
+            //there was nothing in the box to put onto the URL... reset
+            if (this.userUrl.indexOf('company=') !== -1){
+                let start = this.userUrl.indexOf('company=');
+                let end = this.userUrl.indexOf('&', start);
+                this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end+1);
+                console.log(this.userUrl);
+            }
+            //this would remove other filtering too
+            //this.userUrl = environment.API_URL + "users";
+
         }
     }
 
