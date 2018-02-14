@@ -4,6 +4,8 @@ import {DebugElement} from '@angular/core';
 
 import {AppModule} from "./app.module";
 import {AppComponent} from './app.component';
+import {CustomModule} from "./custom.module";
+import {MATERIAL_COMPATIBILITY_MODE} from "@angular/material";
 
 describe('AppComponent', () => {
     let appInstance: AppComponent;
@@ -13,8 +15,10 @@ describe('AppComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                CustomModule,
                 AppModule
-            ]
+            ],
+            providers: [{provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}],
         });
 
         appFixture = TestBed.createComponent(AppComponent);
@@ -29,12 +33,12 @@ describe('AppComponent', () => {
     });
 
     it(`should have as title 'app'`, () => {
-        expect(appInstance.title).toEqual('Angular Spark lab');
+        expect(appInstance.title).toEqual('Mongo-Angular-Spark lab');
     });
 
-    it('should render title in a h1 tag', () => {
+    it('should render title in the navbar', () => {
         appFixture.detectChanges();
-        let h1: HTMLElement = debugElement.query(By.css('h1')).nativeElement;
-        expect(h1.textContent).toContain('Angular Spark lab');
+        let navbar: HTMLElement = debugElement.query(By.css('td-layout-nav')).nativeElement;
+        expect(navbar.textContent).toContain('menu');
     });
 });
