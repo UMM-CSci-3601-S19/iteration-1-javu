@@ -75,7 +75,7 @@ public class UserController {
      * and `null` if no user with that ID is found
      */
 
-    public String getUserJSON(String id) {
+    public String getUser(String id) {
         FindIterable<Document> jsonUsers
             = userCollection
             .find(eq("_id", new ObjectId(id)));
