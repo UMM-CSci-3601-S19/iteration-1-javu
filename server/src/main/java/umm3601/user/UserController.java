@@ -38,7 +38,7 @@ public class UserController {
 
 
      /**
-     * Get a JSON response with a list of all the users in the database.
+     * Method called from Server when the 'api/users/:id' endpoint is received.
      *
      * @param req the HTTP request
      * @param res the HTTP response
@@ -70,7 +70,8 @@ public class UserController {
 
 
     /**
-     * Get the single user specified by the `id` parameter in the request.
+     * Helper method that gets a single user specified by the `id`
+     * parameter in the request.
      *
      * @param id the Mongo ID of the desired user
      * @return the desired user as a JSON object if the user with that ID is found,
@@ -92,7 +93,9 @@ public class UserController {
     }
 
 
-    /**
+    /** Method called from Server when the 'api/users' endpoint is received.
+     * This handles the request received and the response
+     * that will be sent back.
      * @param req
      * @param res
      * @return an array of users in JSON formatted String
@@ -103,7 +106,11 @@ public class UserController {
         return getUsers(req.queryMap().toMap());
     }
 
-    /**
+    /** Helper method which iterates through the collection, receiving all
+     * documents if no query parameter is specified. If the age query parameter
+     * is specified, then the collection is filtered so only documents of that
+     * specified age are found.
+     *
      * @param queryParams
      * @return an array of Users in a JSON formatted string
      */
@@ -122,7 +129,9 @@ public class UserController {
         return JSON.serialize(matchingUsers);
     }
 
-    /**
+    /**Method called from Server when the 'api/users/new'endpoint is recieved.
+     * Gets specified user info from request and calls addNewUser helper method
+     * to append that info to a document
      *
      * @param req
      * @param res
@@ -169,7 +178,7 @@ public class UserController {
         }
     }
 
-    /**
+    /**Helper method which appends received user information to the to-be added document
      *
      * @param name
      * @param age
