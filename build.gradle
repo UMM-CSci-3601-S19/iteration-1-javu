@@ -1,7 +1,7 @@
 evaluationDependsOn ":client"
 evaluationDependsOn ":server"
 
-// Assumes our test database is named "test"
+// Assumes our dev database is named "dev"
 task clearMongoDB(type: Exec) {
     group = "application"
     executable "mongo"

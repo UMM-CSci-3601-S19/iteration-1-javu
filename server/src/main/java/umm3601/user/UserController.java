@@ -8,9 +8,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import spark.Request;
-import spark.Response;
-
 import java.util.Iterator;
 import java.util.Map;
 
@@ -37,38 +34,6 @@ public class UserController {
     }
 
 
-     /**
-     * Get a JSON response with a list of all the users in the database.
-     *
-     * @param req the HTTP request
-     * @param res the HTTP response
-     * @return one user in JSON formatted string and if it fails it will return text with a different HTTP status code
-     */
-    public String getUser(Request req, Response res){
-        res.type("application/json");
-        String id = req.params("id");
-        String user;
-        try {
-            user = getUser(id);
-        } catch (IllegalArgumentException e) {
-            // This is thrown if the ID doesn't have the appropriate
-            // form for a Mongo Object ID.
-            // https://docs.mongodb.com/manual/reference/method/ObjectId/
-            res.status(400);
-            res.body("The requested user id " + id + " wasn't a legal Mongo Object ID.\n" +
-                "See 'https://docs.mongodb.com/manual/reference/method/ObjectId/' for more info.");
-            return "";
-        }
-        if (user != null) {
-            return user;
-        } else {
-            res.status(404);
-            res.body("The requested user with id " + id + " was not found");
-            return "";
-        }
-    }
-
-
     /**
      * Get the single user specified by the `id` parameter in the request.
      *
@@ -76,7 +41,8 @@ public class UserController {
      * @return the desired user as a JSON object if the user with that ID is found,
      * and `null` if no user with that ID is found
      */
-    public String getUser(String id) {
+
+    public String getUserJSON(String id) {
         FindIterable<Document> jsonUsers
             = userCollection
             .find(eq("_id", new ObjectId(id)));
@@ -93,17 +59,6 @@ public class UserController {
 
 
     /**
-     * @param req
-     * @param res
-     * @return an array of users in JSON formatted String
-     */
-    public String getUsers(Request req, Response res)
-    {
-        res.type("application/json");
-        return getUsers(req.queryMap().toMap());
-    }
-
-    /**
      * @param queryParams
      * @return an array of Users in a JSON formatted string
      */
@@ -116,6 +71,14 @@ public class UserController {
             filterDoc = filterDoc.append("age", targetAge);
         }
 
+        if (queryParams.containsKey("company")) {
+            String targetContent = (queryParams.get("company")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("company", contentRegQuery);
+        }
+
         //FindIterable comes from mongo, Document comes from Gson
         FindIterable<Document> matchingUsers = userCollection.find(filterDoc);
 
@@ -124,58 +87,11 @@ public class UserController {
 
     /**
      *
-     * @param req
-     * @param res
-     * @return
-     */
-    public boolean addNewUser(Request req, Response res)
-    {
-
-        res.type("application/json");
-        Object o = JSON.parse(req.body());
-        try {
-            if(o.getClass().equals(BasicDBObject.class))
-            {
-                try {
-                    BasicDBObject dbO = (BasicDBObject) o;
-
-                    String name = dbO.getString("name");
-                    //For some reason age is a string right now, caused by angular.
-                    //This is a problem and should not be this way but here ya go
-                    int age = dbO.getInt("age");
-                    String company = dbO.getString("company");
-                    String email = dbO.getString("email");
-
-                    System.err.println("Adding new user [name=" + name + ", age=" + age + " company=" + company + " email=" + email + ']');
-                    return addNewUser(name, age, company, email);
-                }
-                catch(NullPointerException e)
-                {
-                    System.err.println("A value was malformed or omitted, new user request failed.");
-                    return false;
-                }
-
-            }
-            else
-            {
-                System.err.println("Expected BasicDBObject, received " + o.getClass());
-                return false;
-            }
-        }
-        catch(RuntimeException ree)
-        {
-            ree.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     *
      * @param name
      * @param age
      * @param company
      * @param email
-     * @return
+     * @return boolean after successfully or unsuccessfully adding a user
      */
     public boolean addNewUser(String name, int age, String company, String email) {
 

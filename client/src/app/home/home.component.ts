@@ -7,6 +7,6 @@ export class HomeComponent {
     public text: string;
 
     constructor() {
-        this.text = "Hello world!";
+        this.text = "Mongo lab";
     }
 }

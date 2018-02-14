@@ -6,6 +6,7 @@ export class UserPage {
         return browser.get('/users');
     }
 
+
     //http://www.assertselenium.com/protractor/highlight-elements-during-your-protractor-test-run/
     highlightElement(byObject) {
         function setStyle(element, style) {
@@ -21,8 +22,8 @@ export class UserPage {
     }
 
     getUserTitle() {
-        let title = element(by.id('title')).getText();
-        this.highlightElement(by.id('title'));
+        let title = element(by.id('user-list-title')).getText();
+        this.highlightElement(by.id('user-list-title'));
 
         return title;
     }
@@ -37,16 +38,29 @@ export class UserPage {
         browser.actions().sendKeys(Key.ARROW_UP).perform();
     }
 
+    backspace(){
+        browser.actions().sendKeys(Key.BACK_SPACE).perform();
+    }
+
+    getCompany(company:string){
+        let input = element(by.id('userCompany'));
+        input.click();
+        input.sendKeys(company);
+        input.sendKeys(Key.TAB);
+
+    }
+
     getUserByAge() {
         let input = element(by.id('userName'));
         input.click();
         input.sendKeys(Key.TAB);
     }
 
-    getFirstUser() {
-        let user = element(by.id('users')).getText();
-        this.highlightElement(by.id('users'));
+    getUniqueUser(email:string) {
+        let user = element(by.id(email)).getText();
+        this.highlightElement(by.id(email));
 
         return user;
     }
+
 }

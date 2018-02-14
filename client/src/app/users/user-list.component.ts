@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {UserListService} from "./user-list.service";
 import {User} from "./user";
 import {Observable} from "rxjs";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {AddUserComponent} from "./add-user.component"
 
 @Component({
     selector: 'user-list-component',
@@ -14,46 +16,30 @@ export class UserListComponent implements OnInit {
     //These are public so that tests can reference them (.spec.ts)
     public users: User[];
     public filteredUsers: User[];
-    private userAddSuccess : Boolean = false;
 
     public userName : string;
     public userAge : number;
 
-    public newUserName:string;
-    public newUserAge: number;
-    public newUserCompany: string;
-    public newUserEmail: string;
-
+    public loadReady: boolean = false;
 
     //Inject the UserListService into this component.
     //That's what happens in the following constructor.
-    //
+    //panelOpenState: boolean = false;
     //We can call upon the service for interacting
     //with the server.
-    constructor(public userListService: UserListService) {
+    constructor(public userListService: UserListService, public dialog: MatDialog) {
 
     }
 
-    addNewUser(name: string, age: number, company : string, email : string) : void{
+    openDialog(): void {
+        let dialogRef = this.dialog.open(AddUserComponent, {
+            width: '500px',
+        });
 
-        //Here we clear all the fields, there's probably a better way
-        //of doing this could be with forms or something else
-        this.newUserName = null;
-        this.newUserAge = null;
-        this.newUserCompany = null;
-        this.newUserEmail = null;
-
-        this.userListService.addNewUser(name, age, company, email).subscribe(
-            succeeded => {
-            this.userAddSuccess = succeeded;
-            // Once we added a new User, refresh our user list.
-            // There is a more efficient method where we request for
-            // this new user from the server and add it to users, but
-            // for this lab it's not necessary
-            this.refreshUsers();
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
         });
     }
-
 
 
     public filterUsers(searchName: string, searchAge: number): User[] {
@@ -79,6 +65,11 @@ export class UserListComponent implements OnInit {
         return this.filteredUsers;
     }
 
+    contentChange(contentString): void {
+        this.userListService.serviceContent = contentString;
+    }
+
+
     /**
      * Starts an asynchronous operation to update the users list
      *
@@ -100,6 +91,20 @@ export class UserListComponent implements OnInit {
                 console.log(err);
             });
         return users;
+    }
+
+    loadService(): void {
+        console.log("yay");
+        this.loadReady = true;
+        this.userListService.getUsers().subscribe(
+            users => {
+                this.users = users;
+                this.filteredUsers = this.users;
+            },
+            err => {
+                console.log(err);
+            }
+        );
     }
 
     ngOnInit(): void {

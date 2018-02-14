@@ -1,10 +1,7 @@
 # Lab Tasks
 
-- Questions that you need to answer (as a group!) are indicated with question
-mark symbols (:question:).
+- Questions that you need to answer can be found in [ANSWERS.md](./ANSWERS.md).
 - Tasks that specify work to do without a written response will be bulleted.
-
-Responses to questions should be submitted as specified by your instructor.
 
 If you're ever confused about what you need to do for a given task, ask.
 
@@ -20,7 +17,6 @@ If you're ever confused about what you need to do for a given task, ask.
 - [Remember to test!](#remember-to-test)
   - [Client-side testing](#client-side-testing)
   - [Server-side testing](#server-side-testing)
-- [Questions](#questions)
 
 <!-- /TOC -->
 
@@ -32,7 +28,7 @@ The structure of this project should be nearly identical to that of lab #3, and 
 
 The server is, for the most part, the same as it has been in the past two labs. The difference to look for here is in how the server gets the data it sends out in reply to requests.
 
-Answer questions 1-6 in [QUESTIONS](#questions).
+Answer questions 1-6 in [ANSWERS.md](./ANSWERS.md).
 
 ## More Todos!
 - Re-implement the ToDo API, this time pulling data from MongoDB rather than from a flat JSON file.
@@ -71,22 +67,15 @@ organize, and count them yourself.
 
 ### Make it pretty
 
-- Use the front-end tools you've learned about to build a nice interface for
+- Use the Angular Material Design tools you've learned about to build a nice interface for
 accessing these APIs:
-  - You must use [Glyphicons][glyphicons] somewhere
-  - You must use at least two of the following nifty Bootstrap features:
-    - [Navs](http://getbootstrap.com/components/#nav)
-    - [Pagination](http://getbootstrap.com/components/#pagination)
-    - [Progress Bars](http://getbootstrap.com/components/#progress)
-    - [Badges](http://getbootstrap.com/components/#badges) or [Labels](http://getbootstrap.com/components/#labels)
-    - [ngStyle directive](https://docs.angularjs.org/api/ng/directive/ngStyle)
-
-[glyphicons]: https://getbootstrap.com/components/#glyphicons
+  - You must use at least two of the following nifty Angular Material features:
+  - There are so many too choose from just explore them [here](https://material.angular.io/components/categories)!
 
 
 ## Remember to test!
 
-Test test and more test! Your project again should have tests. You should contiue expanding  upon your previous end-to-end test as well as implement Unit Test for both your client-side **and**
+Test test and more test! Your project again should have tests. You should continue expanding  upon your previous end-to-end test as well as implement Unit Test for both your client-side **and**
 the server-side.
 
 ### Client-side testing
@@ -102,19 +91,5 @@ the server-side.
 
 >Additionally you can Right-click, select _Analyze_ -> _Generate Coverage Report..._ which will prompt you for an output directory and give you the option to view the report an HTML report in a browser.  
 
-
-## Questions
-
-1. :question: What do we do in the `Server` and `UserController` constructors
-to set up our connection to the development database?
-1. :question: How do we retrieve a user by ID in the `UserController.getUser(String)` method?
-1. :question: How do we retrieve all the users with a given age 
-in `UserController.getUsers(Map...)`? What's the role of `filterDoc` in that
-method?
-1. :question: What are these `Document` objects that we use in the `UserController`? 
-Why and how are we using them?
-1. :question: What does `UserControllerSpec.clearAndPopulateDb` do?
-1. :question: What's being tested in `UserControllerSpec.getUsersWhoAre37()`?
-How is that being tested?
 
 [readme]:https://github.com/UMM-CSci-3601/3601-lab4_mongo_db/#testing-and-continuous-integration
