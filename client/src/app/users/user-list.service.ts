@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, RequestOptions} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 
 import {Observable} from "rxjs";
 import "rxjs/add/operator/map";
@@ -10,31 +10,30 @@ import {environment} from "../../environments/environment";
 
 @Injectable()
 export class UserListService {
-    private userUrl: string = environment.API_URL + "users";
+    readonly baseUserUrl: string = environment.API_URL + "users";
+    private activeUserUrl: string = this.baseUserUrl;
     public serviceContent: string = "";
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     getUsers(): Observable<User[]> {
         this.filterByCompany();
-        let observable: Observable<any> = this.http.request(this.userUrl);
-        return observable.map(res => res.json());
-
+        return this.http.get<User[]>(this.activeUserUrl);
     }
 
     getUserById(id: string): Observable<User> {
-        return this.http.request(this.userUrl + "/" + id).map(res => res.json());
+        return this.http.get<User>(this.baseUserUrl + "/" + id);
     }
 
     filterByCompany(): void{
 
         if(this.serviceContent !== ""){
             console.log("I got here");
-            if (this.userUrl.indexOf('&') !== -1) {
-                this.userUrl += 'company=' + this.serviceContent + '&';
+            if (this.activeUserUrl.indexOf('&') !== -1) {
+                this.activeUserUrl += 'company=' + this.serviceContent + '&';
             }
             else {
-                this.userUrl += "?company=" + this.serviceContent + "&";
+                this.activeUserUrl += "?company=" + this.serviceContent + "&";
             }
         }
     }
@@ -44,6 +43,6 @@ export class UserListService {
         console.log(body);
 
         //Send post request to add a new user with the user data as the body with specified headers.
-        return this.http.post(this.userUrl + "/new", body).map(res => res.json());
+        return this.http.post<Boolean>(this.baseUserUrl + "/new", body);
     }
 }
