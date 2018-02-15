@@ -26,7 +26,7 @@ public class UserRequestHandler {
         String id = req.params("id");
         String user;
         try {
-            user = userController.getUserJSON(id);
+            user = userController.getUser(id);
         } catch (IllegalArgumentException e) {
             // This is thrown if the ID doesn't have the appropriate
             // form for a Mongo Object ID.
