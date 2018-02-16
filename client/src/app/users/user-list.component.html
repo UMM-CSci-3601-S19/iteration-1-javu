@@ -18,7 +18,10 @@
                     <input matInput id="userAge" #input type="number" placeholder="Filter by age" (input)="userAge = $event.target.value">
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput id="userCompany" #input type="text" placeholder="Search for company" (input)="contentChange($event.target.value)">
+                    <input matInput id="userCompany" #input type="search" placeholder="Search for company" [(ngModel)]="userCompany" />
+                    <button mat-button type="button" *ngIf="userCompany" matSuffix mat-icon-button aria-label="clear" (click)="userCompany='';loadService()">
+                        <mat-icon>close</mat-icon>
+                    </button>
                 </mat-form-field>
                 <button mat-raised-button color="primary" #input type="button" (click)="loadService()">Submit</button>
 
