@@ -11,31 +11,44 @@ import {environment} from "../../environments/environment";
 @Injectable()
 export class UserListService {
     private userUrl: string = environment.API_URL + "users";
-    public serviceContent: string = "";
     constructor(private http: Http) {
     }
 
-    getUsers(): Observable<User[]> {
-        this.filterByCompany();
+    getUsers(userCompany?: string): Observable<User[]> {
+        this.filterByCompany(userCompany);
         let observable: Observable<any> = this.http.request(this.userUrl);
         return observable.map(res => res.json());
-
     }
 
     getUserById(id: string): Observable<User> {
         return this.http.request(this.userUrl + "/" + id).map(res => res.json());
     }
 
-    filterByCompany(): void{
+    /*
+    //This method looks lovely and is more compact, but it does not clear previous searches appropriately.
+    //It might be worth updating it, but it is currently commented out since it is not used (to make that clear)
+    getUsersByCompany(userCompany?: string): Observable<User> {
+        this.userUrl = this.userUrl + (!(userCompany == null || userCompany == "") ? "?company=" + userCompany : "");
+        console.log("The url is: " + this.userUrl);
+        return this.http.request(this.userUrl).map(res => res.json());
+    }
+    */
 
-        if(this.serviceContent !== ""){
+    filterByCompany(userCompany?: string): void {
+        if(!(userCompany == null || userCompany == "")){
+            if (this.userUrl.indexOf('company=') !== -1){
+                //there was a previous search by company that we need to clear
+                let start = this.userUrl.indexOf('company=');
+                let end = this.userUrl.indexOf('&', start);
+                this.userUrl = this.userUrl.substring(0, start-1) + this.userUrl.substring(end+1);
+            }
             if (this.userUrl.indexOf('&') !== -1) {
                 //there was already some information passed in this url
-                this.userUrl += 'company=' + this.serviceContent + '&';
+                this.userUrl += 'company=' + userCompany + '&';
             }
             else {
                 //this was the first bit of information to pass in the url
-                this.userUrl += "?company=" + this.serviceContent + "&";
+                this.userUrl += "?company=" + userCompany + "&";
             }
         }
         else {
@@ -43,12 +56,11 @@ export class UserListService {
             if (this.userUrl.indexOf('company=') !== -1){
                 let start = this.userUrl.indexOf('company=');
                 let end = this.userUrl.indexOf('&', start);
+                if (this.userUrl.substring(start-1, start) === '?'){
+                    start = start-1
+                }
                 this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end+1);
-                console.log(this.userUrl);
             }
-            //this would remove other filtering too
-            //this.userUrl = environment.API_URL + "users";
-
         }
     }
 
