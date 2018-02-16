@@ -63,7 +63,7 @@ public class UserRequestHandler {
      *
      * @param req the HTTP request
      * @param res the HTTP response
-     * @return a boolean as whether the user was added succesfully or not
+     * @return a boolean as whether the user was added successfully or not
      */
     public boolean addNewUser(Request req, Response res)
     {
