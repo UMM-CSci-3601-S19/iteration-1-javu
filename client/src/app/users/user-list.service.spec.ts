@@ -33,7 +33,13 @@ describe('User list service: ', () => {
     const mUsers: User[] = testUsers.filter(user =>
         user.company.toLowerCase().indexOf("m") !== -1
     );
+
+    // We will need some url information from the userListService to meaningfully test company filtering;
+    // https://stackoverflow.com/questions/35987055/how-to-write-unit-testing-for-angular-2-typescript-for-private-methods-with-ja
     let userListService: UserListService;
+    //let baseUrl: string;
+    let currentlyImpossibleToGenerateSearchUserUrl: string;
+
     // These are used to mock the HTTP requests so that we (a) don't have to
     // have the server running and (b) we can check exactly which HTTP
     // requests were made to ensure that we're making the correct requests.
@@ -50,6 +56,7 @@ describe('User list service: ', () => {
         // Construct an instance of the service with the mock
         // HTTP client.
         userListService = new UserListService(httpClient);
+        //baseUrl = userListService["environment"].API_URL + "users";
     });
 
     afterEach(() => {
@@ -86,6 +93,27 @@ describe('User list service: ', () => {
         const req = httpTestingController.expectOne(userListService.baseUrl + '?company=m&');
         expect(req.request.method).toEqual('GET');
         req.flush(mUsers);
+    });
+
+    it('filterByCompany(userCompany) deals appropriately with a URL that already had a company', () => {
+        currentlyImpossibleToGenerateSearchUserUrl = userListService.baseUrl + '?company=f&something=k&';
+        userListService["userUrl"] = currentlyImpossibleToGenerateSearchUserUrl;
+        userListService.filterByCompany('m');
+        expect(userListService["userUrl"]).toEqual(userListService.baseUrl + '?something=k&company=m&');
+    });
+
+    it('filterByCompany(userCompany) deals appropriately with a URL that already had some filtering, but no company', () => {
+        currentlyImpossibleToGenerateSearchUserUrl = userListService.baseUrl + '?something=k&';
+        userListService["userUrl"] = currentlyImpossibleToGenerateSearchUserUrl;
+        userListService.filterByCompany('m');
+        expect(userListService["userUrl"]).toEqual(userListService.baseUrl + '?something=k&company=m&');
+    });
+
+    it('filterByCompany(userCompany) deals appropriately with a URL has the keyword company, but nothing after the =', () => {
+        currentlyImpossibleToGenerateSearchUserUrl = userListService.baseUrl + '?company=&';
+        userListService["userUrl"] = currentlyImpossibleToGenerateSearchUserUrl;
+        userListService.filterByCompany('');
+        expect(userListService["userUrl"]).toEqual(userListService.baseUrl + '');
     });
 
     it('getUserById() calls api/users/id', () => {

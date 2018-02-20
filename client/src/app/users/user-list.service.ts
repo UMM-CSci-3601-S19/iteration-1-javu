@@ -40,7 +40,7 @@ export class UserListService {
                 //there was a previous search by company that we need to clear
                 let start = this.userUrl.indexOf('company=');
                 let end = this.userUrl.indexOf('&', start);
-                this.userUrl = this.userUrl.substring(0, start-1) + this.userUrl.substring(end+1);
+                this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end+1);
             }
             if (this.userUrl.indexOf('&') !== -1) {
                 //there was already some information passed in this url
