@@ -12,7 +12,7 @@ file in this repository.
 - [Running your project](#running-your-project)
 - [Testing and Continuous Integration](#testing-and-continuous-integration)
 - [Resources](#resources)
-	- [Angular 4](#angular-4)
+	- [Angular 5](#angular-5)
 	- [SparkJava](#sparkjava)
 	- [MongoDB](#mongodb)
 
@@ -27,7 +27,7 @@ group using GitHub classroom, you can clone your repository using IntelliJ:
 - Select **import project from existing model** and select **Gradle.**
   - Make sure **Use default Gradle wrapper** is selected.
 - Click **Finish.**
-- If IDEA asks you if you want to compile JavaScript to TypeScript :fire: DO NOT :fire:
+- If IDEA asks you if you want to compile TypeScript to JavaScript :fire: DO NOT :fire:
 it will break your project.
 
 :warning: IDEA will sometimes decide to "help" you by offering
@@ -80,11 +80,12 @@ run the `seedMongoDB` task before running the e2e tests!
 Turn on your repo in [Travis CI][travis], replace the build status image in this README, and push your changes. That will trigger a build with Travis.
 
 ## Resources
-### Angular 4
-- [What _is_ Angular 4 and Typescript?][angular-2-4]
+### Angular 5
+- [Angular 5 documentation][angular-5]
+- [TypeScript documentation][typescript-doc]
 - [What _is_ Angular CLI?][angular-cli]
 - [What are environments in Angular CLI?][environments]
-- [Testing Angular 4 with Karma/Jasmine][angular4-karma-jasmine]
+- [Testing Angular 5 with Karma/Jasmine][angular5-karma-jasmine]
 - [End to end testing (e2e) with protactor and Angular CLI][e2e-testing]
 - [Angular CLI commands](https://github.com/angular/angular-cli/wiki)
 - [Angular Material Design][angular-md]
@@ -97,10 +98,11 @@ Turn on your repo in [Travis CI][travis], replace the build status image in this
 ### MongoDB
 - [Mongo's Java Drivers (Mongo JDBC)][mongo-jdbc]
 
-[angular-md]:(https://material.angular.io/)
-[angular-cli]: https://idyllic.co/blog/beginners-guide-angular-cli/
-[angular-2-4]: https://www.technicaldiary.com/angular-2-tutorial-for-beginners-angular-4-tutorial-for-beginners/
-[angular4-karma-jasmine]: https://codecraft.tv/courses/angular/unit-testing/jasmine-and-karma/
+[angular-md]: https://material.angular.io/
+[angular-cli]: https://cli.angular.io/
+[typescript-doc]: https://www.typescriptlang.org/docs/home.html
+[angular-5]: https://angular.io/docs
+[angular5-karma-jasmine]: https://codecraft.tv/courses/angular/unit-testing/jasmine-and-karma/
 [e2e-testing]: https://coryrylan.com/blog/introduction-to-e2e-testing-with-the-angular-cli-and-protractor
 [environments]: http://tattoocoder.com/angular-cli-using-the-environment-option/
 [bootstrap]: https://getbootstrap.com/components/
