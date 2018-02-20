@@ -34,15 +34,18 @@ public class UserController {
     }
 
 
+
+
     /**
-     * Get the single user specified by the `id` parameter in the request.
+     * Helper method that gets a single user specified by the `id`
+     * parameter in the request.
      *
      * @param id the Mongo ID of the desired user
      * @return the desired user as a JSON object if the user with that ID is found,
      * and `null` if no user with that ID is found
      */
 
-    public String getUserJSON(String id) {
+    public String getUser(String id) {
         FindIterable<Document> jsonUsers
             = userCollection
             .find(eq("_id", new ObjectId(id)));
@@ -58,6 +61,11 @@ public class UserController {
     }
 
 
+    /** Helper method which iterates through the collection, receiving all
+     * documents if no query parameter is specified. If the age query parameter
+     * is specified, then the collection is filtered so only documents of that
+     * specified age are found.
+     *
     /**
      * @param queryParams
      * @return an array of Users in a JSON formatted string
@@ -85,6 +93,8 @@ public class UserController {
         return JSON.serialize(matchingUsers);
     }
 
+
+    /**Helper method which appends received user information to the to-be added document
     /**
      *
      * @param name

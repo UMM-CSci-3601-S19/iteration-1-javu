@@ -2,14 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {UserListService} from "./user-list.service";
 import {User} from "./user";
 import {Observable} from "rxjs";
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {AddUserComponent} from "./add-user.component"
 
 @Component({
     selector: 'user-list-component',
     templateUrl: 'user-list.component.html',
     styleUrls: ['./user-list.component.css'],
-    providers: []
 })
 
 export class UserListComponent implements OnInit {

@@ -128,10 +128,10 @@ public class UserControllerSpec
 
     @Test
     public void getSamById() {
-        String jsonResult = userController.getUserJSON(samsId.toHexString());
+        String jsonResult = userController.getUser(samsId.toHexString());
         Document sam = Document.parse(jsonResult);
         assertEquals("Name should match", "Sam", sam.get("name"));
-        String noJsonResult = userController.getUserJSON(new ObjectId().toString());
+        String noJsonResult = userController.getUser(new ObjectId().toString());
         assertNull("No name should match",noJsonResult);
 
     }
