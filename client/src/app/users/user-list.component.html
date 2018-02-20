@@ -19,14 +19,14 @@
                 </mat-form-field>
                 <mat-form-field>
                     <input matInput id="userCompany" #input type="search" placeholder="Search for company" [(ngModel)]="userCompany" />
-                    <button mat-button type="button" *ngIf="userCompany" matSuffix mat-icon-button aria-label="clear" (click)="userCompany='';loadService()">
+                    <button mat-button id="companyClearSearch" type="button" *ngIf="userCompany" matSuffix mat-icon-button aria-label="clear" (click)="userCompany='';loadService()">
                         <mat-icon>close</mat-icon>
                     </button>
                 </mat-form-field>
-                <button mat-raised-button color="primary" #input type="button" (click)="loadService()">Submit</button>
+                <button mat-raised-button id="submit" color="primary" #input type="button" (click)="loadService()">Submit</button>
 
                 <mat-accordion *ngIf="users; else usersError" >
-                <mat-expansion-panel #elem [id]="user.email" *ngFor="let user of this.filterUsers(userName, userAge)">
+                <mat-expansion-panel #elem class="users" [id]="user.email" *ngFor="let user of this.filterUsers(userName, userAge)">
                     <mat-expansion-panel-header>
                         <mat-panel-title  matTooltip="email: {{user.email}}" >{{user.name}}</mat-panel-title>
 
