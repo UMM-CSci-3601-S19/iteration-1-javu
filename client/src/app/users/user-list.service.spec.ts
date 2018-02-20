@@ -30,6 +30,9 @@ describe('User list service: ', () => {
             email: 'jamie@frogs.com'
         }
     ];
+    const mUsers: User[] = testUsers.filter(user =>
+        user.company.toLowerCase().indexOf("m") !== -1
+    );
     let userListService: UserListService;
     // These are used to mock the HTTP requests so that we (a) don't have to
     // have the server running and (b) we can check exactly which HTTP
@@ -73,6 +76,16 @@ describe('User list service: ', () => {
         // triggers the subscribe above, which leads to that check
         // actually being performed.
         req.flush(testUsers);
+    });
+
+    it('getUsers(userCompany) adds appropriate param string to called URL', () => {
+        userListService.getUsers("m").subscribe(
+            users => expect(users).toEqual(mUsers)
+        );
+
+        const req = httpTestingController.expectOne(userListService.baseUrl + '?company=m&');
+        expect(req.request.method).toEqual('GET');
+        req.flush(mUsers);
     });
 
     it('getUserById() calls api/users/id', () => {
