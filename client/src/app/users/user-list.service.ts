@@ -9,7 +9,8 @@ import {environment} from "../../environments/environment";
 
 @Injectable()
 export class UserListService {
-    private userUrl: string = environment.API_URL + "users";
+    readonly baseUrl: string = environment.API_URL + "users";
+    private userUrl: string = this.baseUrl;
 
     constructor(private http: HttpClient) {
     }
