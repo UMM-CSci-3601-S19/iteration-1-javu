@@ -11,6 +11,8 @@ Why and how are we using them?
 1. :question: What does `UserControllerSpec.clearAndPopulateDb` do?
 1. :question: What's being tested in `UserControllerSpec.getUsersWhoAre37()`?
 How is that being tested?
+1. :question: Follow the process for adding a new user. What role do `UserController` and 
+`UserRequestHandler` play in the process?
 
 ## Your Team's Answers
 
