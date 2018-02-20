@@ -1,5 +1,4 @@
 // Client side build.gradle
-// Builds the client-side of the project
 
 plugins {
     id 'com.moowork.node' version '1.2.0'
@@ -30,7 +29,6 @@ task runClientTestWithCoverage(type: Exec, dependsOn: yarn_install) {
     executable "ng"
     args = ["test", "--watch=false", "--code-coverage"]
 }
-
 
 task runE2ETest(type:Exec){
     group = 'application'

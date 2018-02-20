@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http, RequestOptions} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 
 import {Observable} from "rxjs";
-import "rxjs/add/operator/map";
 
 import {User} from './user';
 import {environment} from "../../environments/environment";
@@ -11,17 +10,17 @@ import {environment} from "../../environments/environment";
 @Injectable()
 export class UserListService {
     private userUrl: string = environment.API_URL + "users";
-    constructor(private http: Http) {
+
+    constructor(private http: HttpClient) {
     }
 
     getUsers(userCompany?: string): Observable<User[]> {
         this.filterByCompany(userCompany);
-        let observable: Observable<any> = this.http.request(this.userUrl);
-        return observable.map(res => res.json());
+        return this.http.get<User[]>(this.userUrl);
     }
 
     getUserById(id: string): Observable<User> {
-        return this.http.request(this.userUrl + "/" + id).map(res => res.json());
+        return this.http.get<User>(this.userUrl + "/" + id);
     }
 
     /*
@@ -69,6 +68,6 @@ export class UserListService {
         console.log(body);
 
         //Send post request to add a new user with the user data as the body with specified headers.
-        return this.http.post(this.userUrl + "/new", body).map(res => res.json());
+        return this.http.post<Boolean>(this.userUrl + "/new", body);
     }
 }

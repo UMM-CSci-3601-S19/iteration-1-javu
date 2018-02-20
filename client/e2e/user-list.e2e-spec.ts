@@ -18,7 +18,7 @@ browser.driver.controlFlow().execute = function () {
     return origFn.apply(browser.driver.controlFlow(), args);
 };
 
-describe('angular-spark-lab', () => {
+describe('User list', () => {
     let page: UserPage;
 
     beforeEach(() => {
