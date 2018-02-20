@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Http, RequestOptions} from '@angular/http';
 
 import {Observable} from "rxjs";
 import "rxjs/add/operator/map";
@@ -10,30 +10,56 @@ import {environment} from "../../environments/environment";
 
 @Injectable()
 export class UserListService {
-    readonly baseUserUrl: string = environment.API_URL + "users";
-    private activeUserUrl: string = this.baseUserUrl;
-    public serviceContent: string = "";
-    constructor(private http: HttpClient) {
+    private userUrl: string = environment.API_URL + "users";
+    constructor(private http: Http) {
     }
 
-    getUsers(): Observable<User[]> {
-        this.filterByCompany();
-        return this.http.get<User[]>(this.activeUserUrl);
+    getUsers(userCompany?: string): Observable<User[]> {
+        this.filterByCompany(userCompany);
+        let observable: Observable<any> = this.http.request(this.userUrl);
+        return observable.map(res => res.json());
     }
 
     getUserById(id: string): Observable<User> {
-        return this.http.get<User>(this.baseUserUrl + "/" + id);
+        return this.http.request(this.userUrl + "/" + id).map(res => res.json());
     }
 
-    filterByCompany(): void{
+    /*
+    //This method looks lovely and is more compact, but it does not clear previous searches appropriately.
+    //It might be worth updating it, but it is currently commented out since it is not used (to make that clear)
+    getUsersByCompany(userCompany?: string): Observable<User> {
+        this.userUrl = this.userUrl + (!(userCompany == null || userCompany == "") ? "?company=" + userCompany : "");
+        console.log("The url is: " + this.userUrl);
+        return this.http.request(this.userUrl).map(res => res.json());
+    }
+    */
 
-        if(this.serviceContent !== ""){
-            console.log("I got here");
-            if (this.activeUserUrl.indexOf('&') !== -1) {
-                this.activeUserUrl += 'company=' + this.serviceContent + '&';
+    filterByCompany(userCompany?: string): void {
+        if(!(userCompany == null || userCompany == "")){
+            if (this.userUrl.indexOf('company=') !== -1){
+                //there was a previous search by company that we need to clear
+                let start = this.userUrl.indexOf('company=');
+                let end = this.userUrl.indexOf('&', start);
+                this.userUrl = this.userUrl.substring(0, start-1) + this.userUrl.substring(end+1);
+            }
+            if (this.userUrl.indexOf('&') !== -1) {
+                //there was already some information passed in this url
+                this.userUrl += 'company=' + userCompany + '&';
             }
             else {
-                this.activeUserUrl += "?company=" + this.serviceContent + "&";
+                //this was the first bit of information to pass in the url
+                this.userUrl += "?company=" + userCompany + "&";
+            }
+        }
+        else {
+            //there was nothing in the box to put onto the URL... reset
+            if (this.userUrl.indexOf('company=') !== -1){
+                let start = this.userUrl.indexOf('company=');
+                let end = this.userUrl.indexOf('&', start);
+                if (this.userUrl.substring(start-1, start) === '?'){
+                    start = start-1
+                }
+                this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end+1);
             }
         }
     }
@@ -43,6 +69,6 @@ export class UserListService {
         console.log(body);
 
         //Send post request to add a new user with the user data as the body with specified headers.
-        return this.http.post<Boolean>(this.baseUserUrl + "/new", body);
+        return this.http.post(this.userUrl + "/new", body).map(res => res.json());
     }
 }

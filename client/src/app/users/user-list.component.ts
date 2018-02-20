@@ -18,6 +18,7 @@ export class UserListComponent implements OnInit {
 
     public userName : string;
     public userAge : number;
+    public userCompany : string;
 
     public loadReady: boolean = false;
 
@@ -64,11 +65,6 @@ export class UserListComponent implements OnInit {
         return this.filteredUsers;
     }
 
-    contentChange(contentString): void {
-        this.userListService.serviceContent = contentString;
-    }
-
-
     /**
      * Starts an asynchronous operation to update the users list
      *
@@ -92,10 +88,10 @@ export class UserListComponent implements OnInit {
         return users;
     }
 
+
     loadService(): void {
-        console.log("yay");
         this.loadReady = true;
-        this.userListService.getUsers().subscribe(
+        this.userListService.getUsers(this.userCompany).subscribe(
             users => {
                 this.users = users;
                 this.filteredUsers = this.users;
@@ -106,7 +102,9 @@ export class UserListComponent implements OnInit {
         );
     }
 
+
     ngOnInit(): void {
         this.refreshUsers();
+        this.loadService();
     }
 }

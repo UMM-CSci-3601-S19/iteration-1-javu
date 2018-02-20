@@ -6,7 +6,6 @@ export class UserPage {
         return browser.get('/users');
     }
 
-
     //http://www.assertselenium.com/protractor/highlight-elements-during-your-protractor-test-run/
     highlightElement(byObject) {
         function setStyle(element, style) {
@@ -46,8 +45,8 @@ export class UserPage {
         let input = element(by.id('userCompany'));
         input.click();
         input.sendKeys(company);
-        input.sendKeys(Key.TAB);
-
+        let selectButton = element(by.id('submit'));
+        selectButton.click();
     }
 
     getUserByAge() {
@@ -63,4 +62,12 @@ export class UserPage {
         return user;
     }
 
+    getUsers() {
+        return element.all(by.className('users'));
+    }
+
+    clickClearCompanySearch() {
+        let input = element(by.id('companyClearSearch'));
+        input.click();
+    }
 }
