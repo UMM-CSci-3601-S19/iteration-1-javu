@@ -26,14 +26,13 @@
                 <button mat-raised-button id="submit" color="primary" #input type="button" (click)="loadService()">Submit</button>
 
                 <mat-accordion *ngIf="users; else usersError" >
-                <mat-expansion-panel #elem class="users" [id]="user.email" *ngFor="let user of this.filterUsers(userName, userAge)">
+                <mat-expansion-panel #elem class="users" [id]="user.email" [expanded]="this.isHighlighted(user)" *ngFor="let user of this.filterUsers(userName, userAge)">
                     <mat-expansion-panel-header>
-                        <mat-panel-title  matTooltip="email: {{user.email}}" >{{user.name}}</mat-panel-title>
+                        <mat-panel-title matTooltip="email: {{user.email}}" >{{user.name}}</mat-panel-title>
 
                     </mat-expansion-panel-header>
                     <mat-panel-description >Works for {{user.company}}</mat-panel-description>
-                     <mat-panel-description>Age: {{user.age}} years old</mat-panel-description>
-
+                    <mat-panel-description>Age: {{user.age}} years old</mat-panel-description>
                 </mat-expansion-panel>
                 </mat-accordion>
                 <!-- Maybe this should be a pop-up instead of just a text message? Not sure. -->
