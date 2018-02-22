@@ -37,7 +37,6 @@ describe('User list service: ', () => {
     // We will need some url information from the userListService to meaningfully test company filtering;
     // https://stackoverflow.com/questions/35987055/how-to-write-unit-testing-for-angular-2-typescript-for-private-methods-with-ja
     let userListService: UserListService;
-    //let baseUrl: string;
     let currentlyImpossibleToGenerateSearchUserUrl: string;
 
     // These are used to mock the HTTP requests so that we (a) don't have to
@@ -127,5 +126,27 @@ describe('User list service: ', () => {
         const req = httpTestingController.expectOne(expectedUrl);
         expect(req.request.method).toEqual('GET');
         req.flush(targetUser);
+    });
+
+    it('adding a user calls api/users/new', () => {
+        const jesse_id = { "$oid": 'jesse_id' };
+        const newUser: User = {
+            _id: '',
+            name: 'Jesse',
+            age: 72,
+            company: 'Smithsonian',
+            email: 'jesse@stuff.com'
+        };
+
+        userListService.addNewUser(newUser).subscribe(
+            id => {
+                expect(id).toBe(jesse_id)
+            }
+        );
+
+        const expectedUrl: string = userListService.baseUrl + '/new';
+        const req = httpTestingController.expectOne(expectedUrl);
+        expect(req.request.method).toEqual('POST');
+        req.flush(jesse_id);
     });
 });
