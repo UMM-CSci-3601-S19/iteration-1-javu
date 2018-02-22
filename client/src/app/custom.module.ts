@@ -12,7 +12,7 @@ import {
 import { FlexLayoutModule, } from '@angular/flex-layout';
 
 import { FormsModule } from '@angular/forms';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const FLEX_LAYOUT_MODULES: any[] = [
     FlexLayoutModule,

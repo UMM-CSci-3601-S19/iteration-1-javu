@@ -1,17 +1,17 @@
-import {ComponentFixture, TestBed, async} from "@angular/core/testing";
-import {User} from "./user";
-import {UserListComponent} from "./user-list.component";
-import {UserListService} from "./user-list.service";
-import {Observable} from "rxjs/Observable";
-import {FormsModule} from "@angular/forms";
-import {CustomModule} from "../custom.module";
-import {MATERIAL_COMPATIBILITY_MODE} from "@angular/material";
+import {ComponentFixture, TestBed, async} from '@angular/core/testing';
+import {User} from './user';
+import {UserListComponent} from './user-list.component';
+import {UserListService} from './user-list.service';
+import {Observable} from 'rxjs/Observable';
+import {FormsModule} from '@angular/forms';
+import {CustomModule} from '../custom.module';
+import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 import {MatDialog} from '@angular/material';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 
-describe("User list", () => {
+describe('User list', () => {
 
     let userList: UserListComponent;
     let fixture: ComponentFixture<UserListComponent>;
@@ -25,25 +25,25 @@ describe("User list", () => {
         userListServiceStub = {
             getUsers: () => Observable.of([
                 {
-                    _id: "chris_id",
-                    name: "Chris",
+                    _id: 'chris_id',
+                    name: 'Chris',
                     age: 25,
-                    company: "UMM",
-                    email: "chris@this.that"
+                    company: 'UMM',
+                    email: 'chris@this.that'
                 },
                 {
-                    _id: "pat_id",
-                    name: "Pat",
+                    _id: 'pat_id',
+                    name: 'Pat',
                     age: 37,
-                    company: "IBM",
-                    email: "pat@something.com"
+                    company: 'IBM',
+                    email: 'pat@something.com'
                 },
                 {
-                    _id: "jamie_id",
-                    name: "Jamie",
+                    _id: 'jamie_id',
+                    name: 'Jamie',
                     age: 37,
-                    company: "Frogs, Inc.",
-                    email: "jamie@frogs.com"
+                    company: 'Frogs, Inc.',
+                    email: 'jamie@frogs.com'
                 }
             ])
         };
@@ -55,7 +55,7 @@ describe("User list", () => {
             // Provide a test-double instead
             providers: [{provide: UserListService, useValue: userListServiceStub},
                 {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
-        })
+        });
     });
 
     beforeEach(async(() => {
@@ -66,35 +66,35 @@ describe("User list", () => {
         });
     }));
 
-    it("contains all the users", () => {
+    it('contains all the users', () => {
         expect(userList.users.length).toBe(3);
     });
 
-    it("contains a user named 'Chris'", () => {
-        expect(userList.users.some((user: User) => user.name === "Chris")).toBe(true);
+    it('contains a user named \'Chris\'', () => {
+        expect(userList.users.some((user: User) => user.name === 'Chris')).toBe(true);
     });
 
-    it("contain a user named 'Jamie'", () => {
-        expect(userList.users.some((user: User) => user.name === "Jamie")).toBe(true);
+    it('contain a user named \'Jamie\'', () => {
+        expect(userList.users.some((user: User) => user.name === 'Jamie')).toBe(true);
     });
 
-    it("doesn't contain a user named 'Santa'", () => {
-        expect(userList.users.some((user: User) => user.name === "Santa")).toBe(false);
+    it('doesn\'t contain a user named \'Santa\'', () => {
+        expect(userList.users.some((user: User) => user.name === 'Santa')).toBe(false);
     });
 
-    it("has two users that are 37 years old", () => {
+    it('has two users that are 37 years old', () => {
         expect(userList.users.filter((user: User) => user.age === 37).length).toBe(2);
     });
 
-    it("user list filters by name", () => {
+    it('user list filters by name', () => {
         expect(userList.filteredUsers.length).toBe(3);
-        userList.userName = "a";
+        userList.userName = 'a';
         userList.refreshUsers().subscribe(() => {
             expect(userList.filteredUsers.length).toBe(2);
         });
     });
 
-    it("user list filters by age", () => {
+    it('user list filters by age', () => {
         expect(userList.filteredUsers.length).toBe(3);
         userList.userAge = 37;
         userList.refreshUsers().subscribe(() => {
@@ -102,10 +102,10 @@ describe("User list", () => {
         });
     });
 
-    it("user list filters by name and age", () => {
+    it('user list filters by name and age', () => {
         expect(userList.filteredUsers.length).toBe(3);
         userList.userAge = 37;
-        userList.userName = "i";
+        userList.userName = 'i';
         userList.refreshUsers().subscribe(() => {
             expect(userList.filteredUsers.length).toBe(1);
         });
@@ -113,7 +113,7 @@ describe("User list", () => {
 
 });
 
-describe("Misbehaving User List", () => {
+describe('Misbehaving User List', () => {
     let userList: UserListComponent;
     let fixture: ComponentFixture<UserListComponent>;
 
@@ -125,7 +125,7 @@ describe("Misbehaving User List", () => {
         // stub UserService for test purposes
         userListServiceStub = {
             getUsers: () => Observable.create(observer => {
-                observer.error("Error-prone observable");
+                observer.error('Error-prone observable');
             })
         };
 
@@ -134,7 +134,7 @@ describe("Misbehaving User List", () => {
             declarations: [UserListComponent],
             providers: [{provide: UserListService, useValue: userListServiceStub},
                 {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
-        })
+        });
     });
 
     beforeEach(async(() => {
@@ -145,14 +145,14 @@ describe("Misbehaving User List", () => {
         });
     }));
 
-    it("generates an error if we don't set up a UserListService", () => {
+    it('generates an error if we don\'t set up a UserListService', () => {
         // Since the observer throws an error, we don't expect users to be defined.
         expect(userList.users).toBeUndefined();
     });
 });
 
 
-describe("Adding a user", () => {
+describe('Adding a user', () => {
     let userList: UserListComponent;
     let fixture: ComponentFixture<UserListComponent>;
     const newUser: User = {
@@ -162,13 +162,13 @@ describe("Adding a user", () => {
         company: 'Things and stuff',
         email: 'sam@this.and.that'
     };
-    const newId: string = "sam_id";
+    const newId = 'sam_id';
 
     let calledUser: User;
 
     let userListServiceStub: {
         getUsers: () => Observable<User[]>,
-        addNewUser: (newUser: User) => Observable<{"$oid": string}>
+        addNewUser: (newUser: User) => Observable<{'$oid': string}>
     };
     let mockMatDialog: {
         open: (AddUserComponent, any) => {
@@ -184,8 +184,8 @@ describe("Adding a user", () => {
             addNewUser: (newUser: User) => {
                 calledUser = newUser;
                 return Observable.of({
-                    "$oid": newId
-                })
+                    '$oid': newId
+                });
             }
         };
         mockMatDialog = {
@@ -194,7 +194,7 @@ describe("Adding a user", () => {
                     afterClosed: () => {
                         return Observable.of(newUser);
                     }
-                }
+                };
             }
         };
 
@@ -205,7 +205,7 @@ describe("Adding a user", () => {
                 {provide: UserListService, useValue: userListServiceStub},
                 {provide: MatDialog, useValue: mockMatDialog},
                 {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
-        })
+        });
     });
 
     beforeEach(async(() => {
@@ -216,7 +216,7 @@ describe("Adding a user", () => {
         });
     }));
 
-    it("calls UserListService.addUser", () => {
+    it('calls UserListService.addUser', () => {
         expect(calledUser).toBeNull();
         userList.openDialog();
         expect(calledUser).toEqual(newUser);

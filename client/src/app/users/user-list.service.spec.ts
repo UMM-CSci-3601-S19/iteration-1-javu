@@ -31,7 +31,7 @@ describe('User list service: ', () => {
         }
     ];
     const mUsers: User[] = testUsers.filter(user =>
-        user.company.toLowerCase().indexOf("m") !== -1
+        user.company.toLowerCase().indexOf('m') !== -1
     );
 
     // We will need some url information from the userListService to meaningfully test company filtering;
@@ -55,7 +55,6 @@ describe('User list service: ', () => {
         // Construct an instance of the service with the mock
         // HTTP client.
         userListService = new UserListService(httpClient);
-        //baseUrl = userListService["environment"].API_URL + "users";
     });
 
     afterEach(() => {
@@ -85,7 +84,7 @@ describe('User list service: ', () => {
     });
 
     it('getUsers(userCompany) adds appropriate param string to called URL', () => {
-        userListService.getUsers("m").subscribe(
+        userListService.getUsers('m').subscribe(
             users => expect(users).toEqual(mUsers)
         );
 
@@ -96,23 +95,23 @@ describe('User list service: ', () => {
 
     it('filterByCompany(userCompany) deals appropriately with a URL that already had a company', () => {
         currentlyImpossibleToGenerateSearchUserUrl = userListService.baseUrl + '?company=f&something=k&';
-        userListService["userUrl"] = currentlyImpossibleToGenerateSearchUserUrl;
+        userListService['userUrl'] = currentlyImpossibleToGenerateSearchUserUrl;
         userListService.filterByCompany('m');
-        expect(userListService["userUrl"]).toEqual(userListService.baseUrl + '?something=k&company=m&');
+        expect(userListService['userUrl']).toEqual(userListService.baseUrl + '?something=k&company=m&');
     });
 
     it('filterByCompany(userCompany) deals appropriately with a URL that already had some filtering, but no company', () => {
         currentlyImpossibleToGenerateSearchUserUrl = userListService.baseUrl + '?something=k&';
-        userListService["userUrl"] = currentlyImpossibleToGenerateSearchUserUrl;
+        userListService['userUrl'] = currentlyImpossibleToGenerateSearchUserUrl;
         userListService.filterByCompany('m');
-        expect(userListService["userUrl"]).toEqual(userListService.baseUrl + '?something=k&company=m&');
+        expect(userListService['userUrl']).toEqual(userListService.baseUrl + '?something=k&company=m&');
     });
 
     it('filterByCompany(userCompany) deals appropriately with a URL has the keyword company, but nothing after the =', () => {
         currentlyImpossibleToGenerateSearchUserUrl = userListService.baseUrl + '?company=&';
-        userListService["userUrl"] = currentlyImpossibleToGenerateSearchUserUrl;
+        userListService['userUrl'] = currentlyImpossibleToGenerateSearchUserUrl;
         userListService.filterByCompany('');
-        expect(userListService["userUrl"]).toEqual(userListService.baseUrl + '');
+        expect(userListService['userUrl']).toEqual(userListService.baseUrl + '');
     });
 
     it('getUserById() calls api/users/id', () => {
@@ -129,7 +128,7 @@ describe('User list service: ', () => {
     });
 
     it('adding a user calls api/users/new', () => {
-        const jesse_id = { "$oid": 'jesse_id' };
+        const jesse_id = { '$oid': 'jesse_id' };
         const newUser: User = {
             _id: '',
             name: 'Jesse',
@@ -140,7 +139,7 @@ describe('User list service: ', () => {
 
         userListService.addNewUser(newUser).subscribe(
             id => {
-                expect(id).toBe(jesse_id)
+                expect(id).toBe(jesse_id);
             }
         );
 

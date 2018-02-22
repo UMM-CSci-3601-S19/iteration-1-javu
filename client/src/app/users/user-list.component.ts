@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {UserListService} from "./user-list.service";
-import {User} from "./user";
-import {Observable} from "rxjs/Observable";
+import {UserListService} from './user-list.service';
+import {User} from './user';
+import {Observable} from 'rxjs/Observable';
 import {MatDialog} from '@angular/material';
-import {AddUserComponent} from "./add-user.component"
+import {AddUserComponent} from './add-user.component';
 
 @Component({
     selector: 'user-list-component',
@@ -12,31 +12,31 @@ import {AddUserComponent} from "./add-user.component"
 })
 
 export class UserListComponent implements OnInit {
-    //These are public so that tests can reference them (.spec.ts)
+    // These are public so that tests can reference them (.spec.ts)
     public users: User[];
     public filteredUsers: User[];
 
     // These are the target values used in searching.
     // We should rename them to make that clearer.
-    public userName : string;
-    public userAge : number;
-    public userCompany : string;
+    public userName: string;
+    public userAge: number;
+    public userCompany: string;
 
     // The ID of the
-    private highlightedID: {"$oid": string} = { "$oid": '' };
+    private highlightedID: {'$oid': string} = { '$oid': '' };
 
-    //Inject the UserListService into this component.
+    // Inject the UserListService into this component.
     constructor(public userListService: UserListService, public dialog: MatDialog) {
 
     }
 
-    isHighlighted(user: User) : boolean {
-        return user._id["$oid"] === this.highlightedID["$oid"];
+    isHighlighted(user: User): boolean {
+        return user._id['$oid'] === this.highlightedID['$oid'];
     }
 
     openDialog(): void {
-        let newUser: User = {_id: "", name: "", age: -1, company: "", email: ""};
-        let dialogRef = this.dialog.open(AddUserComponent, {
+        const newUser: User = {_id: '', name: '', age: -1, company: '', email: ''};
+        const dialogRef = this.dialog.open(AddUserComponent, {
             width: '500px',
             data: { user: newUser }
         });
@@ -49,8 +49,8 @@ export class UserListComponent implements OnInit {
                 },
                 err => {
                     // This should probably be turned into some sort of meaningful response.
-                    console.log("There was an error adding the user.");
-                    console.log("The error was " + JSON.stringify(err));
+                    console.log('There was an error adding the user.');
+                    console.log('The error was ' + JSON.stringify(err));
                 });
         });
     }
@@ -59,7 +59,7 @@ export class UserListComponent implements OnInit {
 
         this.filteredUsers = this.users;
 
-        //Filter by name
+        // Filter by name
         if (searchName != null) {
             searchName = searchName.toLocaleLowerCase();
 
@@ -68,7 +68,7 @@ export class UserListComponent implements OnInit {
             });
         }
 
-        //Filter by age
+        // Filter by age
         if (searchAge != null) {
             this.filteredUsers = this.filteredUsers.filter(user => {
                 return !searchAge || user.age == searchAge;
@@ -83,13 +83,13 @@ export class UserListComponent implements OnInit {
      *
      */
     refreshUsers(): Observable<User[]> {
-        //Get Users returns an Observable, basically a "promise" that
-        //we will get the data from the server.
+        // Get Users returns an Observable, basically a "promise" that
+        // we will get the data from the server.
         //
-        //Subscribe waits until the data is fully downloaded, then
-        //performs an action on it (the first lambda)
+        // Subscribe waits until the data is fully downloaded, then
+        // performs an action on it (the first lambda)
 
-        let users : Observable<User[]> = this.userListService.getUsers();
+        const users: Observable<User[]> = this.userListService.getUsers();
         users.subscribe(
             users => {
                 this.users = users;

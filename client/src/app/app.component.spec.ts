@@ -2,10 +2,10 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
 
-import {AppModule} from "./app.module";
+import {AppModule} from './app.module';
 import {AppComponent} from './app.component';
-import {CustomModule} from "./custom.module";
-import {MATERIAL_COMPATIBILITY_MODE} from "@angular/material";
+import {CustomModule} from './custom.module';
+import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 
 describe('AppComponent', () => {
     let appInstance: AppComponent;
@@ -38,7 +38,7 @@ describe('AppComponent', () => {
 
     it('should render title in the navbar', () => {
         appFixture.detectChanges();
-        let navbar: HTMLElement = debugElement.query(By.css('td-layout-nav')).nativeElement;
+        const navbar: HTMLElement = debugElement.query(By.css('td-layout-nav')).nativeElement;
         expect(navbar.textContent).toContain('menu');
     });
 });

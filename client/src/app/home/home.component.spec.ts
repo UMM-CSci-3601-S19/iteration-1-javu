@@ -1,9 +1,9 @@
-import {TestBed, ComponentFixture} from "@angular/core/testing";
-import {HomeComponent} from "./home.component";
-import {DebugElement} from "@angular/core";
-import {By} from "@angular/platform-browser";
-import {CustomModule} from "../custom.module";
-import {MATERIAL_COMPATIBILITY_MODE} from "@angular/material";
+import {TestBed, ComponentFixture} from '@angular/core/testing';
+import {HomeComponent} from './home.component';
+import {DebugElement} from '@angular/core';
+import {By} from '@angular/platform-browser';
+import {CustomModule} from '../custom.module';
+import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 
 describe('Home', () => {
 
@@ -28,7 +28,7 @@ describe('Home', () => {
         el = de.nativeElement;
     });
 
-    it("displays a greeting", () => {
+    it('displays a greeting', () => {
         fixture.detectChanges();
         expect(el.textContent).toContain(component.text);
     });

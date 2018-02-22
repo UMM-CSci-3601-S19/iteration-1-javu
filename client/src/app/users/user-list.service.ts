@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {Observable} from "rxjs/Observable";
+import {Observable} from 'rxjs/Observable';
 
 import {User} from './user';
-import {environment} from "../../environments/environment";
+import {environment} from '../../environments/environment';
 
 
 @Injectable()
 export class UserListService {
-    readonly baseUrl: string = environment.API_URL + "users";
+    readonly baseUrl: string = environment.API_URL + 'users';
     private userUrl: string = this.baseUrl;
 
     constructor(private http: HttpClient) {
@@ -21,7 +21,7 @@ export class UserListService {
     }
 
     getUserById(id: string): Observable<User> {
-        return this.http.get<User>(this.userUrl + "/" + id);
+        return this.http.get<User>(this.userUrl + '/' + id);
     }
 
     /*
@@ -35,43 +35,41 @@ export class UserListService {
     */
 
     filterByCompany(userCompany?: string): void {
-        if(!(userCompany == null || userCompany == "")){
-            if (this.userUrl.indexOf('company=') !== -1){
-                //there was a previous search by company that we need to clear
-                let start = this.userUrl.indexOf('company=');
-                let end = this.userUrl.indexOf('&', start);
-                this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end+1);
+        if (!(userCompany == null || userCompany === '')) {
+            if (this.userUrl.indexOf('company=') !== -1) {
+                // there was a previous search by company that we need to clear
+                const start = this.userUrl.indexOf('company=');
+                const end = this.userUrl.indexOf('&', start);
+                this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end + 1);
             }
             if (this.userUrl.indexOf('&') !== -1) {
-                //there was already some information passed in this url
+                // there was already some information passed in this url
                 this.userUrl += 'company=' + userCompany + '&';
+            } else {
+                // this was the first bit of information to pass in the url
+                this.userUrl += '?company=' + userCompany + '&';
             }
-            else {
-                //this was the first bit of information to pass in the url
-                this.userUrl += "?company=" + userCompany + "&";
-            }
-        }
-        else {
-            //there was nothing in the box to put onto the URL... reset
-            if (this.userUrl.indexOf('company=') !== -1){
+        } else {
+            // there was nothing in the box to put onto the URL... reset
+            if (this.userUrl.indexOf('company=') !== -1) {
                 let start = this.userUrl.indexOf('company=');
-                let end = this.userUrl.indexOf('&', start);
-                if (this.userUrl.substring(start-1, start) === '?'){
-                    start = start-1
+                const end = this.userUrl.indexOf('&', start);
+                if (this.userUrl.substring(start - 1, start) === '?') {
+                    start = start - 1;
                 }
-                this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end+1);
+                this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end + 1);
             }
         }
     }
 
-    addNewUser(newUser: User): Observable<{"$oid": string}> {
+    addNewUser(newUser: User): Observable<{'$oid': string}> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json'
             }),
         };
 
-        //Send post request to add a new user with the user data as the body with specified headers.
-        return this.http.post<{"$oid": string}>(this.userUrl + "/new", newUser, httpOptions); // { ...httpOptions, responseType: 'text' });
+        // Send post request to add a new user with the user data as the body with specified headers.
+        return this.http.post<{'$oid': string}>(this.userUrl + '/new', newUser, httpOptions);
     }
 }
