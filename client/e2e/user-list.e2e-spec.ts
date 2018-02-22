@@ -1,5 +1,5 @@
 import {UserPage} from './user-list.po';
-import {browser, protractor} from 'protractor';
+import {browser, protractor, element, by} from 'protractor';
 import {Key} from "selenium-webdriver";
 
 let origFn = browser.driver.controlFlow().execute;
@@ -89,5 +89,56 @@ describe('User list', () => {
         page.getUsers().then(function(users) {
             expect(users.length).toBe(3);
         });
-    })
+    });
+
+// For examples testing modal dialog related things, see:
+// https://code.tutsplus.com/tutorials/getting-started-with-end-to-end-testing-in-angular-using-protractor--cms-29318
+// https://github.com/blizzerand/angular-protractor-demo/tree/final
+
+    it('Should have an add user button', () => {
+        page.navigateTo();
+        expect(page.buttonExists()).toBeTruthy();
+    });
+
+    it('Should open a dialog box when add user button is clicked', () => {
+        page.navigateTo();
+        expect(element(by.css('add-user')).isPresent()).toBeFalsy('There should not be a modal window yet');
+        element(by.id('addNewUser')).click();
+        expect(element(by.css('add-user')).isPresent()).toBeTruthy('There should be a modal window now');
+    });
+
+    it('Should actually add the user with the information we put in the fields', () => {
+        page.navigateTo();
+        page.clickAddUserButton();
+        element(by.id('nameField')).sendKeys('Tracy Kim');
+        // Need to use backspace because the default value is -1. If that changes, this will change too.
+        element(by.id('ageField')).sendKeys(protractor.Key.BACK_SPACE).then(function() {
+            element(by.id('ageField')).sendKeys(protractor.Key.BACK_SPACE).then(function() {
+                element(by.id('ageField')).sendKeys('26');
+            });
+        });
+        element(by.id('companyField')).sendKeys('Awesome Startup, LLC');
+        element(by.id('emailField')).sendKeys('tracy@awesome.com');
+        element(by.id('confirmAddUserButton')).click();
+        expect(page.getUniqueUser('tracy@awesome.com')).toEqual('Tracy Kim');
+    });
+
+    it('Should allow us to put information into the fields of the add user dialog', () => {
+        page.navigateTo();
+        page.clickAddUserButton();
+        expect(element(by.id('nameField')).isPresent()).toBeTruthy('There should be a name field');
+        element(by.id('nameField')).sendKeys('Dana Jones');
+        expect(element(by.id('ageField')).isPresent()).toBeTruthy('There should be an age field');
+        // Need to use backspace because the default value is -1. If that changes, this will change too.
+        element(by.id('ageField')).sendKeys(protractor.Key.BACK_SPACE).then(function() {
+            element(by.id('ageField')).sendKeys(protractor.Key.BACK_SPACE).then(function() {
+                element(by.id('ageField')).sendKeys('24');
+            });
+        });
+        expect(element(by.id('companyField')).isPresent()).toBeTruthy('There should be a company field');
+        element(by.id('companyField')).sendKeys('Awesome Startup, LLC');
+        expect(element(by.id('emailField')).isPresent()).toBeTruthy('There should be an email field');
+        element(by.id('emailField')).sendKeys('dana@awesome.com');
+        element(by.id('exitWithoutAddingButton')).click();
+    });
 });
