@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
     }
 
     isHighlighted(user: User) : boolean {
-        return user._id["$oid"] === this.highlightedID;
+        return user._id["$oid"] === this.highlightedID["$oid"];
     }
 
     openDialog(): void {
