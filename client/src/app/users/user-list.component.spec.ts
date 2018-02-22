@@ -2,11 +2,13 @@ import {ComponentFixture, TestBed, async} from "@angular/core/testing";
 import {User} from "./user";
 import {UserListComponent} from "./user-list.component";
 import {UserListService} from "./user-list.service";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 import {FormsModule} from "@angular/forms";
 import {CustomModule} from "../custom.module";
 import {MATERIAL_COMPATIBILITY_MODE} from "@angular/material";
 
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/do';
 
 describe("User list", () => {
 

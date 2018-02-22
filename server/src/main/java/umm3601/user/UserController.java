@@ -33,9 +33,6 @@ public class UserController {
         userCollection = database.getCollection("users");
     }
 
-
-
-
     /**
      * Helper method that gets a single user specified by the `id`
      * parameter in the request.
@@ -44,7 +41,6 @@ public class UserController {
      * @return the desired user as a JSON object if the user with that ID is found,
      * and `null` if no user with that ID is found
      */
-
     public String getUser(String id) {
         FindIterable<Document> jsonUsers
             = userCollection
@@ -66,7 +62,6 @@ public class UserController {
      * is specified, then the collection is filtered so only documents of that
      * specified age are found.
      *
-    /**
      * @param queryParams
      * @return an array of Users in a JSON formatted string
      */
@@ -94,8 +89,8 @@ public class UserController {
     }
 
 
-    /**Helper method which appends received user information to the to-be added document
     /**
+     * Helper method which appends received user information to the to-be added document
      *
      * @param name
      * @param age
@@ -103,7 +98,7 @@ public class UserController {
      * @param email
      * @return boolean after successfully or unsuccessfully adding a user
      */
-    public boolean addNewUser(String name, int age, String company, String email) {
+    public String addNewUser(String name, int age, String company, String email) {
 
         Document newUser = new Document();
         newUser.append("name", name);
@@ -113,17 +108,13 @@ public class UserController {
 
         try {
             userCollection.insertOne(newUser);
-        }
-        catch(MongoException me)
-        {
+            ObjectId id = newUser.getObjectId("_id");
+            System.err.println("Successfully added new user [_id=" + id + ", name=" + name + ", age=" + age + " company=" + company + " email=" + email + ']');
+            // return JSON.serialize(newUser);
+            return JSON.serialize(id);
+        } catch(MongoException me) {
             me.printStackTrace();
-            return false;
+            return null;
         }
-
-        return true;
     }
-
-
-
-
 }

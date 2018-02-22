@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserListService} from "./user-list.service";
 import {User} from "./user";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 import {MatDialog} from '@angular/material';
 import {AddUserComponent} from "./add-user.component"
 
@@ -16,31 +16,44 @@ export class UserListComponent implements OnInit {
     public users: User[];
     public filteredUsers: User[];
 
+    // These are the target values used in searching.
+    // We should rename them to make that clearer.
     public userName : string;
     public userAge : number;
     public userCompany : string;
 
-    public loadReady: boolean = false;
+    // The ID of the
+    private highlightedID: {"$oid": string} = { "$oid": '' };
 
     //Inject the UserListService into this component.
-    //That's what happens in the following constructor.
-    //panelOpenState: boolean = false;
-    //We can call upon the service for interacting
-    //with the server.
     constructor(public userListService: UserListService, public dialog: MatDialog) {
 
     }
 
+    isHighlighted(user: User) : boolean {
+        return user._id["$oid"] === this.highlightedID;
+    }
+
     openDialog(): void {
+        let newUser: User = {_id: "", name: "", age: -1, company: "", email: ""};
         let dialogRef = this.dialog.open(AddUserComponent, {
             width: '500px',
+            data: { user: newUser }
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+            this.userListService.addNewUser(result).subscribe(
+                result => {
+                    this.highlightedID = result;
+                    this.refreshUsers();
+                },
+                err => {
+                    // This should probably be turned into some sort of meaningful response.
+                    console.log("There was an error adding the user.");
+                    console.log("The error was " + JSON.stringify(err));
+                });
         });
     }
-
 
     public filterUsers(searchName: string, searchAge: number): User[] {
 
@@ -90,7 +103,6 @@ export class UserListComponent implements OnInit {
 
 
     loadService(): void {
-        this.loadReady = true;
         this.userListService.getUsers(this.userCompany).subscribe(
             users => {
                 this.users = users;

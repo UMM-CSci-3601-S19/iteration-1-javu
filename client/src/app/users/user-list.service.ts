@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 
 import {User} from './user';
 import {environment} from "../../environments/environment";
@@ -64,11 +64,14 @@ export class UserListService {
         }
     }
 
-    addNewUser(name: string, age: number, company : string, email : string): Observable<Boolean> {
-        const body = {name:name, age:age, company:company, email:email};
-        console.log(body);
+    addNewUser(newUser: User): Observable<{"$oid": string}> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            }),
+        };
 
         //Send post request to add a new user with the user data as the body with specified headers.
-        return this.http.post<Boolean>(this.userUrl + "/new", body);
+        return this.http.post<{"$oid": string}>(this.userUrl + "/new", newUser, httpOptions); // { ...httpOptions, responseType: 'text' });
     }
 }

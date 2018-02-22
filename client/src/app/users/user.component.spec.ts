@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed, async} from "@angular/core/testing";
 import {User} from "./user";
 import {UserComponent} from "./user.component";
 import {UserListService} from "./user-list.service";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 //import { PipeModule } from "../../pipe.module";
 
 describe("User component", () => {
