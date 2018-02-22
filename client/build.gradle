@@ -27,7 +27,7 @@ task runClientTestsAndWatch(type: NpmTask) {
 task runClientTestWithCoverage(type: Exec, dependsOn: yarn_install) {
     group = 'application'
     executable "ng"
-    args = ["test", "--watch=false", "--code-coverage"]
+    args = ["test", "-sm=false", "--watch=false", "--code-coverage"]
 }
 
 task runE2ETest(type:Exec){
