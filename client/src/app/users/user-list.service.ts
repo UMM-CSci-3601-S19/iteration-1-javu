@@ -36,13 +36,11 @@ export class UserListService {
 
     filterByCompany(userCompany?: string): void {
         if (!(userCompany == null || userCompany === '')) {
-            if (this.userUrl.indexOf('company=') !== -1) {
+            if (this.parameterPresent('company=') ) {
                 // there was a previous search by company that we need to clear
-                const start = this.userUrl.indexOf('company=');
-                const end = this.userUrl.indexOf('&', start);
-                this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end + 1);
+                this.removeParameter('company=');
             }
-            if (this.userUrl.indexOf('&') !== -1) {
+            if (this.userUrl.indexOf('?') !== -1) {
                 // there was already some information passed in this url
                 this.userUrl += 'company=' + userCompany + '&';
             } else {
@@ -51,7 +49,7 @@ export class UserListService {
             }
         } else {
             // there was nothing in the box to put onto the URL... reset
-            if (this.userUrl.indexOf('company=') !== -1) {
+            if (this.parameterPresent('company=')) {
                 let start = this.userUrl.indexOf('company=');
                 const end = this.userUrl.indexOf('&', start);
                 if (this.userUrl.substring(start - 1, start) === '?') {
@@ -60,6 +58,22 @@ export class UserListService {
                 this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end + 1);
             }
         }
+    }
+
+    private parameterPresent(searchParam: string) {
+        return this.userUrl.indexOf(searchParam) !== -1;
+    }
+
+    //remove the parameter and, if present, the &
+    private removeParameter(searchParam: string) {
+        let start = this.userUrl.indexOf(searchParam);
+        let end = 0;
+        if (this.userUrl.indexOf('&') !== -1) {
+            end = this.userUrl.indexOf('&', start) + 1;
+        } else {
+            end = this.userUrl.indexOf('&', start);
+        }
+        this.userUrl = this.userUrl.substring(0, start) + this.userUrl.substring(end);
     }
 
     addNewUser(newUser: User): Observable<{'$oid': string}> {
