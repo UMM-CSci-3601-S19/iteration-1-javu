@@ -1,8 +1,8 @@
-import {browser, element, by} from 'protractor';
+import {browser, element, by, promise, ElementFinder} from 'protractor';
 import {Key} from "selenium-webdriver";
 
 export class UserPage {
-    navigateTo() {
+    navigateTo():promise.Promise<any> {
         return browser.get('/users');
     }
 
@@ -70,4 +70,15 @@ export class UserPage {
         let input = element(by.id('companyClearSearch'));
         input.click();
     }
+
+    buttonExists() : promise.Promise<boolean>{
+        this.highlightElement(by.id('addNewUser'));
+        return element(by.id('addNewUser')).isPresent();
+    }
+
+    clickAddUserButton() : promise.Promise<void> {
+        this.highlightElement(by.id('addNewUser'));
+        return element(by.id('addNewUser')).click();
+    }
+
 }
