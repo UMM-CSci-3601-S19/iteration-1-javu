@@ -6,6 +6,7 @@ import {Observable} from "rxjs/Observable";
 import {FormsModule} from "@angular/forms";
 import {CustomModule} from "../custom.module";
 import {MATERIAL_COMPATIBILITY_MODE} from "@angular/material";
+import {MatDialog} from '@angular/material';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
@@ -88,35 +89,26 @@ describe("User list", () => {
     it("user list filters by name", () => {
         expect(userList.filteredUsers.length).toBe(3);
         userList.userName = "a";
-        let a : Observable<User[]> = userList.refreshUsers();
-        a.do(x => Observable.of(x))
-            .subscribe(x =>
-            {
-                expect(userList.filteredUsers.length).toBe(2);
-            });
+        userList.refreshUsers().subscribe(() => {
+            expect(userList.filteredUsers.length).toBe(2);
+        });
     });
 
     it("user list filters by age", () => {
         expect(userList.filteredUsers.length).toBe(3);
         userList.userAge = 37;
-        let a : Observable<User[]> = userList.refreshUsers();
-        a.do(x => Observable.of(x))
-            .subscribe(x =>
-            {
-                expect(userList.filteredUsers.length).toBe(2);
-            });
+        userList.refreshUsers().subscribe(() => {
+            expect(userList.filteredUsers.length).toBe(2);
+        });
     });
 
     it("user list filters by name and age", () => {
         expect(userList.filteredUsers.length).toBe(3);
         userList.userAge = 37;
         userList.userName = "i";
-        let a : Observable<User[]> = userList.refreshUsers();
-        a.do(x => Observable.of(x))
-            .subscribe(x =>
-            {
-                expect(userList.filteredUsers.length).toBe(1);
-            });
+        userList.refreshUsers().subscribe(() => {
+            expect(userList.filteredUsers.length).toBe(1);
+        });
     });
 
 });
@@ -156,5 +148,77 @@ describe("Misbehaving User List", () => {
     it("generates an error if we don't set up a UserListService", () => {
         // Since the observer throws an error, we don't expect users to be defined.
         expect(userList.users).toBeUndefined();
+    });
+});
+
+
+describe("Adding a user", () => {
+    let userList: UserListComponent;
+    let fixture: ComponentFixture<UserListComponent>;
+    const newUser: User = {
+        _id: '',
+        name: 'Sam',
+        age: 67,
+        company: 'Things and stuff',
+        email: 'sam@this.and.that'
+    };
+    const newId: string = "sam_id";
+
+    let calledUser: User;
+
+    let userListServiceStub: {
+        getUsers: () => Observable<User[]>,
+        addNewUser: (newUser: User) => Observable<{"$oid": string}>
+    };
+    let mockMatDialog: {
+        open: (AddUserComponent, any) => {
+            afterClosed: () => Observable<User>
+        };
+    };
+
+    beforeEach(() => {
+        calledUser = null;
+        // stub UserService for test purposes
+        userListServiceStub = {
+            getUsers: () => Observable.of([]),
+            addNewUser: (newUser: User) => {
+                calledUser = newUser;
+                return Observable.of({
+                    "$oid": newId
+                })
+            }
+        };
+        mockMatDialog = {
+            open: () => {
+                return {
+                    afterClosed: () => {
+                        return Observable.of(newUser);
+                    }
+                }
+            }
+        };
+
+        TestBed.configureTestingModule({
+            imports: [FormsModule, CustomModule],
+            declarations: [UserListComponent],
+            providers: [
+                {provide: UserListService, useValue: userListServiceStub},
+                {provide: MatDialog, useValue: mockMatDialog},
+                {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
+        })
+    });
+
+    beforeEach(async(() => {
+        TestBed.compileComponents().then(() => {
+            fixture = TestBed.createComponent(UserListComponent);
+            userList = fixture.componentInstance;
+            fixture.detectChanges();
+        });
+    }));
+
+    it("calls UserListService.addUser", () => {
+        expect(calledUser).toBeNull();
+        userList.openDialog();
+        expect(calledUser).toEqual(newUser);
     });
 });
