@@ -120,7 +120,7 @@ describe('User list', () => {
         element(by.id('companyField')).sendKeys('Awesome Startup, LLC');
         element(by.id('emailField')).sendKeys('tracy@awesome.com');
         element(by.id('confirmAddUserButton')).click();
-        expect(page.getUniqueUser('tracy@awesome.com')).toEqual('Tracy Kim');
+        expect(page.getUniqueUser('tracy@awesome.com')).toMatch('Tracy Kim.*'); // toEqual('Tracy Kim');
     });
 
     it('Should allow us to put information into the fields of the add user dialog', () => {
