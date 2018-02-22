@@ -17,9 +17,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * JUnit tests for the UserController.
@@ -138,9 +136,9 @@ public class UserControllerSpec
 
     @Test
     public void addUserTest(){
-        boolean bool = userController.addNewUser("Brian",22,"umm", "brian@yahoo.com");
+        String newId = userController.addNewUser("Brian",22,"umm", "brian@yahoo.com");
 
-        assertTrue("Add new user should return true when user is added,",bool);
+        assertNotNull("Add new user should return true when user is added,", newId);
         Map<String, String[]> argMap = new HashMap<>();
         argMap.put("age", new String[] { "22" });
         String jsonResult = userController.getUsers(argMap);
