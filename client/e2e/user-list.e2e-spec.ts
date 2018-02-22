@@ -91,6 +91,19 @@ describe('User list', () => {
         });
     });
 
+    it('Should allow us to search for company, update that search string, and then still successfully search', () => {
+        page.navigateTo();
+        page.getCompany('o');
+        page.getUsers().then(function(users) {
+            expect(users.length).toBe(4);
+        });
+        element(by.id('userCompany')).sendKeys('h');
+        element(by.id('submit')).click();
+        page.getUsers().then(function(users) {
+            expect(users.length).toBe(1);
+        });
+    });
+
 // For examples testing modal dialog related things, see:
 // https://code.tutsplus.com/tutorials/getting-started-with-end-to-end-testing-in-angular-using-protractor--cms-29318
 // https://github.com/blizzerand/angular-protractor-demo/tree/final
