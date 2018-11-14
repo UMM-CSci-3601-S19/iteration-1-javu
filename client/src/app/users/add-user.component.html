@@ -1,26 +1,24 @@
-<div class="add-user" layout-gt-sm="row">
-    <div flex-gt-sm="80" flex-offset-gt-sm="10">
-        <mat-card>
-            <mat-card-title>New User</mat-card-title>
-                <mat-divider></mat-divider>
-            <mat-card-content>
-            <mat-form-field>
-                <input matInput #input id="nameField" placeholder="Name" [(ngModel)]="data.user.name">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput #input id="ageField" type="number" placeholder="Age" [(ngModel)]="data.user.age">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput #input id="companyField" placeholder="Company" [(ngModel)]="data.user.company">
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput #input id="emailField" placeholder="Email" [(ngModel)]="data.user.email">
-            </mat-form-field>
-                <!-- [mat-dialog-close]="data.user" causes the data.user object to be returned when the dialog is closed. -->
-                <button mat-button id="confirmAddUserButton" [mat-dialog-close]="data.user" type="button">Add user</button>
-            </mat-card-content>
-        </mat-card>
-        <button mat-raised-button id="exitWithoutAddingButton" (click)="onNoClick()" type="button">Exit</button>
-    </div>
+<div class="add-user">
+    <h2 mat-dialog-title>New User</h2>
+    <mat-dialog-content layout="column">
+        <mat-form-field flex>
+            <input matInput #input id="nameField" placeholder="Name" [(ngModel)]="data.user.name">
+        </mat-form-field>
+        <mat-form-field flex>
+            <input matInput #input id="ageField" type="number" placeholder="Age" [(ngModel)]="data.user.age">
+        </mat-form-field>
+        <mat-form-field flex>
+            <input matInput #input id="companyField" placeholder="Company" [(ngModel)]="data.user.company">
+        </mat-form-field>
+        <mat-form-field flex>
+            <input matInput #input id="emailField" placeholder="Email" [(ngModel)]="data.user.email">
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions layout="row">
+        <!-- [mat-dialog-close]="data.user" causes the data.user object to be returned when the dialog is closed. -->
+        <button mat-raised-button id="confirmAddUserButton" [mat-dialog-close]="data.user" type="button" color="primary">Add user</button>
+        <!-- [mat-dialog-close]="null" causes null to be returned when the dialog is closed. -->
+        <button mat-raised-button id="exitWithoutAddingButton" [mat-dialog-close]="null" type="button">Exit</button>
+    </mat-dialog-actions>
 </div>
 

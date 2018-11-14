@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MAT_DIALOG_DATA} from '@angular/material';
 import {User} from './user';
 
 @Component({
@@ -8,11 +8,6 @@ import {User} from './user';
 })
 export class AddUserComponent {
     constructor(
-        public dialogRef: MatDialogRef<AddUserComponent>,
         @Inject(MAT_DIALOG_DATA) public data: {user: User}) {
-    }
-
-    onNoClick(): void {
-        this.dialogRef.close();
     }
 }
