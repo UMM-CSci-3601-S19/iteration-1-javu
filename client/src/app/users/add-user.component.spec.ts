@@ -33,11 +33,6 @@ describe('Add user component', () => {
         addUserComponent = fixture.componentInstance;
     });
 
-    it('closes properly', () => {
-        expect(calledClose).toBe(true);
-        fixture.componentInstance.onNoClick();
-    });
-
     //it("doesn't send any data about the new user to create if the person clicks on exit", () => {
     //    expect(mockMatDialogRef.data).toBe(null);
     //});
