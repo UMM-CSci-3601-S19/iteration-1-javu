@@ -66,19 +66,24 @@ export class UserPage {
         return element.all(by.className('users'));
     }
 
-    clickClearCompanySearch() {
-        const input = element(by.id('companyClearSearch'));
-        input.click();
+    elementExistsWithId(idOfElement: string): promise.Promise<boolean> {
+        if (element(by.id(idOfElement)).isPresent()) {
+            this.highlightElement(by.id(idOfElement));
+        }
+        return element(by.id(idOfElement)).isPresent();
     }
 
-    buttonExists(): promise.Promise<boolean> {
-        this.highlightElement(by.id('addNewUser'));
-        return element(by.id('addNewUser')).isPresent();
+    elementExistsWithCss(cssOfElement: string): promise.Promise<boolean> {
+        return element(by.css(cssOfElement)).isPresent();
     }
 
-    clickAddUserButton(): promise.Promise<void> {
-        this.highlightElement(by.id('addNewUser'));
-        return element(by.id('addNewUser')).click();
+    click(idOfButton: string): promise.Promise<void> {
+        this.highlightElement(by.id(idOfButton));
+        return element(by.id(idOfButton)).click();
+    }
+
+    field(idOfField: string) {
+        return element(by.id(idOfField));
     }
 
 }
