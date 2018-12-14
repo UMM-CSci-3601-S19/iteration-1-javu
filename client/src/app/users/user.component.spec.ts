@@ -3,6 +3,7 @@ import {User} from './user';
 import {UserComponent} from './user.component';
 import {UserListService} from './user-list.service';
 import {Observable} from 'rxjs/Observable';
+import {CustomModule} from "../custom.module";
 
 describe('User component', () => {
 
@@ -42,6 +43,7 @@ describe('User component', () => {
         };
 
         TestBed.configureTestingModule({
+            imports: [CustomModule],
             declarations: [UserComponent],
             providers: [{provide: UserListService, useValue: userListServiceStub}]
         });
