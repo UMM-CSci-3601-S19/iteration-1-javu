@@ -1,5 +1,7 @@
-<mat-list dense *ngIf="user" class="user">
-        <mat-list-item>Name: {{ user.name }}</mat-list-item>
-        <mat-list-item>Age: {{ user.age }}</mat-list-item>
-        <mat-list-item>Company: {{ user.company }}</mat-list-item>
-</mat-list>
+<div *ngIf="user" #users>
+    <ul mat-list>
+        <li mat-list-item>Name: {{ user.name }}</li>
+        <li mat-list-item>Age: {{ user.age }}</li>
+        <li mat-list-item>Company: {{ user.company }}</li>
+    </ul>
+</div>
