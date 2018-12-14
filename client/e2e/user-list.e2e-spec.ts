@@ -81,7 +81,7 @@ describe('User list', () => {
         page.getUsers().then(function(users) {
             expect(users.length).toBe(2);
         });
-        page.clickClearCompanySearch();
+        page.click('companyClearSearch');
         page.getUsers().then(function(users) {
             expect(users.length).toBe(10);
         });
@@ -97,8 +97,8 @@ describe('User list', () => {
         page.getUsers().then(function(users) {
             expect(users.length).toBe(4);
         });
-        element(by.id('userCompany')).sendKeys('h');
-        element(by.id('submit')).click();
+        page.field('userCompany').sendKeys('h');
+        page.click('submit');
         page.getUsers().then(function(users) {
             expect(users.length).toBe(1);
         });
@@ -110,29 +110,29 @@ describe('User list', () => {
 
     it('Should have an add user button', () => {
         page.navigateTo();
-        expect(page.buttonExists()).toBeTruthy();
+        expect(page.elementExistsWithId('addNewUser')).toBeTruthy();
     });
 
     it('Should open a dialog box when add user button is clicked', () => {
         page.navigateTo();
-        expect(element(by.css('add-user')).isPresent()).toBeFalsy('There should not be a modal window yet');
-        element(by.id('addNewUser')).click();
-        expect(element(by.css('add-user')).isPresent()).toBeTruthy('There should be a modal window now');
+        expect(page.elementExistsWithCss('add-user')).toBeFalsy('There should not be a modal window yet');
+        page.click('addNewUser');
+        expect(page.elementExistsWithCss('add-user')).toBeTruthy('There should be a modal window now');
     });
 
     it('Should actually add the user with the information we put in the fields', () => {
         page.navigateTo();
-        page.clickAddUserButton();
-        element(by.id('nameField')).sendKeys('Tracy Kim');
+        page.click('addNewUser');
+        page.field('nameField').sendKeys('Tracy Kim');
         // Need to use backspace because the default value is -1. If that changes, this will change too.
-        element(by.id('ageField')).sendKeys(protractor.Key.BACK_SPACE).then(function() {
-            element(by.id('ageField')).sendKeys(protractor.Key.BACK_SPACE).then(function() {
-                element(by.id('ageField')).sendKeys('26');
+        page.field('ageField').sendKeys(protractor.Key.BACK_SPACE).then(function() {
+            page.field('ageField').sendKeys(protractor.Key.BACK_SPACE).then(function() {
+                page.field('ageField').sendKeys('26');
             });
         });
-        element(by.id('companyField')).sendKeys('Awesome Startup, LLC');
-        element(by.id('emailField')).sendKeys('tracy@awesome.com');
-        element(by.id('confirmAddUserButton')).click();
+        page.field('companyField').sendKeys('Awesome Startup, LLC');
+        page.field('emailField').sendKeys('tracy@awesome.com');
+        page.click('confirmAddUserButton');
         // This annoying delay is necessary, otherwise it's possible that we execute the `expect`
         // line before the add user has been fully processed and the new user is available
         // in the list.
@@ -143,20 +143,20 @@ describe('User list', () => {
 
     it('Should allow us to put information into the fields of the add user dialog', () => {
         page.navigateTo();
-        page.clickAddUserButton();
-        expect(element(by.id('nameField')).isPresent()).toBeTruthy('There should be a name field');
-        element(by.id('nameField')).sendKeys('Dana Jones');
+        page.click('addNewUser');
+        expect(page.field('nameField').isPresent()).toBeTruthy('There should be a name field');
+        page.field('nameField').sendKeys('Dana Jones');
         expect(element(by.id('ageField')).isPresent()).toBeTruthy('There should be an age field');
         // Need to use backspace because the default value is -1. If that changes, this will change too.
-        element(by.id('ageField')).sendKeys(protractor.Key.BACK_SPACE).then(function() {
-            element(by.id('ageField')).sendKeys(protractor.Key.BACK_SPACE).then(function() {
-                element(by.id('ageField')).sendKeys('24');
+        page.field('ageField').sendKeys(protractor.Key.BACK_SPACE).then(function() {
+            page.field('ageField').sendKeys(protractor.Key.BACK_SPACE).then(function() {
+                page.field('ageField').sendKeys('24');
             });
         });
-        expect(element(by.id('companyField')).isPresent()).toBeTruthy('There should be a company field');
-        element(by.id('companyField')).sendKeys('Awesome Startup, LLC');
-        expect(element(by.id('emailField')).isPresent()).toBeTruthy('There should be an email field');
-        element(by.id('emailField')).sendKeys('dana@awesome.com');
-        element(by.id('exitWithoutAddingButton')).click();
+        expect(page.field('companyField').isPresent()).toBeTruthy('There should be a company field');
+        page.field('companyField').sendKeys('Awesome Startup, LLC');
+        expect(page.field('emailField').isPresent()).toBeTruthy('There should be an email field');
+        page.field('emailField').sendKeys('dana@awesome.com');
+        page.click('exitWithoutAddingButton');
     });
 });
