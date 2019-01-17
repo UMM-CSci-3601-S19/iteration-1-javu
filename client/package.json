@@ -32,7 +32,7 @@
         "package.json": "^2.0.1",
         "core-js": "^2.6.2",
         "rxjs": "^5.5.12",
-        "zone.js": "^0.8.26"
+        "zone.js": "^0.8.28"
     },
     "devDependencies": {
         "@angular/cli": "1.7.2",
