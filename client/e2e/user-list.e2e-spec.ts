@@ -7,20 +7,20 @@ import {Key} from 'selenium-webdriver';
 // https://hassantariqblog.wordpress.com/2015/11/09/reduce-speed-of-angular-e2e-protractor-tests/
 
 const origFn = browser.driver.controlFlow().execute;
-/*
+
 browser.driver.controlFlow().execute = function () {
     let args = arguments;
 
     // queue 100ms wait between test
     // This delay is only put here so that you can watch the browser do its thing.
     // If you're tired of it taking long you can remove this call
-    origFn.call(browser.driver.controlFlow(), function () {
+    origFn.call(browser.driver.controlFlow(), () => {
         return protractor.promise.delayed(100);
     });
 
     return origFn.apply(browser.driver.controlFlow(), args);
 };
-*/
+
 
 describe('User list', () => {
   let page: UserPage;
@@ -70,7 +70,7 @@ describe('User list', () => {
   it('Should allow us to filter users based on company', () => {
     page.navigateTo();
     page.getCompany('o');
-    page.getUsers().then(function (users) {
+    page.getUsers().then((users) => {
       expect(users.length).toBe(4);
     });
     expect(page.getUniqueUser('conniestewart@ohmnet.com')).toEqual('Connie Stewart');
@@ -82,15 +82,15 @@ describe('User list', () => {
   it('Should allow us to clear a search for company and then still successfully search again', () => {
     page.navigateTo();
     page.getCompany('m');
-    page.getUsers().then(function (users) {
+    page.getUsers().then((users) => {
       expect(users.length).toBe(2);
     });
     page.click('companyClearSearch');
-    page.getUsers().then(function (users) {
+    page.getUsers().then((users) => {
       expect(users.length).toBe(10);
     });
     page.getCompany('ne');
-    page.getUsers().then(function (users) {
+    page.getUsers().then((users) => {
       expect(users.length).toBe(3);
     });
   });
@@ -98,12 +98,12 @@ describe('User list', () => {
   it('Should allow us to search for company, update that search string, and then still successfully search', () => {
     page.navigateTo();
     page.getCompany('o');
-    page.getUsers().then(function (users) {
+    page.getUsers().then((users) => {
       expect(users.length).toBe(4);
     });
     page.field('userCompany').sendKeys('h');
     page.click('submit');
-    page.getUsers().then(function (users) {
+    page.getUsers().then((users) => {
       expect(users.length).toBe(1);
     });
   });
