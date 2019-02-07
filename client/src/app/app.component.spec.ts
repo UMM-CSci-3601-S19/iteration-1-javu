@@ -8,37 +8,37 @@ import {CustomModule} from './custom.module';
 import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 
 describe('AppComponent', () => {
-    let appInstance: AppComponent;
-    let appFixture: ComponentFixture<AppComponent>;
-    let debugElement: DebugElement;
+  let appInstance: AppComponent;
+  let appFixture: ComponentFixture<AppComponent>;
+  let debugElement: DebugElement;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CustomModule,
-                AppModule
-            ],
-            providers: [{provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}],
-        });
-
-        appFixture = TestBed.createComponent(AppComponent);
-
-        appInstance = appFixture.componentInstance;
-
-        debugElement = appFixture.debugElement;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        CustomModule,
+        AppModule
+      ],
+      providers: [{provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}],
     });
 
-    it('should create the app', () => {
-        expect(appFixture).toBeTruthy();
-    });
+    appFixture = TestBed.createComponent(AppComponent);
 
-    it(`should have as title 'app'`, () => {
-        expect(appInstance.title).toEqual('Mongo-Angular-Spark lab');
-    });
+    appInstance = appFixture.componentInstance;
 
-    it('should render title in the navbar', () => {
-        appFixture.detectChanges();
-        const navbar: HTMLElement = debugElement.query(By.css('td-layout-nav')).nativeElement;
-        expect(navbar.textContent).toContain('menu');
-    });
+    debugElement = appFixture.debugElement;
+  });
+
+  it('should create the app', () => {
+    expect(appFixture).toBeTruthy();
+  });
+
+  it(`should have as title 'app'`, () => {
+    expect(appInstance.title).toEqual('Mongo-Angular-Spark lab');
+  });
+
+  it('should render title in the navbar', () => {
+    appFixture.detectChanges();
+    const navbar: HTMLElement = debugElement.query(By.css('td-layout-nav')).nativeElement;
+    expect(navbar.textContent).toContain('menu');
+  });
 });

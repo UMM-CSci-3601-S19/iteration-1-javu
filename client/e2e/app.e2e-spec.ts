@@ -1,13 +1,13 @@
 import {AppPage} from './app.po';
 
 describe('angular-spark-lab', () => {
-    let page: AppPage;
+  let page: AppPage;
 
-    beforeEach(() => {
-        page = new AppPage();
-    });
+  beforeEach(() => {
+    page = new AppPage();
+  });
 
-    it('should load', () => {
-        page.navigateTo();
-    });
+  it('should load', () => {
+    page.navigateTo();
+  });
 });
