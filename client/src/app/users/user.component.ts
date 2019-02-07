@@ -3,35 +3,35 @@ import {UserListService} from './user-list.service';
 import {User} from './user';
 
 @Component({
-    selector: 'user-component',
-    styleUrls: ['./user.component.css'],
-    templateUrl: 'user.component.html'
+  selector: 'user-component',
+  styleUrls: ['./user.component.css'],
+  templateUrl: 'user.component.html'
 })
 export class UserComponent implements OnInit {
-    public user: User = null;
-    private id: string;
+  public user: User = null;
+  private id: string;
 
-    constructor(private userListService: UserListService) {
-        // this.users = this.userListService.getUsers();
-    }
+  constructor(private userListService: UserListService) {
+    // this.users = this.userListService.getUsers();
+  }
 
-    private subscribeToServiceForId() {
-        if (this.id) {
-            this.userListService.getUserById(this.id).subscribe(
-                user => this.user = user,
-                err => {
-                    console.log(err);
-                }
-            );
+  private subscribeToServiceForId() {
+    if (this.id) {
+      this.userListService.getUserById(this.id).subscribe(
+        user => this.user = user,
+        err => {
+          console.log(err);
         }
+      );
     }
+  }
 
-    setId(id: string) {
-        this.id = id;
-        this.subscribeToServiceForId();
-    }
+  setId(id: string) {
+    this.id = id;
+    this.subscribeToServiceForId();
+  }
 
-    ngOnInit(): void {
-        this.subscribeToServiceForId();
-    }
+  ngOnInit(): void {
+    this.subscribeToServiceForId();
+  }
 }

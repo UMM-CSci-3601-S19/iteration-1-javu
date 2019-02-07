@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { MATERIAL_COMPATIBILITY_MODE } from '@angular/material';
+import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 
 
 import {HttpClientModule} from '@angular/common/http';
@@ -18,28 +18,28 @@ import {AddUserComponent} from './users/add-user.component';
 
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        Routing,
-        CustomModule,
-    ],
-    declarations: [
-        AppComponent,
-        HomeComponent,
-        UserListComponent,
-        UserComponent,
-        AddUserComponent
-    ],
-    providers: [
-        UserListService,
-        {provide: APP_BASE_HREF, useValue: '/'},
-        {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}
-    ],
-    entryComponents: [
-      AddUserComponent,
-    ],
-    bootstrap: [AppComponent]
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    Routing,
+    CustomModule,
+  ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    UserListComponent,
+    UserComponent,
+    AddUserComponent
+  ],
+  providers: [
+    UserListService,
+    {provide: APP_BASE_HREF, useValue: '/'},
+    {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}
+  ],
+  entryComponents: [
+    AddUserComponent,
+  ],
+  bootstrap: [AppComponent]
 })
 
 export class AppModule {
