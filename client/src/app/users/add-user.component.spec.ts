@@ -44,7 +44,6 @@ describe('Add user component', () => {
   // https://github.com/angular/angular/blob/7.2.2/packages/forms/src/validators.ts#L136-L157
   it('should not allow a name to contain a symbol'), async(() => {
     let fixture = TestBed.createComponent(AddUserComponent);
-    let comp = fixture.componentInstance;
     let debug = fixture.debugElement;
     let input = debug.query(By.css('[name=email]'));
 

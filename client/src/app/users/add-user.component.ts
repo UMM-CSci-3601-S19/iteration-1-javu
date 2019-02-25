@@ -37,7 +37,7 @@ export class AddUserComponent implements OnInit {
     'email': [
       {type: 'email', message: 'Email must be formatted properly'}
     ]
-  }
+  };
 
   createForms() {
 

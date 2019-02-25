@@ -7,9 +7,6 @@ import spark.Response;
 import umm3601.user.UserController;
 import umm3601.user.UserRequestHandler;
 
-import java.io.IOException;
-
-
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
@@ -17,7 +14,7 @@ public class Server {
   private static final String userDatabaseName = "dev";
   private static final int serverPort = 4567;
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) {
 
     MongoClient mongoClient = new MongoClient();
     MongoDatabase userDatabase = mongoClient.getDatabase(userDatabaseName);

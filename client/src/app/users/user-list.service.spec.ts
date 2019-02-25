@@ -128,7 +128,7 @@ describe('User list service: ', () => {
   });
 
   it('adding a user calls api/users/new', () => {
-    const jesse_id = {'$oid': 'jesse_id'};
+    const jesse_id = 'jesse_id';
     const newUser: User = {
       _id: '',
       name: 'Jesse',

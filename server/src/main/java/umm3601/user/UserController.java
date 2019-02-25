@@ -1,16 +1,16 @@
 package umm3601.user;
 
-import com.google.gson.Gson;
-import com.mongodb.*;
+import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.util.JSON;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -19,8 +19,6 @@ import static com.mongodb.client.model.Filters.eq;
  */
 public class UserController {
 
-  private final Gson gson;
-  private MongoDatabase database;
   private final MongoCollection<Document> userCollection;
 
   /**
@@ -29,8 +27,6 @@ public class UserController {
    * @param database the database containing user data
    */
   public UserController(MongoDatabase database) {
-    gson = new Gson();
-    this.database = database;
     userCollection = database.getCollection("users");
   }
 
@@ -64,7 +60,7 @@ public class UserController {
    * is specified, then the collection is filtered so only documents of that
    * specified age are found.
    *
-   * @param queryParams
+   * @param queryParams the query parameters from the request
    * @return an array of Users in a JSON formatted string
    */
   public String getUsers(Map<String, String[]> queryParams) {
@@ -87,17 +83,28 @@ public class UserController {
     //FindIterable comes from mongo, Document comes from Gson
     FindIterable<Document> matchingUsers = userCollection.find(filterDoc);
 
-    return JSON.serialize(matchingUsers);
+    return serializeIterable(matchingUsers);
+  }
+
+  /*
+   * Take an iterable collection of documents, turn each into JSON string
+   * using `document.toJson`, and then join those strings into a single
+   * string representing an array of JSON objects.
+   */
+  private String serializeIterable(Iterable<Document> documents) {
+    return StreamSupport.stream(documents.spliterator(), false)
+      .map(Document::toJson)
+      .collect(Collectors.joining(", ", "[", "]"));
   }
 
 
   /**
    * Helper method which appends received user information to the to-be added document
    *
-   * @param name
-   * @param age
-   * @param company
-   * @param email
+   * @param name the name of the new user
+   * @param age the age of the new user
+   * @param company the company the new user works for
+   * @param email the email of the new user
    * @return boolean after successfully or unsuccessfully adding a user
    */
   public String addNewUser(String name, int age, String company, String email) {
@@ -112,8 +119,7 @@ public class UserController {
       userCollection.insertOne(newUser);
       ObjectId id = newUser.getObjectId("_id");
       System.err.println("Successfully added new user [_id=" + id + ", name=" + name + ", age=" + age + " company=" + company + " email=" + email + ']');
-      // return JSON.serialize(newUser);
-      return JSON.serialize(id);
+      return id.toHexString();
     } catch (MongoException me) {
       me.printStackTrace();
       return null;

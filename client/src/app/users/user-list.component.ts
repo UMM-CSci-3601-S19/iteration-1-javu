@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit {
   public userCompany: string;
 
   // The ID of the
-  private highlightedID: { '$oid': string } = {'$oid': ''};
+  private highlightedID: string = '';
 
   // Inject the UserListService into this component.
   constructor(public userListService: UserListService, public dialog: MatDialog) {
@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
   }
 
   isHighlighted(user: User): boolean {
-    return user._id['$oid'] === this.highlightedID['$oid'];
+    return user._id['$oid'] === this.highlightedID;
   }
 
   openDialog(): void {
@@ -104,7 +104,6 @@ export class UserListComponent implements OnInit {
     return users;
   }
 
-
   loadService(): void {
     this.userListService.getUsers(this.userCompany).subscribe(
       users => {
@@ -116,7 +115,6 @@ export class UserListComponent implements OnInit {
       }
     );
   }
-
 
   ngOnInit(): void {
     this.refreshUsers();

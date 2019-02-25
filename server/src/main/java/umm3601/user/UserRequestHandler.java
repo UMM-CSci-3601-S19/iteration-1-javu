@@ -1,8 +1,6 @@
 package umm3601.user;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.util.JSON;
-import org.bson.types.ObjectId;
+import org.bson.Document;
 import spark.Request;
 import spark.Response;
 
@@ -66,7 +64,7 @@ public class UserRequestHandler {
 
 
   /**
-   * Method called from Server when the 'api/users/new'endpoint is recieved.
+   * Method called from Server when the 'api/users/new' endpoint is received.
    * Gets specified user info from request and calls addNewUser helper method
    * to append that info to a document
    *
@@ -75,35 +73,16 @@ public class UserRequestHandler {
    * @return a boolean as whether the user was added successfully or not
    */
   public String addNewUser(Request req, Response res) {
-
     res.type("application/json");
-    Object o = JSON.parse(req.body());
-    try {
-      if (o.getClass().equals(BasicDBObject.class)) {
-        try {
-          BasicDBObject dbO = (BasicDBObject) o;
 
-          String name = dbO.getString("name");
-          //For some reason age is a string right now, caused by angular.
-          //This is a problem and should not be this way but here ya go
-          int age = dbO.getInt("age");
-          String company = dbO.getString("company");
-          String email = dbO.getString("email");
+    Document newUser = Document.parse(req.body());
 
-          System.err.println("Adding new user [name=" + name + ", age=" + age + " company=" + company + " email=" + email + ']');
-          return userController.addNewUser(name, age, company, email).toString();
-        } catch (NullPointerException e) {
-          System.err.println("A value was malformed or omitted, new user request failed.");
-          return null;
-        }
+    String name = newUser.getString("name");
+    int age = newUser.getInteger("age");
+    String company = newUser.getString("company");
+    String email = newUser.getString("email");
 
-      } else {
-        System.err.println("Expected BasicDBObject, received " + o.getClass());
-        return null;
-      }
-    } catch (RuntimeException ree) {
-      ree.printStackTrace();
-      return null;
-    }
+    System.err.println("Adding new user [name=" + name + ", age=" + age + " company=" + company + " email=" + email + ']');
+    return userController.addNewUser(name, age, company, email);
   }
 }
