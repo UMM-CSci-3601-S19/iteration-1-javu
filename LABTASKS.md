@@ -37,41 +37,12 @@ Answer questions 1-7 in [ANSWERS.md](./ANSWERS.md).
 ### Writing Todos to the Database
 - We have included an example of writing to the database with `addUser` functionality. Add to both the front-end and back-end to make it possible to add ToDos so that they appear both in your list and in the database.
 
-### Summary Information About ToDos
-
-To see an example of using the database and the server to do some useful work
-(instead of having everything happen in Angular), implement an API endpoint
-`/api/todoSummary` which provides summary information about a group of
-ToDos in the following format:
-
-````
-{
-  percentToDosComplete: Float,
-  categoriesPercentComplete: {
-    groceries: Float,
-    ...
-  }
-  ownersPercentComplete: {
-    Blanche: Float,
-    ...
-  }
-}
-````
-
-So you should add a new endpoint to your Spark routes, and then have that call
-some method (possibly in a new class?) that queries the DB for the relevant data
-and assembles this JSON response. Note that you can use
-[MongoDB aggregation](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/aggregation/)
-to do most of this calculation without having to actually download all the todos,
-organize, and count them yourself.
-
 ### Make it pretty
 
 - Use the Angular Material Design tools you've learned about to build a nice interface for
 accessing these APIs:
   - You must use at least two nifty Angular Material features from [here](https://material.angular.io/components/categories)!
   - There are many interesting features and documentation about how to use them - we encourage you to try several
-
 
 ## Remember to test!
 
@@ -82,7 +53,6 @@ the server-side.
 - The gradle task [_runClientTestsWithCoverage_](./README.md#testing-and-continuous-integration) will be extremely useful to see how covered your client-side is by test.
 
 - Describe your E2E test coverage in a `TESTCOVERAGE.md` file. Update it when you add any additional end-to-end tests.
-
 
 ### Server-side testing
 - Remember to add JUnit Test as you re-implement your ToDo API.
