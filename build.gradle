@@ -4,7 +4,7 @@ evaluationDependsOn ":server"
 // Assumes our dev database is named "dev"
 task clearMongoDB(type: Exec) {
   group = "application"
-  executable "mongo"
+  executable = "mongo"
   args = ["dev", "--eval", "printjson(db.dropDatabase())"]
 }
 
