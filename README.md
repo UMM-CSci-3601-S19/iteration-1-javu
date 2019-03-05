@@ -1,5 +1,5 @@
 # CSCI 3601 Lab #4 - Mongo, Spark and Angular
-[![Build Status](https://travis-ci.org/UMM-CSci-3601/3601-lab4_mongo.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601/3601-lab4_mongo)
+[![Build Status](https://travis-ci.org/UMM-CSci-3601-S19/iteration-1-javu.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601-S19/iteration-1-javu)
 
 In this lab, you'll be working to re-implement the ToDo API, this time pulling data from a Mongo Database rather than a flat JSON file. You will also be implementing a new summary API which returns results of processing ToDo data. You will also be implementing a simple client-side application to view this data.
 
