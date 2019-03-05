@@ -5,7 +5,6 @@ import {UserListService} from './user-list.service';
 import {Observable} from 'rxjs/Observable';
 import {FormsModule} from '@angular/forms';
 import {CustomModule} from '../custom.module';
-import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 import {MatDialog} from '@angular/material';
 
 import 'rxjs/add/observable/of';
@@ -53,8 +52,7 @@ describe('User list', () => {
       declarations: [UserListComponent],
       // providers:    [ UserListService ]  // NO! Don't provide the real service!
       // Provide a test-double instead
-      providers: [{provide: UserListService, useValue: userListServiceStub},
-        {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
+      providers: [{provide: UserListService, useValue: userListServiceStub}]
     });
   });
 
@@ -132,8 +130,7 @@ describe('Misbehaving User List', () => {
     TestBed.configureTestingModule({
       imports: [FormsModule, CustomModule],
       declarations: [UserListComponent],
-      providers: [{provide: UserListService, useValue: userListServiceStub},
-        {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
+      providers: [{provide: UserListService, useValue: userListServiceStub}]
     });
   });
 
@@ -204,7 +201,7 @@ describe('Adding a user', () => {
       providers: [
         {provide: UserListService, useValue: userListServiceStub},
         {provide: MatDialog, useValue: mockMatDialog},
-        {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}]
+      ]
     });
   });
 

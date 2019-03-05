@@ -5,7 +5,6 @@ import {DebugElement} from '@angular/core';
 import {AppModule} from './app.module';
 import {AppComponent} from './app.component';
 import {CustomModule} from './custom.module';
-import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 
 describe('AppComponent', () => {
   let appInstance: AppComponent;
@@ -18,7 +17,6 @@ describe('AppComponent', () => {
         CustomModule,
         AppModule
       ],
-      providers: [{provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}],
     });
 
     appFixture = TestBed.createComponent(AppComponent);
