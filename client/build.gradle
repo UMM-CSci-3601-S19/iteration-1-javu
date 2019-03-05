@@ -5,7 +5,7 @@ plugins {
 }
 
 node {
-  version = '10.15.1'
+  version = '8.15.1'
   download = true
   workDir = file("${project.projectDir}/node")
   yarnWorkDir = file("${project.projectDir}/yarn")
@@ -14,7 +14,7 @@ node {
 
 task runClient(type: Exec, dependsOn: yarn_install) {
   group = 'application'
-  executable "ng"
+  executable = "ng"
   args = ["serve"]
 }
 
@@ -26,16 +26,18 @@ task runClientTestsAndWatch(type: NpmTask) {
 
 task runClientTestWithCoverage(type: Exec, dependsOn: yarn_install) {
   group = 'application'
-  executable "ng"
-  args = ["test", "-sm=false", "--watch=false", "--code-coverage"]
+  executable = "ng"
+  args = ["test", "--watch=false", "--code-coverage"]
 }
 
 task runE2ETests(type: Exec) {
   group = 'application'
-  executable "ng"
+  executable = "ng"
   args = ["e2e"]
 }
 
-task runClientTests(dependsOn: yarn_run_test) {
+task runClientTests(type: Exec, dependsOn: yarn_install) {
   group = 'application'
+  executable = "ng"
+  args = ["test", "--watch=false"]
 }

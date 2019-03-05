@@ -3,7 +3,6 @@ import {HomeComponent} from './home.component';
 import {DebugElement} from '@angular/core';
 import {By} from '@angular/platform-browser';
 import {CustomModule} from '../custom.module';
-import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 
 describe('Home', () => {
 
@@ -16,7 +15,6 @@ describe('Home', () => {
     TestBed.configureTestingModule({
       imports: [CustomModule],
       declarations: [HomeComponent], // declare the test component
-      providers: [{provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}],
     });
 
     fixture = TestBed.createComponent(HomeComponent);
