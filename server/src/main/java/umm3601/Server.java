@@ -14,6 +14,8 @@ public class Server {
   private static final String userDatabaseName = "dev";
   private static final int serverPort = 4567;
 
+  //private static final String rideDatabaseName = "dev";
+
   public static void main(String[] args) {
 
     MongoClient mongoClient = new MongoClient();
@@ -21,6 +23,12 @@ public class Server {
 
     UserController userController = new UserController(userDatabase);
     UserRequestHandler userRequestHandler = new UserRequestHandler(userController);
+
+
+    /*MongoDatabase rideDatabase = mongoClient.getDatabase(rideDatabaseName);
+
+    RideController rideController = new RideController(rideDatabase);
+    RideRequestHandler rideRequestHandler = new RideRequestHandler(rideController);*/
 
     //Configure Spark
     port(serverPort);
@@ -63,6 +71,11 @@ public class Server {
     get("api/users", userRequestHandler::getUsers);
     get("api/users/:id", userRequestHandler::getUserJSON);
     post("api/users/new", userRequestHandler::addNewUser);
+
+
+    /*get("api/rides", userRequestHandler::getUsers);
+    get("api/rides/:id", userRequestHandler::getUserJSON);
+    post("api/rides/new", userRequestHandler::addNewUser);*/
 
     // An example of throwing an unhandled exception so you can see how the
     // Java Spark debugger displays errors like this.
