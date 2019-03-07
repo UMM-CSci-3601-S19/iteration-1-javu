@@ -4,7 +4,7 @@ Code for Generating random rides:
   {
     'repeat(100)': {
       driver: '{{firstName()}} {{surname()}}',
-      riders: 'string',
+      riders: "{{random('5c817c356e1e7c3c544638fd', '5c817c35f51d7f2cf6a6ec44', '5c817c358f1702ea7c5f4ee3', '5c817c35004535b2c6789e1a')}}",
        destination: "{{random('Willies', 'Alexandria', 'Duluth', 'Maplegrove', 'Family Dollar', 'St.Paul')}}",
       origin:'{{street()}}',
       roundTrip: '{{bool()}}',
