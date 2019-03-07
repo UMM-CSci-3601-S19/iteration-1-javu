@@ -5,7 +5,7 @@ import {Ride} from "./ride";
 @Component({
   selector: 'ride-component',
   templateUrl: 'ride.component.html',
-  styleUrls: ['./ride.component.css']
+  styleUrls: ['./ride.component.css'],
 })
 
 export class RideComponent implements OnInit {

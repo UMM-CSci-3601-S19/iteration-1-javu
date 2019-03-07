@@ -3,6 +3,13 @@ import {Observable} from 'rxjs/Observable';
 import {Ride} from "./ride";
 import {RideListService} from "./ride-list.service";
 
+@Component({
+  selector: 'ride-list-component',
+  templateUrl: 'ride-list.component.html',
+  styleUrls: ['./ride-list.component.css'],
+})
+
+
 export class RideListComponent implements OnInit {
 
   public rides: Ride[];
