@@ -6,32 +6,6 @@ In this lab, you'll be working to re-implement the ToDo API, this time pulling d
 Your specific tasks for this lab can be found in the [LABTASKS.md][labtasks]
 file in this repository.
 
-#Kind-of-a-Start for random generator for rides
-
-
- 
-     {
-         'repeat(100)': { 
-     _id: {
-             "$oid": '{{objectId()}}',
-           },
-           driver: '{{firstName()}} {{surname()}}',
-      time: "{{random('March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')}} ",
-      destination: "{{random('Willies', 'Maplegrove', 'St.Paul', 'Alexandria', 'Walmart', 'Family Doller')}}",
-      email(tags) {
-      return `${this.name.first}.${this.name.last}@${this.company}${tags.domainZone()}`.toLowerCase();
-        },
-      },
-    }
-  
-  
-  
-
-
-
-
-
-
 
 <!-- TOC depthFrom:1 depthTo:5 withLinks:1 updateOnSave:1 orderedList:0 -->
 ## Table of Contents

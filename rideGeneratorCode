@@ -1,0 +1,41 @@
+Code for Generating random rides:
+
+[
+  {
+    'repeat(100)': {
+      _id: {
+        "oid": '{{objectId()}}',
+      },
+      driver: '{{firstName()}} {{surname()}}',
+      date: '{{date(new Date(2017, 0, 1), new Date(2024, 0, 1))}}',
+      destination: "{{random('Willies', 'Alexandria', 'Duluth', 'Maplegrove', 'Family Dollar', 'St.Paul')}}",
+      email(tags) {
+
+        return `${this.driver.split(' ')[0]}.${this.driver.split(' ')[1]}@${this.destination}${tags.domainZone()}`.toLowerCase();
+      },
+    },
+  }
+]
+
+
+
+Additional Notes:
+-----------------
+{{date([min], [max])}} creates a random date in specified range
+
+Param	  Type	          Default	                        Details
+
+min     (optional)	    Date	new Date(1970, 0, 1)	    Minimum date in the range.
+max     (optional)	    Date	new Date()	              Maximum date in the range.
+
+----------------------------------------------------------------------------------
+.split(argument)
+
+Searches string for argument where string will be split. Passing an empty string splits the string at space.
+
+[0] returns the item before the split
+[1] returns the item after the split
+-----------------------------------------------------------------------------------------
+Double quotes are required if there are strings in the function like in destination
+Otherwise it expects single quotes for integer and functions
+---------------------------------------------------------------------------------------
