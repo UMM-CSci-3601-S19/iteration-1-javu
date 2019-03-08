@@ -11,14 +11,17 @@
         </mat-form-field>
 
         <mat-accordion *ngIf="rides; else ridesError">
-          <mat-expansion-panel #elem class="rides" [id]="ride.destination" 
+          <mat-expansion-panel #elem class="rides" [id]="ride.destination"
                                *ngFor="let ride of this.filterRides(rideDestination)">
             <mat-expansion-panel-header>
               <mat-panel-title>{{ride.destination}}</mat-panel-title>
 
             </mat-expansion-panel-header>
-           <!-- <mat-panel-description>Works for {{ride.driver}}</mat-panel-description>
-            <mat-panel-description>Age: {{ride.departureTime}} years old</mat-panel-description>-->
+            <mat-panel-description>Driver: {{ride.driver}}</mat-panel-description>
+            <mat-panel-description>Round Trip?: {{ride.roundTrip}}</mat-panel-description>
+            <mat-panel-description>Departure Time: {{ride.departureTime}}</mat-panel-description>
+            <mat-panel-description>Pickup at: {{ride.origin}}</mat-panel-description>
+            <mat-panel-description>Notes: {{ride.notes}}</mat-panel-description>
           </mat-expansion-panel>
         </mat-accordion>
 
