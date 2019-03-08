@@ -22,16 +22,16 @@ public class RideRequestHandler {
    */
   public String getRideJSON(Request req, Response res) {
     res.type("application/json");
-    String id = req.params("id");
+    String destination = req.params("destination");
     String ride;
     try {
-      ride = rideController.getRide(id);
+      ride = rideController.getRide(destination);
     } catch (IllegalArgumentException e) {
       // This is thrown if the ID doesn't have the appropriate
       // form for a Mongo Object ID.
       // https://docs.mongodb.com/manual/reference/method/ObjectId/
       res.status(400);
-      res.body("The requested ride id " + id + " wasn't a legal Mongo Object ID.\n" +
+      res.body("The requested ride destination " + destination + " wasn't a legal Mongo Object ID.\n" +
         "See 'https://docs.mongodb.com/manual/reference/method/ObjectId/' for more info.");
       return "";
     }
@@ -39,7 +39,7 @@ public class RideRequestHandler {
       return ride;
     } else {
       res.status(404);
-      res.body("The requested ride with id " + id + " was not found");
+      res.body("The requested ride with id " + destination + " was not found");
       return "";
     }
   }

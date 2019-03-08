@@ -27,10 +27,10 @@ public class Server {
     MongoDatabase rideDatabase = mongoClient.getDatabase(rideDatabaseName);
 
     UserController userController = new UserController(userDatabase);
-    UserRequestHandler userRequestHandler = new UserRequestHandler(userController);
-
-
     RideController rideController = new RideController(rideDatabase);
+
+
+    UserRequestHandler userRequestHandler = new UserRequestHandler(userController);
     RideRequestHandler rideRequestHandler = new RideRequestHandler(rideController);
 
     //Configure Spark
@@ -77,8 +77,8 @@ public class Server {
 
 
     get("api/rides", rideRequestHandler::getRides);
-   // get("api/rides/:id", rideRequestHandler::getRideJSON);
-    //post("api/rides/new", rideRequestHandler::addNewRide);
+//    get("api/rides/:destination", rideRequestHandler::getRideJSON);
+//    post("api/rides/new", rideRequestHandler::addNewRide);
 
     // An example of throwing an unhandled exception so you can see how the
     // Java Spark debugger displays errors like this.
