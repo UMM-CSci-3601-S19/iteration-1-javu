@@ -13,12 +13,12 @@
   border-radius: 300px;
   margin-top: 20px;
   margin-bottom: 20px;
-  background-color: #8FC1BF;
-  color: #272E27;;
+  background-color: white;
+  color: navy;;
 }
 
 
 #addNewRide:hover {
-  background-color: #193257;
+  background-color: #5C5D91;
   color: white;
 }
