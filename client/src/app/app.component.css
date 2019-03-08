@@ -1,1 +1,30 @@
 
+#homeNav{
+  color:green;
+}
+
+#userNav{
+  color:gold;
+}
+
+#carNav{
+  color:slateblue;
+}
+
+
+#navHome:hover {
+  background-color: salmon;
+  color: white;
+}
+
+#navUsers:hover {
+  background-color: salmon;
+  color: white;
+}
+
+#navRides:hover {
+  background-color: salmon;
+  color: white;
+}
+
+
