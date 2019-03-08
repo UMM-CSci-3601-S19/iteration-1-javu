@@ -21,7 +21,7 @@ public class RideController {
   private final MongoCollection<Document> rideCollection;
 
   public RideController(MongoDatabase database) {
-    rideCollection = database.getCollection("rides");  //The database with riders data goes here
+    rideCollection = database.getCollection("Rides");  //The database with riders data goes here
   }
 
   public String getRide(String id) {
