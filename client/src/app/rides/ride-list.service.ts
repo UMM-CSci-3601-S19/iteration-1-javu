@@ -17,4 +17,8 @@ export class RideListService {
     return this.http.get<Ride[]>(this.rideUrl);
   }
 
+  getRideByDriver(driver: string): Observable<Ride> {
+    return this.http.get<Ride>(this.rideUrl + '/' + driver);
+  }
+
 }
