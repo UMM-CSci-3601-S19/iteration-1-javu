@@ -6,6 +6,9 @@ import spark.Request;
 import spark.Response;
 import umm3601.user.UserController;
 import umm3601.user.UserRequestHandler;
+import umm3601.ride.RideController;
+import umm3601.ride.RideRequestHandler;
+
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -14,21 +17,21 @@ public class Server {
   private static final String userDatabaseName = "dev";
   private static final int serverPort = 4567;
 
-  //private static final String rideDatabaseName = "dev";
+  private static final String rideDatabaseName = "dev";  // Do we need this?
+  // Wouldn't having one string with database name "dev" be enough?
 
   public static void main(String[] args) {
 
     MongoClient mongoClient = new MongoClient();
     MongoDatabase userDatabase = mongoClient.getDatabase(userDatabaseName);
+    MongoDatabase rideDatabase = mongoClient.getDatabase(rideDatabaseName);
 
     UserController userController = new UserController(userDatabase);
     UserRequestHandler userRequestHandler = new UserRequestHandler(userController);
 
 
-    /*MongoDatabase rideDatabase = mongoClient.getDatabase(rideDatabaseName);
-
     RideController rideController = new RideController(rideDatabase);
-    RideRequestHandler rideRequestHandler = new RideRequestHandler(rideController);*/
+    RideRequestHandler rideRequestHandler = new RideRequestHandler(rideController);
 
     //Configure Spark
     port(serverPort);
@@ -73,9 +76,9 @@ public class Server {
     post("api/users/new", userRequestHandler::addNewUser);
 
 
-    /*get("api/rides", userRequestHandler::getUsers);
-    get("api/rides/:id", userRequestHandler::getUserJSON);
-    post("api/rides/new", userRequestHandler::addNewUser);*/
+    get("api/rides", rideRequestHandler::getRides);
+   // get("api/rides/:id", rideRequestHandler::getRideJSON);
+    //post("api/rides/new", rideRequestHandler::addNewRide);
 
     // An example of throwing an unhandled exception so you can see how the
     // Java Spark debugger displays errors like this.
