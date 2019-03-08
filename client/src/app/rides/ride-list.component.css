@@ -14,11 +14,22 @@
   margin-top: 20px;
   margin-bottom: 20px;
   background-color: white;
-  color: navy;
+  color: darkgreen;
 }
 
 
 #addNewRide:hover {
+  background-color: darkgreen;
+  color: white;
+}
+
+#editRide{
+  background-color: white;
+  color: navy;
+}
+
+#editRide:hover {
   background-color: #5C5D91;
   color: white;
 }
+
