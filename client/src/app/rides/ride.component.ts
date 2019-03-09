@@ -11,15 +11,15 @@ import {Ride} from "./ride";
 export class RideComponent implements OnInit {
 
   public ride: Ride = null;
-  private driver: string;
+  private destination: string;
 
 
   constructor(private rideListService: RideListService) {
   }
 
-  private subscribeToServiceForDriver() {
-    if (this.driver) {
-      this.rideListService.getRideByDriver(this.driver).subscribe(
+  private subscribeToServiceForDestination() {
+    if (this.destination) {
+      this.rideListService.getRideByDestination(this.destination).subscribe(
         ride => this.ride = ride,
         err => {
           console.log(err);
@@ -28,13 +28,13 @@ export class RideComponent implements OnInit {
     }
   }
 
-  setDriver(driver: string) {
-    this.driver = driver;
-    this.subscribeToServiceForDriver();
+  setDestination(destination: string) {
+    this.destination = destination;
+    this.subscribeToServiceForDestination();
   }
 
   ngOnInit(): void {
-    this.subscribeToServiceForDriver();
+    this.subscribeToServiceForDestination();
   }
 
 
