@@ -1,5 +1,6 @@
 package umm3601.ride;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.bson.Document;
 import spark.Request;
 import spark.Response;
@@ -74,12 +75,17 @@ public class RideRequestHandler {
 
     Document newRide = Document.parse(req.body());
 
-    String param1 = newRide.getString("param1");
-    int param2 = newRide.getInteger("param2");
-    String param3 = newRide.getString("param3");
-    String param4 = newRide.getString("param4");
+    String driver = newRide.getString("driver");
+    String destination = newRide.getString("destination");
+    String origin = newRide.getString("origin");
+    String roundTrip = newRide.getString("roundTrip");
+    String departureTime = newRide.getString("departureTime");
+    String notes = newRide.getString("notes");
 
-    System.err.println("Adding new ride [param1=" + param1 + ", param2=" + param2 + " param3=" + param3 + " param4=" + param4 + ']');
-    return rideController.addNewRide(param1, param2, param3, param4);
+
+    Boolean roundTripBool = Boolean.parseBoolean(roundTrip);
+
+    System.err.println("Adding new ride [driver=" + driver + " destination=" + destination + " origin=" + origin + " roundTrip=" + roundTripBool + " departureTime=" + departureTime + " notes=" + notes + ']');
+    return rideController.addNewRide(driver, destination, origin, roundTripBool, departureTime, notes);
   }
 }

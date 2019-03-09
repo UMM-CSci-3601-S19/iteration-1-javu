@@ -17,8 +17,8 @@ export class RideListService {
     return this.http.get<Ride[]>(this.rideUrl);
   }
 
-  getRideByDestination(driver: string): Observable<Ride> {
-    return this.http.get<Ride>(this.rideUrl + '/' + driver);
+  getRideByDestination(destination: string): Observable<Ride> {
+    return this.http.get<Ride>(this.rideUrl + '/' + destination);
   }
 
   addNewRide(newRide: Ride): Observable<string> {
