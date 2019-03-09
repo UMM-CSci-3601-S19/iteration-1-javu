@@ -9,6 +9,9 @@ import {UserListComponent} from './users/user-list.component';
 import {UserListService} from './users/user-list.service';
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from '@angular/common';
+import {RideComponent} from './rides/ride.component';
+import {RideListComponent} from './rides/ride-list.component';
+import {RideListService} from './rides/ride-list.service';
 
 import {CustomModule} from './custom.module';
 import {AddUserComponent} from './users/add-user.component';
@@ -26,10 +29,13 @@ import {AddUserComponent} from './users/add-user.component';
     HomeComponent,
     UserListComponent,
     UserComponent,
-    AddUserComponent
+    AddUserComponent,
+    RideComponent,
+    RideListComponent
   ],
   providers: [
     UserListService,
+    RideListService,
     {provide: APP_BASE_HREF, useValue: '/'},
   ],
   entryComponents: [
