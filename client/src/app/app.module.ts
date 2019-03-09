@@ -7,14 +7,16 @@ import {HomeComponent} from './home/home.component';
 import {UserComponent} from './users/user.component';
 import {UserListComponent} from './users/user-list.component';
 import {UserListService} from './users/user-list.service';
+import {AddUserComponent} from './users/add-user.component';
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from '@angular/common';
 import {RideComponent} from "./rides/ride.component";
 import {RideListComponent} from "./rides/ride-list.component";
 import {RideListService} from "./rides/ride-list.service";
+import {AddRideComponent} from "./rides/add-ride.component";
 
 import {CustomModule} from './custom.module';
-import {AddUserComponent} from './users/add-user.component';
+
 
 
 @NgModule({
@@ -32,6 +34,7 @@ import {AddUserComponent} from './users/add-user.component';
     AddUserComponent,
     RideComponent,
     RideListComponent,
+    AddRideComponent,
   ],
   providers: [
     UserListService,
@@ -40,6 +43,7 @@ import {AddUserComponent} from './users/add-user.component';
   ],
   entryComponents: [
     AddUserComponent,
+    AddRideComponent,
   ],
   bootstrap: [AppComponent]
 })
