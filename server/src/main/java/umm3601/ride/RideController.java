@@ -41,7 +41,13 @@ public class RideController {
 
     Document filterDoc = new Document();
 
-   //queryParams that filter through rideCollection go here and return documents of that specified query
+    if (queryParams.containsKey("driver")) {
+      String targetContent = (queryParams.get("driver")[0]);
+      Document contentRegQuery = new Document();
+      contentRegQuery.append("$regex", targetContent);
+      contentRegQuery.append("$options", "i");
+      filterDoc = filterDoc.append("driver", contentRegQuery);
+    }
 
     //FindIterable comes from mongo, Document comes from Gson
     FindIterable<Document> matchingRides = rideCollection.find(filterDoc);
