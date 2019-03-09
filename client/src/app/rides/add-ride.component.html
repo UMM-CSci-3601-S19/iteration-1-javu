@@ -5,7 +5,7 @@
       <mat-form-field flex>
         <input matInput #input id="destinationField" placeholder="Destination" [(ngModel)]="data.ride.destination" formControlName="destination"
                required>
-        <mat-error *ngFor="let validation of add_destination_validation_messages.destination">
+        <mat-error *ngFor="let validation of add_ride_validation_messages.destination">
           <mat-error class="error-message" id="destination-error"
                      *ngIf="addRideForm.get('destination').hasError(validation.type) && (addRideForm.get('destination').dirty || addRideForm.get('destination').touched)">
             {{validation.message}}
