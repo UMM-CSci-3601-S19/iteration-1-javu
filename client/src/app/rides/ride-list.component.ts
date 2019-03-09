@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Ride} from "./ride";
 import {RideListService} from "./ride-list.service";
+import {AddRideComponent} from "./add-ride.component";
+import{MatDialog} from "@angular/material";
+
 
 @Component({
   selector: 'ride-list-component',
@@ -17,16 +20,45 @@ export class RideListComponent implements OnInit {
 
   public rideDestination: string;
 
+  private highlightedDestination: string = '';
 
-  constructor(public rideListService: RideListService) {
+
+  constructor(public rideListService: RideListService, public dialog: MatDialog) {
   }
 
+  isHighlighted(ride: Ride): boolean {
+    return ride.destination === this.highlightedDestination;
+  }
+
+
+  openDialog(): void {
+    const newRide: Ride = {driver: '', riders: '', destination: '', origin: '', roundTrip: null,driving: null, departureTime: '', notes: ''};
+    const dialogRef = this.dialog.open(AddRideComponent, {
+      width: '500px',
+      data: {ride: newRide}
+    });
+
+    dialogRef.afterClosed().subscribe(newRide => {
+      if (newRide != null) {
+        this.rideListService.addNewRide(newRide).subscribe(
+          result => {
+            this.highlightedDestination = result;
+            this.refreshRides();
+          },
+          err => {
+            // This should probably be turned into some sort of meaningful response.
+            console.log('There was an error adding the ride.');
+            console.log('The newRide or dialogResult was ' + JSON.stringify(newRide));
+            console.log('The error was ' + JSON.stringify(err));
+          });
+      }
+    });
+  }
 
 
   public filterRides(searchDestination: string): Ride[] {
 
     this.filteredRides = this.rides;
-
 
     if (searchDestination != null) {
       searchDestination = searchDestination.toLocaleLowerCase();

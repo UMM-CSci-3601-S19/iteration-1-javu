@@ -77,7 +77,7 @@ public class Server {
     post("api/users/new", userRequestHandler::addNewUser);
 
 
-    get("api/rides", rideRequestHandler::getRides);
+      get("api/rides", rideRequestHandler::getRides);
 //    get("api/rides/:destination", rideRequestHandler::getRideJSON);
 //    post("api/rides/new", rideRequestHandler::addNewRide);
 

@@ -35,7 +35,7 @@ export class UserListComponent implements OnInit {
   }
 
   openDialog(): void {
-    const newUser: User = {_id: '', name: '', age: -1, company: '', email: ''};
+    const newUser: User = {_id: '', name: '', age: 0, company: '', email: ''};
     const dialogRef = this.dialog.open(AddUserComponent, {
       width: '500px',
       data: {user: newUser}
