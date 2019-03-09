@@ -9,7 +9,7 @@ import {DestinationValidator} from './destination.validator';
   selector: 'add-ride.component',
   templateUrl: 'add-ride.component.html',
 })
-export class AddUserComponent implements OnInit {
+export class AddRideComponent implements OnInit {
   addRideForm: FormGroup;
 
   constructor(
