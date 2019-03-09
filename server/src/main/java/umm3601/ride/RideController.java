@@ -67,19 +67,21 @@ public class RideController {
       .collect(Collectors.joining(", ", "[", "]"));
   }
 
-  public String addNewRide(String param1, int param2, String param3, String param4) {
+  public String addNewRide(String destination, String origin, Boolean roundTrip, String departureTime, String notes) {
 
     Document newRide = new Document();
-    newRide.append("param1", param1);
-    newRide.append("param2", param2);
-    newRide.append("param3,", param3);
-    newRide.append("param4", param4);
+    newRide.append("destination", destination);
+    newRide.append("origin", origin);
+    newRide.append("roundTrip,", roundTrip);
+    newRide.append("departureTime", departureTime);
+    newRide.append("notes", notes);
+
 
     try {
       rideCollection.insertOne(newRide);
-      ObjectId id = newRide.getObjectId("_id");
-      System.err.println("Successfully added new ride [id=" + id + ", param1=" + param1 + ", param2=" + param2 + ", param3=" + param3 + " param4=" + param4 + ']');
-      return id.toHexString();
+      ObjectId driver = newRide.getObjectId("driver");
+      System.err.println("Successfully added new ride [driver=" + driver + ", destination=" + destination + ", origin=" + origin + ", roundTrip=" + roundTrip + " departureTime=" + departureTime + " notes=" + notes + ']');
+      return driver.toHexString();
     } catch (MongoException me) {
       me.printStackTrace();
       return null;
