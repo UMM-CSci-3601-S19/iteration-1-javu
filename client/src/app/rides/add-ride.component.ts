@@ -9,6 +9,7 @@ import {DestinationValidator} from './destination.validator';
   selector: 'add-ride.component',
   templateUrl: 'add-ride.component.html',
 })
+
 export class AddRideComponent implements OnInit {
   addRideForm: FormGroup;
 
