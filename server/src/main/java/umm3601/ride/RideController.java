@@ -67,9 +67,10 @@ public class RideController {
       .collect(Collectors.joining(", ", "[", "]"));
   }
 
-  public String addNewRide(String destination, String origin, Boolean roundTrip, String departureTime, String notes) {
+  public String addNewRide(String driver, String destination, String origin, Boolean roundTrip, String departureTime, String notes) {
 
     Document newRide = new Document();
+    newRide.append("driver", driver);
     newRide.append("destination", destination);
     newRide.append("origin", origin);
     newRide.append("roundTrip,", roundTrip);
@@ -79,9 +80,9 @@ public class RideController {
 
     try {
       rideCollection.insertOne(newRide);
-      ObjectId driver = newRide.getObjectId("driver");
-      System.err.println("Successfully added new ride [driver=" + driver + ", destination=" + destination + ", origin=" + origin + ", roundTrip=" + roundTrip + " departureTime=" + departureTime + " notes=" + notes + ']');
-      return driver.toHexString();
+      ObjectId _id = newRide.getObjectId("_id");
+      System.err.println("Successfully added new ride [_id=" + _id + ", driver=" + driver + ", destination=" + destination + ", origin=" + origin + ", roundTrip=" + roundTrip + " departureTime=" + departureTime + " notes=" + notes + ']');
+      return _id.toHexString();
     } catch (MongoException me) {
       me.printStackTrace();
       return null;
