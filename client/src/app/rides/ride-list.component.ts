@@ -40,6 +40,7 @@ export class RideListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(newRide => {
       if (newRide != null) {
+        
         this.rideListService.addNewRide(newRide).subscribe(
           result => {
             this.highlightedDestination = result;
