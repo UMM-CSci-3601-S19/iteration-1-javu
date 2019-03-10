@@ -13,11 +13,55 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field flex>
-
+        <input matInput #input id="driverField" placeholder="Driver" [(ngModel)]="data.ride.driver" formControlName="driver"
+               required>
+        <mat-error *ngFor="let validation of add_ride_validation_messages.driver">
+          <mat-error class="error-message" id="driver-error"
+                     *ngIf="addRideForm.get('driver').hasError(validation.type) && (addRideForm.get('driver').dirty || addRideForm.get('driver').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
       </mat-form-field>
+      <mat-form-field flex>
+        <input matInput #input id="originField" placeholder="Origin" [(ngModel)]="data.ride.origin" formControlName="origin"
+               required>
+        <mat-error *ngFor="let validation of add_ride_validation_messages.origin">
+          <mat-error class="error-message" id="origin-error"
+                     *ngIf="addRideForm.get('origin').hasError(validation.type) && (addRideForm.get('origin').dirty || addRideForm.get('origin').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field flex>
+        <input matInput #input id="departureTimeField" placeholder="Departure Time" [(ngModel)]="data.ride.departureTime" formControlName="departureTime"
+               required>
+        <mat-error *ngFor="let validation of add_ride_validation_messages.departureTime">
+          <mat-error class="error-message" id="departureTime-error"
+                     *ngIf="addRideForm.get('departureTime').hasError(validation.type) && (addRideForm.get('departureTime').dirty || addRideForm.get('departureTime').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field flex>
+        <input matInput #input id="notesField" placeholder="Notes" [(ngModel)]="data.ride.notes" formControlName="notes"
+               required>
+        <mat-error *ngFor="let validation of add_ride_validation_messages.notes">
+          <mat-error class="error-message" id="notes-error"
+                     *ngIf="addRideForm.get('notes').hasError(validation.type) && (addRideForm.get('notes').dirty || addRideForm.get('notes').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <mat-checkbox name ="roundTrip" ngDefaultControl >Round Trip</mat-checkbox>
+      </div>
+
+
+
+
     </mat-dialog-content>
     <mat-dialog-actions layout="row">
-      <button mat-raised-button id="confirmAddRideButon" [mat-dialog-close]="data.user" type="button" color="primary"
+      <button mat-raised-button id="confirmAddRideButon" [mat-dialog-close]="data.ride" type="button" color="primary"
               [disabled]="!addRideForm.valid">Add Ride
       </button>
 
