@@ -18,9 +18,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class RideControllerSpec {
   private RideController rideController;
+  private ObjectId knownId;
 
   @Before
   public void clearAndPopulateDB(){
@@ -37,7 +39,7 @@ public class RideControllerSpec {
       "roundTrip: true,\n" +
       "departureTime: \"Mon Aug 07 2017 15:00:32 GMT+0000 (UTC)\",\n" +
       "driving: true,\n" +
-      "notes: \"I like to drive with no air conditioning\"\n" +
+      "notes: \"I like to drive with Y	no air conditioning\"\n" +
       "}"));
     testRides.add(Document.parse("{\n" +
       "driver: \"Boyer Kramer\",\n" +
@@ -59,17 +61,20 @@ public class RideControllerSpec {
       "driving: false,\n" +
       "notes: \"I love to crank the volume up to 11\"\n" +
       "}"));
-    testRides.add(Document.parse("{\n" +
-      "driver: \"Carter Browning\",\n" +
-      "riders: \"5c817c356e1e7c3c544638fd\",\n" +
-      "destination: \"Maplegrove\",\n" +
-      "origin: \"Balfour Place\",\n" +
-      "roundTrip: false,\n" +
-      "departureTime: \"Sat Apr 22 2017 06:12:11 GMT+0000 (UTC)\",\n" +
-      "driving: true,\n" +
-      "notes: \"I will pay for lunch for anyone who is riding with me and I am a cool guy\"\n" +
-      "}"));
     rideDocuments.insertMany(testRides);
+
+    knownId = new ObjectId();
+    BasicDBObject knownObj = new BasicDBObject("_id", knownId);
+    knownObj = knownObj
+      .append("driver", "Carter Browning")
+      .append("riders", "5c817c356e1e7c3c544638fd")
+      .append("destination", "Maplegrove")
+      .append("origin", "Balfour Place")
+      .append("roundTrip", false)
+      .append("departureTime", "Sat Apr 22 2017 06:12:11 GMT+0000 (UTC)")
+      .append("driving", true)
+      .append("notes", "I will pay for lunch for anyone who is riding with me and I am a cool guy");
+    rideDocuments.insertOne(Document.parse(knownObj.toJson()));
 
     rideController = new RideController(db);
   }
@@ -105,5 +110,13 @@ public class RideControllerSpec {
       .collect(Collectors.toList());
     List<String> expectedDrivers = Arrays.asList("Boyer Kramer", "Carter Browning", "Marci Sears", "Millie Flores");
     assertEquals("Drivers should match", expectedDrivers, drivers);
+  }
+  @Test
+  public void getRideById(){
+    String jsonResult = rideController.getRide(knownId.toString());
+    Document result = Document.parse(jsonResult);
+    assertEquals("Driver should match", "Carter Browning", result.get("driver"));
+    String noJsonResult = rideController.getRide(new ObjectId().toString());
+    assertNull("No ride should be found", noJsonResult);
   }
 }
