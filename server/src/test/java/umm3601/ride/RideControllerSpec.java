@@ -14,10 +14,10 @@ import com.mongodb.BasicDBObject;
 import org.junit.Test;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static junit.framework.TestCase.assertEquals;
 
 public class RideControllerSpec {
   private RideController rideController;
@@ -73,13 +73,37 @@ public class RideControllerSpec {
 
     rideController = new RideController(db);
   }
+  private static BsonArray parseJsonArray(String json) {
+    final CodecRegistry codecRegistry
+      = CodecRegistries.fromProviders(Arrays.asList(
+      new ValueCodecProvider(),
+      new BsonValueCodecProvider(),
+      new DocumentCodecProvider()));
 
+    JsonReader reader = new JsonReader(json);
+    BsonArrayCodec arrayReader = new BsonArrayCodec(codecRegistry);
+
+    return arrayReader.decode(reader, DecoderContext.builder().build());
+  }
+  private static String getAttribute(BsonValue val, String attribute){
+    BsonDocument doc = val.asDocument();
+    return ((BsonString) doc.get(attribute)).getValue();
+  }
+  private static String getDriver(BsonValue val) {
+    return getAttribute(val, "driver");
+  }
   @Test
   public void getAllRides() {
     Map<String, String[]> emptyMap = new HashMap<>();
     String jsonResult = rideController.getRides(emptyMap);
-    System.out.print(jsonResult);
+    BsonArray docs = parseJsonArray(jsonResult);
+    assertEquals("Should have 4 riders", 4, docs.size());
+    List<String> drivers = docs
+      .stream()
+      .map(RideControllerSpec::getDriver)
+      .sorted()
+      .collect(Collectors.toList());
+    List<String> expectedDrivers = Arrays.asList("Boyer Kramer", "Carter Browning", "Marci Sears", "Millie Flores");
+    assertEquals("Drivers should match", expectedDrivers, drivers);
   }
-
-
 }
