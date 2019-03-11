@@ -18,7 +18,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class RideControllerSpec {
   private RideController rideController;
@@ -97,6 +99,9 @@ public class RideControllerSpec {
   private static String getDriver(BsonValue val) {
     return getAttribute(val, "driver");
   }
+  private static String getDestination(BsonValue val) {
+    return getAttribute(val, "destination");
+  }
   @Test
   public void getAllRides() {
     Map<String, String[]> emptyMap = new HashMap<>();
@@ -118,5 +123,22 @@ public class RideControllerSpec {
     assertEquals("Driver should match", "Carter Browning", result.get("driver"));
     String noJsonResult = rideController.getRide(new ObjectId().toString());
     assertNull("No ride should be found", noJsonResult);
+  }
+  @Test
+  public void addRide(){
+    Map<String, String[]> emptyMap = new HashMap<>();
+    String beforeResult = rideController.getRides(emptyMap);
+    BsonArray beforeDocs = parseJsonArray(beforeResult);
+    assertEquals("Should have 4 riders before adding a new one", 4, beforeDocs.size());
+    String jsonResult = rideController.addNewRide("Good Driver", "Far, Far Away", "The RFC", false, "Noon Tomorrow", "We're never coming back.");
+    assertNotNull("Add ride result should not be null", jsonResult);
+    String afterResult = rideController.getRides(emptyMap);
+    BsonArray afterDocs = parseJsonArray(afterResult);
+    assertEquals("Should have 5 riders after adding a new one", 5, afterDocs.size());
+    List<String> destinations = afterDocs
+      .stream()
+      .map(RideControllerSpec::getDestination)
+      .collect(Collectors.toList());
+    assertTrue("Should contain newly added destination", destinations.contains("Far, Far Away"));
   }
 }
