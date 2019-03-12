@@ -32,7 +32,7 @@ export class RideListComponent implements OnInit {
 
 
   openDialog(): void {
-    const newRide: Ride = {driver: '', destination: '', origin: '', roundTrip: null, departureTime: '', notes: ''};
+    const newRide: Ride = {driver: '', destination: '', origin: '', roundTrip: false, departureTime: '', notes: ''};
     const dialogRef = this.dialog.open(AddRideComponent, {
       width: '500px',
       data: {ride: newRide}
@@ -44,6 +44,7 @@ export class RideListComponent implements OnInit {
         this.rideListService.addNewRide(newRide).subscribe(
           result => {
             this.highlightedDestination = result;
+            console.log("The result is " + result);
             this.refreshRides();
           },
           err => {
@@ -57,7 +58,7 @@ export class RideListComponent implements OnInit {
   }
 
 
-  
+
   public filterRides(searchDestination: string): Ride[] {
 
     this.filteredRides = this.rides;

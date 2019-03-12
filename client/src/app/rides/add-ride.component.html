@@ -53,7 +53,7 @@
         </mat-error>
       </mat-form-field>
       <div>
-        <mat-checkbox name ="roundTrip" ngDefaultControl >Round Trip</mat-checkbox>
+        <mat-checkbox name ="roundTripStatus" ngDefaultControl [(ngModel)]="data.ride.roundTrip" [ngModelOptions]="{standalone: true}" >Round Trip</mat-checkbox>
       </div>
 
 
