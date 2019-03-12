@@ -38,7 +38,7 @@ describe( 'Ride list service: ', () => {
   );
 
   let rideListService: RideListService;
-  let searchUrl: string;
+  //let searchUrl: string;
 
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
@@ -80,6 +80,43 @@ describe( 'Ride list service: ', () => {
     const req = httpTestingController.expectOne(rideListService.baseUrl + '?destination=r&');
     expect(req.request.method).toEqual('GET');
     req.flush(rRides);
+  });
+
+
+  it('adding a ride calls api/rides/new', () => {
+    const teacherDestination = 'teacherDestination';
+    const newRide: Ride = {
+      driver: 'Teacher',
+      destination: 'St. Cloud',
+      origin: 'Becker',
+      roundTrip: false,
+      departureTime: 'August',
+      notes: 'There is no escaping Morris'
+    };
+
+    rideListService.addNewRide(newRide).subscribe(
+      destination => {
+        expect(destination).toBe(teacherDestination);
+      }
+    );
+
+    const expectedUrl: string = rideListService.baseUrl + '/new';
+    const req = httpTestingController.expectOne(expectedUrl);
+    expect(req.request.method).toEqual('POST');
+    req.flush(teacherDestination);
+  });
+
+  it('getRideByDestination() calls api/rides/destination', () => {
+    const targetRide: Ride = testRides[1];
+    const targetDestination: string = targetRide.destination;
+    rideListService.getRideByDestination(targetDestination).subscribe(
+      ride => expect(ride).toBe(targetRide)
+    );
+
+    const expectedUrl: string = rideListService.baseUrl + '/' + targetDestination;
+    const req = httpTestingController.expectOne(expectedUrl);
+    expect(req.request.method).toEqual('GET');
+    req.flush(targetRide);
   });
 
 
