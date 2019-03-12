@@ -78,14 +78,14 @@ public class RideRequestHandler {
     String driver = newRide.getString("driver");
     String destination = newRide.getString("destination");
     String origin = newRide.getString("origin");
-    String roundTrip = newRide.getString("roundTrip");
+    Boolean roundTrip = newRide.getBoolean("roundTrip");
     String departureTime = newRide.getString("departureTime");
     String notes = newRide.getString("notes");
 
 
-    Boolean roundTripBool = Boolean.parseBoolean(roundTrip);
 
-    System.err.println("Adding new ride [driver=" + driver + "destination=" + destination + " origin=" + origin + " roundTrip=" + roundTripBool + " departureTime=" + departureTime + " notes=" + notes + ']');
-    return rideController.addNewRide(driver, destination, origin, roundTripBool, departureTime, notes);
+
+    System.err.println("Adding new ride [driver=" + driver + " destination=" + destination + " origin=" + origin + " roundTrip=" + roundTrip + " departureTime=" + departureTime + " notes=" + notes + ']');
+    return rideController.addNewRide(driver, destination, origin, roundTrip, departureTime, notes);
   }
 }
