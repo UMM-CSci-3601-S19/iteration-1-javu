@@ -1,0 +1,35 @@
+#title input {
+  width: 16%;
+  min-width: 100px;
+}
+
+#list-title {
+  padding-right: 14px;
+}
+
+
+#addNewRide {
+  margin-left: 45%;
+  border-radius: 300px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+  color: darkgreen;
+}
+
+
+#addNewRide:hover {
+  background-color: darkgreen;
+  color: white;
+}
+
+#editRide{
+  background-color: white;
+  color: navy;
+}
+
+#editRide:hover {
+  background-color: #5C5D91;
+  color: white;
+}
+

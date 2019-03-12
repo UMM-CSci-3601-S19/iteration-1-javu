@@ -1,6 +1,6 @@
 # Lab Tasks
 
-- Questions that you need to answer can be found in [ANSWERS.md](./ANSWERS.md).
+
 - Tasks that specify work to do without a written response will be bulleted.
 
 If you're ever confused about what you need to do for a given task, ask.
@@ -28,7 +28,6 @@ The structure of this project should be nearly identical to that of lab #3, and 
 
 The server is, for the most part, the same as it has been in the past two labs. The difference to look for here is in how the server gets the data it sends out in reply to requests.
 
-Answer questions 1-7 in [ANSWERS.md](./ANSWERS.md).
 
 ## More Todos!
 - Re-implement the ToDo API, this time pulling data from MongoDB rather than from a flat JSON file.

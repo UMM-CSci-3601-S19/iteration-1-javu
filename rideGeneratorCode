@@ -1,0 +1,39 @@
+Code for Generating random rides:
+
+[
+  {
+    'repeat(100)': {
+      driver: '{{firstName()}} {{surname()}}',
+      riders: "{{random('5c817c356e1e7c3c544638fd', '5c817c35f51d7f2cf6a6ec44', '5c817c358f1702ea7c5f4ee3', '5c817c35004535b2c6789e1a')}}",
+       destination: "{{random('Willies', 'Alexandria', 'Duluth', 'Maplegrove', 'Family Dollar', 'St.Paul')}}",
+      origin:'{{street()}}',
+      roundTrip: '{{bool()}}',
+      departureTime: '{{date(new Date(2017, 0, 1), new Date(2024, 0, 1))}}',
+      driving: '{{bool()}}',
+      notes: "{{random('Im driving and I like to eat at the same time', 'I love to crank the volume up to 11', 'I like to drive with no air conditioning', 'No room in the trunk of my car', 'No pet allowed', 'I will pay for lunch for anyone who is riding with me and I am a cool guy')}}",
+    },
+  }
+]
+
+
+
+Additional Notes:
+-----------------
+{{date([min], [max])}} creates a random date in specified range
+
+Param	  Type	          Default	                        Details
+
+min     (optional)	    Date	new Date(1970, 0, 1)	    Minimum date in the range.
+max     (optional)	    Date	new Date()	              Maximum date in the range.
+
+----------------------------------------------------------------------------------
+.split(argument)
+
+Searches string for argument where string will be split. Passing an empty string splits the string at space.
+
+[0] returns the item before the split
+[1] returns the item after the split
+-----------------------------------------------------------------------------------------
+Double quotes are required if there are strings in the function like in destination
+Otherwise it expects single quotes for integer and functions
+---------------------------------------------------------------------------------------

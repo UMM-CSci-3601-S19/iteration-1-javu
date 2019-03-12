@@ -1,0 +1,12 @@
+[
+  {
+    'repeat(20)': {
+      _id: {
+        "oid": '{{objectId()}}',
+      },
+      name: '{{firstName()}} {{surname()}}',
+      email: '{{company()}}{{integer(0,99)}}@{{random("gmail.com", "hotmail.com", "yahoo.com", "morris.umn.edu")}}',
+      phoneNumber: '{{phone()}}'
+    },
+  }
+]

@@ -1,13 +1,16 @@
 <td-layout #layout>
   <td-navigation-drawer flex sidenavTitle="Lab 4">
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['/']" (click)="layout.close()" routerLinkActive="nav-active"
+      <a id="navHome" mat-list-item [routerLink]="['/']" (click)="layout.close()" routerLinkActive="nav-active"
          [routerLinkActiveOptions]="{exact: true}">
-        <mat-icon>home</mat-icon>
+        <mat-icon id="homeNav">home</mat-icon>
         Home</a>
-      <a mat-list-item [routerLink]="['/users']" (click)="layout.close()" routerLinkActive="nav-active">
-        <mat-icon>account_box</mat-icon>
+      <a id="navUsers" mat-list-item [routerLink]="['/users']" (click)="layout.close()" routerLinkActive="nav-active">
+        <mat-icon id="userNav">account_box</mat-icon>
         Users</a>
+      <a id="navRides" mat-list-item [routerLink]="['/rides']" (click)="layout.close()" routerLinkActive="nav-active">
+        <mat-icon id="carNav">directions_car</mat-icon>
+        Rides</a>
     </mat-nav-list>
   </td-navigation-drawer>
   <td-layout-nav toolbarTitle="Menu" navigationRoute="/">

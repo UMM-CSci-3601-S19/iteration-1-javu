@@ -6,6 +6,7 @@ In this lab, you'll be working to re-implement the ToDo API, this time pulling d
 Your specific tasks for this lab can be found in the [LABTASKS.md][labtasks]
 file in this repository.
 
+
 <!-- TOC depthFrom:1 depthTo:5 withLinks:1 updateOnSave:1 orderedList:0 -->
 ## Table of Contents
 - [Setup](#setup)

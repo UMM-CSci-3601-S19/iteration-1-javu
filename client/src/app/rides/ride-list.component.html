@@ -1,0 +1,49 @@
+<div>
+  <button id="addNewRide" mat-raised-button (click)="openDialog()"> <mat-icon id="plus">add</mat-icon> Add New Ride</button>
+</div>
+
+
+<div layout-gt-sm="row">
+  <div flex-gt-sm="80" flex-offset-gt-sm="10">
+    <mat-card>
+      <mat-card-title id="ride-list-title">Rides</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+
+        <mat-form-field>
+          <input matInput id="rideDestination" #input type="text" placeholder="Filter by Destination"
+                 (input)="rideDestination = $event.target.value">
+        </mat-form-field>
+
+        <mat-accordion *ngIf="rides; else ridesError">
+          <mat-expansion-panel #elem class="rides" [id]="ride.destination"
+                               *ngFor="let ride of this.filterRides(rideDestination)">
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ride.destination}}</mat-panel-title>
+
+            </mat-expansion-panel-header>
+            <mat-panel-description>Driver: {{ride.driver}}</mat-panel-description>
+            <mat-panel-description>Round Trip: {{ride.roundTrip}}</mat-panel-description>
+            <mat-panel-description>Departure Time: {{ride.departureTime}}</mat-panel-description>
+            <mat-panel-description>Pickup at: {{ride.origin}}</mat-panel-description>
+            <mat-panel-description>Notes: {{ride.notes}}</mat-panel-description>
+            <div>
+              <button id="editRide" mat-raised-button>Edit Ride</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <ng-template #ridesError>
+          <mat-error>
+            There was a problem loading the rides. Possibly the server is down or perhaps there are network
+            issues.
+          </mat-error>
+          <mat-error>
+            Please wait a bit and try again or start the server.
+          </mat-error>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
