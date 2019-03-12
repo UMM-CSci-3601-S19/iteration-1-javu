@@ -56,8 +56,7 @@ export class RideListComponent implements OnInit {
       }
     });
   }
-
-
+  
 
   public filterRides(searchDestination: string): Ride[] {
 
