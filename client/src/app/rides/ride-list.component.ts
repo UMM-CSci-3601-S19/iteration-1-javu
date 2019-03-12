@@ -73,7 +73,7 @@ export class RideListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(currentRide => {
       if (currentRide != null) {
 
-        this.rideListService.addEditRide(currentRide).subscribe(
+        this.rideListService.EditRide(currentRide).subscribe(
           result => {
             this.highlightedDestination = result;
             console.log("The result is " + result);
