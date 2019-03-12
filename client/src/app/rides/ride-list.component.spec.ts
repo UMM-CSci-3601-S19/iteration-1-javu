@@ -168,4 +168,119 @@ describe('Ride list', () => {
     expect(rideList.rides.some((ride: Ride) => ride.notes === 'I like to ride alone')).toBe(false);
   });
 
+
+  it('ride list filters by destination', () => {
+    expect(rideList.filteredRides.length).toBe(6);
+    rideList.rideDestination = 'Becker';
+    rideList.refreshRides().subscribe(() => {
+      expect(rideList.filteredRides.length).toBe(2);
+    });
+  });
+
+});
+
+describe('Misbehaving Ride List',() => {
+  let rideList: RideListComponent;
+  let fixture: ComponentFixture<RideListComponent>;
+
+  let rideListServiceStub: {
+    getRides: () => Observable<Ride[]>
+  };
+
+  beforeEach(() => {
+    rideListServiceStub = {
+      getRides: () => Observable.create(observer => {
+        observer.error('Error-prone observable');
+      })
+    };
+
+    TestBed.configureTestingModule( {
+      imports: [FormsModule, CustomModule],
+      declarations: [RideListComponent],
+      providers: [{provide: RideListService, useValue: rideListServiceStub}]
+    });
+  });
+
+  beforeEach(async(() => {
+    TestBed.compileComponents().then(() => {
+      fixture = TestBed.createComponent(RideListComponent);
+      rideList = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+  }));
+
+  it('generates an error if w don\'t set up a RideListService',() => {
+    expect(rideList.rides).toBeUndefined();
+  });
+});
+
+describe('Adding a ride',()=> {
+  let rideList: RideListComponent;
+  let fixture: ComponentFixture<RideListComponent>;
+  const newRide: Ride = {
+    driver: 'Danial Donald',
+    destination: 'Becker',
+    origin: 'Morris',
+    roundTrip: true,
+    departureTime: '5:00pm',
+    notes: 'I do not like the smell of smoke.'
+  };
+  const newId = 'Danial_id';
+
+  let calledRide: Ride;
+
+  let rideListServiceStub: {
+    getRides: () => Observable<Ride[]>,
+    addNewRide: (newRide: Ride) => Observable<{ '$oid': string}>
+  };
+  let mockMatDialog: {
+    open: (AddRideComponent, any) => {
+      afterClosed: () => Observable<Ride>
+    };
+  };
+
+  beforeEach(() => {
+    calledRide = null;
+    rideListServiceStub = {
+      getRides: () => Observable.of([]),
+      addNewRide: (newRide: Ride) => {
+        calledRide = newRide;
+        return Observable.of({
+          '$oid': newId
+        });
+      }
+    };
+    mockMatDialog = {
+      open: () => {
+        return {
+          afterClosed: () => {
+            return Observable.of(newRide);
+          }
+        };
+      }
+    };
+
+    TestBed.configureTestingModule({
+      imports: [FormsModule, CustomModule],
+      declarations: [RideListComponent],
+      providers: [
+        {provide: RideListService, useValue: rideListServiceStub},
+        {provide: MatDialog, useValue: mockMatDialog},
+      ]
+    });
+  });
+
+  beforeEach(async(()=> {
+    TestBed.compileComponents().then(()=> {
+      fixture = TestBed.createComponent(RideListComponent);
+      rideList = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+  }));
+
+  it('calls RideListService.addRide', () => {
+    expect(calledRide).toBeNull();
+    rideList.openDialog();
+    expect(calledRide).toEqual(newRide);
+  });
 });
