@@ -24,7 +24,7 @@ public class RideController {
     rideCollection = database.getCollection("Rides");
   }
 
-  public String getRide(String id) {
+  String getRide(String id) {
     FindIterable<Document> jsonRides = rideCollection.find(eq("_id", new ObjectId(id)));
 
     Iterator<Document> iterator = jsonRides.iterator();
@@ -37,7 +37,7 @@ public class RideController {
     }
   }
 
-  public String getRides(Map<String, String[]> queryParams) {
+  String getRides(Map<String, String[]> queryParams) {
 
     Document filterDoc = new Document();
 
@@ -67,7 +67,7 @@ public class RideController {
       .collect(Collectors.joining(", ", "[", "]"));
   }
 
-  public String addNewRide(String driver, String destination, String origin, Boolean roundTrip, String departureTime, String notes) {
+  String addNewRide(String driver, String destination, String origin, Boolean roundTrip, String departureTime, String notes) {
 
     Document newRide = new Document();
     newRide.append("driver", driver);
