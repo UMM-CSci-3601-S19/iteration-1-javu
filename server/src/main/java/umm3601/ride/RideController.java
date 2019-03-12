@@ -4,6 +4,7 @@ import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -113,8 +114,9 @@ public class RideController {
     updateFields.append("notes", notes);
     Document updateDoc = new Document("$set", updateFields);
     try{
-      rideCollection.updateOne(filter, updateDoc);
-      return true;
+      UpdateResult out = rideCollection.updateOne(filter, updateDoc);
+      //returns false if no documents were modified, true otherwise
+      return out.getModifiedCount() != 0;
     }catch(MongoException e){
       e.printStackTrace();
       return false;

@@ -18,6 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -166,14 +167,14 @@ public class RideControllerSpec {
     assertTrue("Successful update should return true",resp);
     String result = rideController.getRides(emptyMap);
     BsonArray docs = parseJsonArray(result);
-    assertEquals("Should have 4 riders", 4, docs.size());
+    assertEquals("Should have 4 riders after update", 4, docs.size());
     List<String> drivers = docs
       .stream()
       .map(RideControllerSpec::getDriver)
       .sorted()
       .collect(Collectors.toList());
     List<String> expectedDrivers = Arrays.asList("Boyer Kramer", "Christian", "Marci Sears", "Millie Flores");
-    assertEquals("Drivers should match after deletion", expectedDrivers, drivers);
+    assertEquals("Drivers should match after update", expectedDrivers, drivers);
     String singleResultJson = rideController.getRide(knownId.toString());
     Document singleResult = Document.parse(singleResultJson);
     assertEquals("Driver should match", "Christian", singleResult.get("driver"));
@@ -182,5 +183,12 @@ public class RideControllerSpec {
     assertEquals("Round Trip should match", false, singleResult.get("roundTrip"));
     assertEquals("Departure Time should match", "March 28", singleResult.get("departureTime"));
     assertEquals("Notes should match", "Lets Go!", singleResult.get("notes"));
+    //Test bad update
+    Boolean badResp = rideController.updateRide(new ObjectId().toString(), "Christian2", "Milwaukee", "Arizona", false, "March 28", "Lets Go!");
+    System.out.println(badResp);
+    assertFalse("Unsuccessful update should return false",badResp);
+    assertEquals("Should have 4 riders after failed update", 4, docs.size());
+    assertEquals("Drivers should match after failed update", expectedDrivers, drivers);
+
   }
 }
