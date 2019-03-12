@@ -14,13 +14,17 @@ import com.mongodb.BasicDBObject;
 import org.junit.Test;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class RideControllerSpec {
   private RideController rideController;
+  private ObjectId knownId;
 
   @Before
   public void clearAndPopulateDB(){
@@ -37,7 +41,7 @@ public class RideControllerSpec {
       "roundTrip: true,\n" +
       "departureTime: \"Mon Aug 07 2017 15:00:32 GMT+0000 (UTC)\",\n" +
       "driving: true,\n" +
-      "notes: \"I like to drive with no air conditioning\"\n" +
+      "notes: \"I like to drive with Y	no air conditioning\"\n" +
       "}"));
     testRides.add(Document.parse("{\n" +
       "driver: \"Boyer Kramer\",\n" +
@@ -59,27 +63,82 @@ public class RideControllerSpec {
       "driving: false,\n" +
       "notes: \"I love to crank the volume up to 11\"\n" +
       "}"));
-    testRides.add(Document.parse("{\n" +
-      "driver: \"Carter Browning\",\n" +
-      "riders: \"5c817c356e1e7c3c544638fd\",\n" +
-      "destination: \"Maplegrove\",\n" +
-      "origin: \"Balfour Place\",\n" +
-      "roundTrip: false,\n" +
-      "departureTime: \"Sat Apr 22 2017 06:12:11 GMT+0000 (UTC)\",\n" +
-      "driving: true,\n" +
-      "notes: \"I will pay for lunch for anyone who is riding with me and I am a cool guy\"\n" +
-      "}"));
     rideDocuments.insertMany(testRides);
+
+    knownId = new ObjectId();
+    BasicDBObject knownObj = new BasicDBObject("_id", knownId);
+    knownObj = knownObj
+      .append("driver", "Carter Browning")
+      .append("riders", "5c817c356e1e7c3c544638fd")
+      .append("destination", "Maplegrove")
+      .append("origin", "Balfour Place")
+      .append("roundTrip", false)
+      .append("departureTime", "Sat Apr 22 2017 06:12:11 GMT+0000 (UTC)")
+      .append("driving", true)
+      .append("notes", "I will pay for lunch for anyone who is riding with me and I am a cool guy");
+    rideDocuments.insertOne(Document.parse(knownObj.toJson()));
 
     rideController = new RideController(db);
   }
+  private static BsonArray parseJsonArray(String json) {
+    final CodecRegistry codecRegistry
+      = CodecRegistries.fromProviders(Arrays.asList(
+      new ValueCodecProvider(),
+      new BsonValueCodecProvider(),
+      new DocumentCodecProvider()));
 
+    JsonReader reader = new JsonReader(json);
+    BsonArrayCodec arrayReader = new BsonArrayCodec(codecRegistry);
+
+    return arrayReader.decode(reader, DecoderContext.builder().build());
+  }
+  private static String getAttribute(BsonValue val, String attribute){
+    BsonDocument doc = val.asDocument();
+    return ((BsonString) doc.get(attribute)).getValue();
+  }
+  private static String getDriver(BsonValue val) {
+    return getAttribute(val, "driver");
+  }
+  private static String getDestination(BsonValue val) {
+    return getAttribute(val, "destination");
+  }
   @Test
   public void getAllRides() {
     Map<String, String[]> emptyMap = new HashMap<>();
     String jsonResult = rideController.getRides(emptyMap);
-    System.out.print(jsonResult);
+    BsonArray docs = parseJsonArray(jsonResult);
+    assertEquals("Should have 4 riders", 4, docs.size());
+    List<String> drivers = docs
+      .stream()
+      .map(RideControllerSpec::getDriver)
+      .sorted()
+      .collect(Collectors.toList());
+    List<String> expectedDrivers = Arrays.asList("Boyer Kramer", "Carter Browning", "Marci Sears", "Millie Flores");
+    assertEquals("Drivers should match", expectedDrivers, drivers);
   }
-
-
+  @Test
+  public void getRideById(){
+    String jsonResult = rideController.getRide(knownId.toString());
+    Document result = Document.parse(jsonResult);
+    assertEquals("Driver should match", "Carter Browning", result.get("driver"));
+    String noJsonResult = rideController.getRide(new ObjectId().toString());
+    assertNull("No ride should be found", noJsonResult);
+  }
+  @Test
+  public void addRide(){
+    Map<String, String[]> emptyMap = new HashMap<>();
+    String beforeResult = rideController.getRides(emptyMap);
+    BsonArray beforeDocs = parseJsonArray(beforeResult);
+    assertEquals("Should have 4 riders before adding a new one", 4, beforeDocs.size());
+    String jsonResult = rideController.addNewRide("Good Driver", "Far, Far Away", "The RFC", false, "Noon Tomorrow", "We're never coming back.");
+    assertNotNull("Add ride result should not be null", jsonResult);
+    String afterResult = rideController.getRides(emptyMap);
+    BsonArray afterDocs = parseJsonArray(afterResult);
+    assertEquals("Should have 5 riders after adding a new one", 5, afterDocs.size());
+    List<String> destinations = afterDocs
+      .stream()
+      .map(RideControllerSpec::getDestination)
+      .collect(Collectors.toList());
+    assertTrue("Should contain newly added destination", destinations.contains("Far, Far Away"));
+  }
 }
