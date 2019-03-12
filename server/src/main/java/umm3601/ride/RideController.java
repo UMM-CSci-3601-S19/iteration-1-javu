@@ -1,18 +1,18 @@
 package umm3601.ride;
 
-  import com.mongodb.MongoException;
-  import com.mongodb.client.FindIterable;
-  import com.mongodb.client.MongoCollection;
-  import com.mongodb.client.MongoDatabase;
-  import org.bson.Document;
-  import org.bson.types.ObjectId;
+import com.mongodb.MongoException;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
-  import java.util.Iterator;
-  import java.util.Map;
-  import java.util.stream.Collectors;
-  import java.util.stream.StreamSupport;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-  import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.eq;
 
 
 
@@ -89,4 +89,14 @@ public class RideController {
     }
   }
 
+  String deleteRide(String id){
+    ObjectId objId = new ObjectId(id);
+    try{
+      return rideCollection.deleteOne(new Document("_id", objId)).toString();
+    }
+    catch(MongoException e){
+      e.printStackTrace();
+      return null;
+    }
+  }
 }

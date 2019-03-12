@@ -141,4 +141,34 @@ public class RideControllerSpec {
       .collect(Collectors.toList());
     assertTrue("Should contain newly added destination", destinations.contains("Far, Far Away"));
   }
+  @Test
+  public void deleteRide(){
+    Map<String, String[]> emptyMap = new HashMap<>();
+    //Pre-deletion testing
+    String beforeResult = rideController.getRides(emptyMap);
+    BsonArray beforeDocs = parseJsonArray(beforeResult);
+    assertEquals("Should have 4 riders before deletion", 4, beforeDocs.size());
+    List<String> beforeDrivers = beforeDocs
+      .stream()
+      .map(RideControllerSpec::getDriver)
+      .sorted()
+      .collect(Collectors.toList());
+    List<String> expectedBeforeDrivers = Arrays.asList("Boyer Kramer", "Carter Browning", "Marci Sears", "Millie Flores");
+    assertEquals("Drivers should match before deletion", expectedBeforeDrivers, beforeDrivers);
+    //Deletion
+    rideController.deleteRide(knownId.toString());
+    //Post-deletion testing
+    String afterResult = rideController.getRides(emptyMap);
+    BsonArray afterDocs = parseJsonArray(afterResult);
+    assertEquals("Should have 3 riders after deletion", 3, afterDocs.size());
+    List<String> afterDrivers = afterDocs
+      .stream()
+      .map(RideControllerSpec::getDriver)
+      .sorted()
+      .collect(Collectors.toList());
+    List<String> expectedAfterDrivers = Arrays.asList("Boyer Kramer", "Marci Sears", "Millie Flores");
+    assertEquals("Drivers should match after deletion", expectedAfterDrivers, afterDrivers);
+
+
+  }
 }
