@@ -73,7 +73,7 @@ public class RideController {
     newRide.append("driver", driver);
     newRide.append("destination", destination);
     newRide.append("origin", origin);
-    newRide.append("roundTrip,", roundTrip);
+    newRide.append("roundTrip", roundTrip);
     newRide.append("departureTime", departureTime);
     newRide.append("notes", notes);
 
