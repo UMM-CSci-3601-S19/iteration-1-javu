@@ -158,4 +158,29 @@ public class RideControllerSpec {
     List<String> expectedDrivers = Arrays.asList("Boyer Kramer", "Marci Sears", "Millie Flores");
     assertEquals("Drivers should match after deletion", expectedDrivers, drivers);
   }
+  @Test
+  public void updateRide(){
+    Map<String, String[]> emptyMap = new HashMap<>();
+    //Test good update
+    Boolean resp = rideController.updateRide(knownId.toString(), "Christian", "Milwaukee", "Arizona", false, "March 28", "Lets Go!");
+    assertTrue("Successful update should return true",resp);
+    String result = rideController.getRides(emptyMap);
+    BsonArray docs = parseJsonArray(result);
+    assertEquals("Should have 4 riders", 4, docs.size());
+    List<String> drivers = docs
+      .stream()
+      .map(RideControllerSpec::getDriver)
+      .sorted()
+      .collect(Collectors.toList());
+    List<String> expectedDrivers = Arrays.asList("Boyer Kramer", "Christian", "Marci Sears", "Millie Flores");
+    assertEquals("Drivers should match after deletion", expectedDrivers, drivers);
+    String singleResultJson = rideController.getRide(knownId.toString());
+    Document singleResult = Document.parse(singleResultJson);
+    assertEquals("Driver should match", "Christian", singleResult.get("driver"));
+    assertEquals("Destination should match", "Milwaukee", singleResult.get("destination"));
+    assertEquals("Origin should match", "Arizona", singleResult.get("origin"));
+    assertEquals("Round Trip should match", false, singleResult.get("roundTrip"));
+    assertEquals("Departure Time should match", "March 28", singleResult.get("departureTime"));
+    assertEquals("Notes should match", "Lets Go!", singleResult.get("notes"));
+  }
 }

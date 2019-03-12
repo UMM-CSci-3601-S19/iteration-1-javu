@@ -89,14 +89,35 @@ public class RideController {
     }
   }
 
-  String deleteRide(String id){
+  Boolean deleteRide(String id){
     ObjectId objId = new ObjectId(id);
     try{
-      return rideCollection.deleteOne(new Document("_id", objId)).toString();
+      rideCollection.deleteOne(new Document("_id", objId));
+      return true;
     }
     catch(MongoException e){
       e.printStackTrace();
-      return null;
+      return false;
+    }
+  }
+
+  Boolean updateRide(String id, String driver, String destination, String origin, Boolean roundTrip, String departureTime, String notes){
+    ObjectId objId = new ObjectId(id);
+    Document filter = new Document("_id", objId);
+    Document updateFields = new Document();
+    updateFields.append("driver", driver);
+    updateFields.append("destination", destination);
+    updateFields.append("origin", origin);
+    updateFields.append("roundtrip", roundTrip);
+    updateFields.append("departureTime", departureTime);
+    updateFields.append("notes", notes);
+    Document updateDoc = new Document("$set", updateFields);
+    try{
+      rideCollection.updateOne(filter, updateDoc);
+      return true;
+    }catch(MongoException e){
+      e.printStackTrace();
+      return false;
     }
   }
 }
