@@ -3,7 +3,8 @@ import {Observable} from 'rxjs/Observable';
 import {Ride} from "./ride";
 import {RideListService} from "./ride-list.service";
 import {AddRideComponent} from "./add-ride.component";
-import{MatDialog} from "@angular/material";
+import {EditRideComponent} from "./edit-ride.component";
+import {MatDialog} from "@angular/material";
 
 
 @Component({
