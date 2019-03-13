@@ -90,9 +90,9 @@ export class RideListComponent implements OnInit {
   }
 
 
-  openDeleteDialog(deleteID: string): void {
+/*  openDeleteDialog(deleteID: string): void {
     const deletedRide: Ride = {
-      id: string
+      id: deleteID
     };
     const dialogRef = this.dialog.open(DeleteRideComponent, {
       width: '500px',
@@ -115,7 +115,7 @@ export class RideListComponent implements OnInit {
           });
       }
     });
-  }
+  }*/
 
   public filterRides(searchDestination: string): Ride[] {
 

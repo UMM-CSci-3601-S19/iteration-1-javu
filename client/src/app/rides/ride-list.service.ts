@@ -95,7 +95,7 @@ export class RideListService {
   }
 
 
-  deleteRide(deletedRide: Ride): Observable<string> {
+  /*deleteRide(deletedRide: Ride): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -104,6 +104,6 @@ export class RideListService {
     };
 
     return this.http.post<string>(this.rideUrl + '/remove', deletedRide, httpOptions);
-  }
+  }*/
 
 }
