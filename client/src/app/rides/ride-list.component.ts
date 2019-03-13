@@ -68,7 +68,7 @@ export class RideListComponent implements OnInit {
     };
     const dialogRef = this.dialog.open(EditRideComponent, {
       width: '500px',
-      currentData: {ride: currentRide}
+      data: {ride: currentRide}
     });
 
     dialogRef.afterClosed().subscribe(currentRide => {

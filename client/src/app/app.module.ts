@@ -48,6 +48,7 @@ import {CustomModule} from './custom.module';
   entryComponents: [
     AddUserComponent,
     AddRideComponent,
+    EditRideComponent,
   ],
   bootstrap: [AppComponent]
 })
