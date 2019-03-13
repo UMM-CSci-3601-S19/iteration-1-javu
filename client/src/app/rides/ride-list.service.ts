@@ -83,7 +83,7 @@ export class RideListService {
     return this.http.post<string>(this.rideUrl + '/new', newRide, httpOptions);
   }
 
-  EditRide(editedRide: Ride): Observable<string> {
+  editRide(editedRide: Ride): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
