@@ -142,8 +142,8 @@ describe( 'Ride list service: ', () => {
     req.flush(editedTeacherDestination);
   });
 
-  
 
+/*
   it('deleting a ride calls api/rides/remove', () => {
     const deletedTeacherDestination = 'deletedTeacherDestination';
     const deletedRide: Ride = {
@@ -165,7 +165,7 @@ describe( 'Ride list service: ', () => {
     const req = httpTestingController.expectOne(expectedUrl);
     expect(req.request.method).toEqual('POST');
     req.flush(deletedTeacherDestination);
-  });
+  });*/
 
 
 });

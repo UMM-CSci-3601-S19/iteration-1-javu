@@ -1,6 +1,7 @@
 package umm3601.ride;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import spark.Request;
 import spark.Response;
 
@@ -91,7 +92,7 @@ public class RideRequestHandler {
 
     Document editRide = Document.parse(req.body());
 
-    String id = editRide.getString("id");
+    String id = editRide.getObjectId("_id").toHexString();
     String driver = editRide.getString("driver");
     String destination = editRide.getString("destination");
     String origin = editRide.getString("origin");

@@ -57,8 +57,9 @@ export class RideListComponent implements OnInit {
     });
   }
 
-  openEditDialog(currentDriver: string, currentDestination: string, currentOrigin: string, currentRoundTrip: boolean, currentDepartureTime: string, currentNotes: string): void {
+  openEditDialog(currentId: object,currentDriver: string, currentDestination: string, currentOrigin: string, currentRoundTrip: boolean, currentDepartureTime: string, currentNotes: string): void {
     const currentRide: Ride = {
+      _id: currentId,
       driver: currentDriver,
       destination: currentDestination,
       origin: currentOrigin,

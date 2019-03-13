@@ -352,7 +352,7 @@ describe('Editing a ride',()=> {
 
   it('calls RideListService.editRide', () => {
     expect(calledRide).toBeNull();
-    rideList.openEditDialog(currentRide.driver, currentRide.destination, currentRide.origin, currentRide.roundTrip, currentRide.departureTime, currentRide.notes);
+    rideList.openEditDialog(currentRide._id, currentRide.driver, currentRide.destination, currentRide.origin, currentRide.roundTrip, currentRide.departureTime, currentRide.notes);
     expect(calledRide).toEqual(currentRide);
   });
 });
