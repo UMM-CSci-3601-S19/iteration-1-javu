@@ -4,20 +4,19 @@ import {Ride} from './ride';
 import {FormControl, Validators, FormGroup, FormBuilder} from "@angular/forms";
 
 
-
 @Component({
-  selector: 'add-ride.component',
-  templateUrl: 'add-ride.component.html',
+  selector: 'edit-ride.component',
+  templateUrl: 'edit-ride.component.html',
 })
 
-export class AddRideComponent implements OnInit {
-  addRideForm: FormGroup;
+export class EditRideComponent implements OnInit {
+  editRideForm: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { ride: Ride }, private fb: FormBuilder) {
   }
 
-  add_ride_validation_messages = {
+  edit_ride_validation_messages = {
     'destination': [
       {type: 'required', message: 'Destination is required'},
       {type: 'minlength', message: 'Destination must be at least 2 characters long'},
@@ -47,7 +46,7 @@ export class AddRideComponent implements OnInit {
   };
 
   createForms() {
-    this.addRideForm = this.fb.group({
+    this.editRideForm = this.fb.group({
       destination: new FormControl('destination', Validators.compose([
 
         Validators.pattern('^[A-Za-z0-9\\s]+[A-Za-z0-9\\s]+$(\\.0-9+)?'),

@@ -3,7 +3,8 @@ import {Observable} from 'rxjs/Observable';
 import {Ride} from "./ride";
 import {RideListService} from "./ride-list.service";
 import {AddRideComponent} from "./add-ride.component";
-import{MatDialog} from "@angular/material";
+import {EditRideComponent} from "./edit-ride.component";
+import {MatDialog} from "@angular/material";
 
 
 @Component({
@@ -44,7 +45,6 @@ export class RideListComponent implements OnInit {
         this.rideListService.addNewRide(newRide).subscribe(
           result => {
             this.highlightedDestination = result;
-            console.log("The result is " + result);
             this.refreshRides();
           },
           err => {
@@ -57,7 +57,37 @@ export class RideListComponent implements OnInit {
     });
   }
 
+  openEditDialog(currentDriver: string, currentDestination: string, currentOrigin: string, currentRoundTrip: boolean, currentDepartureTime: string, currentNotes: string): void {
+    const currentRide: Ride = {
+      driver: currentDriver,
+      destination: currentDestination,
+      origin: currentOrigin,
+      roundTrip: currentRoundTrip,
+      departureTime: currentDepartureTime,
+      notes: currentNotes
+    };
+    const dialogRef = this.dialog.open(EditRideComponent, {
+      width: '500px',
+      data: {ride: currentRide}
+    });
 
+    dialogRef.afterClosed().subscribe(currentRide => {
+      if (currentRide != null) {
+
+        this.rideListService.editRide(currentRide).subscribe(
+          result => {
+            this.highlightedDestination = result;
+            console.log("The result is " + result);
+            this.refreshRides();
+          },
+          err => {
+            console.log('There was an error editing the ride.');
+            console.log('The currentRide or dialogResult was ' + JSON.stringify(currentRide));
+            console.log('The error was ' + JSON.stringify(err));
+          });
+      }
+    });
+  }
 
   public filterRides(searchDestination: string): Ride[] {
 
