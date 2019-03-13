@@ -89,6 +89,34 @@ export class RideListComponent implements OnInit {
     });
   }
 
+
+  openDeleteDialog(deleteID: string): void {
+    const deletedRide: Ride = {
+      id: string
+    };
+    const dialogRef = this.dialog.open(DeleteRideComponent, {
+      width: '500px',
+      data: {ride: deletedRide}
+    });
+
+    dialogRef.afterClosed().subscribe(deletedRide => {
+      if (deletedRide != null) {
+
+        this.rideListService.deleteRide(deletedRide).subscribe(
+          result => {
+            this.highlightedDestination = result;
+            console.log("The result is " + result);
+            this.refreshRides();
+          },
+          err => {
+            console.log('There was an error deleting the ride.');
+            console.log('The deleteRide or dialogResult was ' + JSON.stringify(deletedRide));
+            console.log('The error was ' + JSON.stringify(err));
+          });
+      }
+    });
+  }
+
   public filterRides(searchDestination: string): Ride[] {
 
     this.filteredRides = this.rides;
