@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 import {Ride} from './ride';
 import {FormControl, Validators, FormGroup, FormBuilder} from "@angular/forms";
-import {DestinationValidator} from './destination.validator';
+
 
 @Component({
   selector: 'edit-ride.component',
@@ -48,8 +48,8 @@ export class EditRideComponent implements OnInit {
   createForms() {
     this.editRideForm = this.fb.group({
       destination: new FormControl('destination', Validators.compose([
-        //Must make a destination.validator.ts file for this next line to work
-        DestinationValidator.validDestination,
+
+        Validators.pattern('^[A-Za-z0-9\\s]+[A-Za-z0-9\\s]+$(\\.0-9+)?'),
         Validators.minLength(2),
         Validators.maxLength(100),
         Validators.required
