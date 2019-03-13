@@ -66,6 +66,7 @@ export class RideListComponent implements OnInit {
       departureTime: currentDepartureTime,
       notes: currentNotes
     };
+
     const dialogRef = this.dialog.open(EditRideComponent, {
       width: '500px',
       data: {ride: currentRide}
