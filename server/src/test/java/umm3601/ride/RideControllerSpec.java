@@ -146,8 +146,9 @@ public class RideControllerSpec {
   public void deleteRide(){
     Map<String, String[]> emptyMap = new HashMap<>();
     //Deletion
-    rideController.deleteRide(knownId.toString());
+    Boolean resp = rideController.deleteRide(knownId.toString());
     //Post-deletion testing
+    assertTrue("Successful deletion should return true", resp);
     String result = rideController.getRides(emptyMap);
     BsonArray docs = parseJsonArray(result);
     assertEquals("Should have 3 riders after deletion", 3, docs.size());
@@ -158,6 +159,13 @@ public class RideControllerSpec {
       .collect(Collectors.toList());
     List<String> expectedDrivers = Arrays.asList("Boyer Kramer", "Marci Sears", "Millie Flores");
     assertEquals("Drivers should match after deletion", expectedDrivers, drivers);
+    //Bad Deletion
+    Boolean badResp = rideController.deleteRide(new ObjectId().toString());
+    assertFalse("Unsuccessful deletion should return false", badResp);
+    result = rideController.getRides(emptyMap);
+    docs = parseJsonArray(result);
+    assertEquals("Should still have 3 riders after bad deletion", 3, docs.size());
+
   }
   @Test
   public void updateRide(){
@@ -185,8 +193,7 @@ public class RideControllerSpec {
     assertEquals("Notes should match", "Lets Go!", singleResult.get("notes"));
     //Test bad update
     Boolean badResp = rideController.updateRide(new ObjectId().toString(), "Christian2", "Milwaukee", "Arizona", false, "March 28", "Lets Go!");
-    System.out.println(badResp);
-    assertFalse("Unsuccessful update should return false",badResp);
+    assertFalse("Unsuccessful update should return false", badResp);
     assertEquals("Should have 4 riders after failed update", 4, docs.size());
     assertEquals("Drivers should match after failed update", expectedDrivers, drivers);
 
