@@ -33,3 +33,16 @@
   color: white;
 }
 
+#deleteRide{
+  background-color: darkred;
+  color: white;
+}
+
+#deleteRide:hover {
+  background-color: red;
+  color: white;
+  transform: scale(1.2);
+  font-weight: bold;
+}
+
+

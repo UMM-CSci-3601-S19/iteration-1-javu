@@ -57,8 +57,9 @@ export class RideListComponent implements OnInit {
     });
   }
 
-  openEditDialog(currentDriver: string, currentDestination: string, currentOrigin: string, currentRoundTrip: boolean, currentDepartureTime: string, currentNotes: string): void {
+  openEditDialog(currentId: object,currentDriver: string, currentDestination: string, currentOrigin: string, currentRoundTrip: boolean, currentDepartureTime: string, currentNotes: string): void {
     const currentRide: Ride = {
+      _id: currentId,
       driver: currentDriver,
       destination: currentDestination,
       origin: currentOrigin,
@@ -66,6 +67,7 @@ export class RideListComponent implements OnInit {
       departureTime: currentDepartureTime,
       notes: currentNotes
     };
+
     const dialogRef = this.dialog.open(EditRideComponent, {
       width: '500px',
       data: {ride: currentRide}
@@ -88,6 +90,34 @@ export class RideListComponent implements OnInit {
       }
     });
   }
+
+
+/*  openDeleteDialog(deleteID: string): void {
+    const deletedRide: Ride = {
+      id: deleteID
+    };
+    const dialogRef = this.dialog.open(DeleteRideComponent, {
+      width: '500px',
+      data: {ride: deletedRide}
+    });
+
+    dialogRef.afterClosed().subscribe(deletedRide => {
+      if (deletedRide != null) {
+
+        this.rideListService.deleteRide(deletedRide).subscribe(
+          result => {
+            this.highlightedDestination = result;
+            console.log("The result is " + result);
+            this.refreshRides();
+          },
+          err => {
+            console.log('There was an error deleting the ride.');
+            console.log('The deleteRide or dialogResult was ' + JSON.stringify(deletedRide));
+            console.log('The error was ' + JSON.stringify(err));
+          });
+      }
+    });
+  }*/
 
   public filterRides(searchDestination: string): Ride[] {
 

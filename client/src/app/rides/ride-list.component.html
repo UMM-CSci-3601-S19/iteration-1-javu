@@ -28,8 +28,10 @@
             <mat-panel-description>Pickup at: {{ride.origin}}</mat-panel-description>
             <mat-panel-description>Notes: {{ride.notes}}</mat-panel-description>
             <div>
-              <button id="editRide" mat-raised-button (click)="openEditDialog(ride.driver, ride.destination, ride.origin, ride.roundTrip, ride.departureTime, ride.notes)">Edit Ride</button>
+              <button id="editRide" mat-raised-button (click)="openEditDialog(ride._id, ride.driver, ride.destination, ride.origin, ride.roundTrip, ride.departureTime, ride.notes)">Edit Ride</button>
+              <button id="deleteRide" mat-raised-button>Delete Ride</button>
             </div>
+
           </mat-expansion-panel>
         </mat-accordion>
 
