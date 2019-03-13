@@ -65,12 +65,15 @@ public class Server {
     // Redirects for the "home" page
     redirect.get("", "/");
 
-    Route clientRoute = (req, res) -> {
-	InputStream stream = Server.class.getResourceAsStream("/public/index.html");
-	return IOUtils.toString(stream);
+   /* Route clientRoute = (req, res) -> {
+	  InputStream stream = Server.class.getResourceAsStream("/public/index.html");
+	  return IOUtils.toString(stream);
     };
 
     get("/", clientRoute);
+*/
+
+    redirect.get("/", "http://localhost:9000");
 
     /// User Endpoints ///////////////////////////
     /////////////////////////////////////////////
@@ -99,7 +102,7 @@ public class Server {
     // before they they're processed by things like `get`.
     after("*", Server::addGzipHeader);
 
-    get("/*", clientRoute);
+   /* get("/*", clientRoute);*/
 
     // Handle "404" file not found requests:
     notFound((req, res) -> {

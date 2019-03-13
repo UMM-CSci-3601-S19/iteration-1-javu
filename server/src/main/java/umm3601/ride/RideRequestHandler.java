@@ -82,8 +82,6 @@ public class RideRequestHandler {
     String notes = newRide.getString("notes");
 
 
-
-
     System.err.println("Adding new ride [driver=" + driver + " destination=" + destination + " origin=" + origin + " roundTrip=" + roundTrip + " departureTime=" + departureTime + " notes=" + notes + ']');
     return rideController.addNewRide(driver, destination, origin, roundTrip, departureTime, notes);
   }
