@@ -1,6 +1,5 @@
 package umm3601.ride;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.bson.Document;
 import spark.Request;
 import spark.Response;
