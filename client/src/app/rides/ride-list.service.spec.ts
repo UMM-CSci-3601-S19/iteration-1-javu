@@ -142,5 +142,28 @@ describe( 'Ride list service: ', () => {
     req.flush(editedTeacherDestination);
   });
 
+  /*
+  it('deleting a ride calls api/rides/remove', () => {
+    const deletedTeacherDestination = 'deletedTeacherDestination';
+    const deletedRide: Ride = {
+      driver: 'Teacher',
+      destination: 'Office',
+      origin: 'Lab',
+      roundTrip: false,
+      departureTime: 'never',
+      notes: 'There is no escaping the lab'
+    };
+
+    rideListService.deleteRide(deletedRide).subscribe(
+      destination => {
+        expect(destination).toBe(deletedTeacherDestination);
+      }
+    );
+
+    const expectedUrl: string = rideListService.baseUrl + '/remove';
+    const req = httpTestingController.expectOne(expectedUrl);
+    expect(req.request.method).toEqual('POST');
+    req.flush(deletedTeacherDestination);
+  });*/
 
 });

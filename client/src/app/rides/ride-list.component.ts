@@ -5,6 +5,7 @@ import {RideListService} from "./ride-list.service";
 import {AddRideComponent} from "./add-ride.component";
 import {EditRideComponent} from "./edit-ride.component";
 import {MatDialog} from "@angular/material";
+import {DeleteRideComponent} from "./delete-ride.component";
 
 
 @Component({
@@ -57,8 +58,9 @@ export class RideListComponent implements OnInit {
     });
   }
 
-  openEditDialog(currentDriver: string, currentDestination: string, currentOrigin: string, currentRoundTrip: boolean, currentDepartureTime: string, currentNotes: string): void {
+  openEditDialog(currentId: object,currentDriver: string, currentDestination: string, currentOrigin: string, currentRoundTrip: boolean, currentDepartureTime: string, currentNotes: string): void {
     const currentRide: Ride = {
+      _id: currentId,
       driver: currentDriver,
       destination: currentDestination,
       origin: currentOrigin,
@@ -66,6 +68,7 @@ export class RideListComponent implements OnInit {
       departureTime: currentDepartureTime,
       notes: currentNotes
     };
+
     const dialogRef = this.dialog.open(EditRideComponent, {
       width: '500px',
       data: {ride: currentRide}
@@ -83,6 +86,31 @@ export class RideListComponent implements OnInit {
           err => {
             console.log('There was an error editing the ride.');
             console.log('The currentRide or dialogResult was ' + JSON.stringify(currentRide));
+            console.log('The error was ' + JSON.stringify(err));
+          });
+      }
+    });
+  }
+
+
+  openDeleteDialog(currentId: object): void {
+    console.log("openDeleteDialog");
+    const dialogRef = this.dialog.open(DeleteRideComponent, {
+      width: '500px',
+      data: {id: currentId}
+    });
+    dialogRef.afterClosed().subscribe(deletedRideId => {
+      if (deletedRideId != null) {
+        this.rideListService.deleteRide(deletedRideId).subscribe(
+          result => {
+            console.log("openDeleteDialog has gotten a result!");
+            this.highlightedDestination = result;
+            console.log("The result is " + result);
+            this.refreshRides();
+          },
+          err => {
+            console.log('There was an error deleting the ride.');
+            console.log('The id we attempted to delete was  ' + deletedRideId);
             console.log('The error was ' + JSON.stringify(err));
           });
       }

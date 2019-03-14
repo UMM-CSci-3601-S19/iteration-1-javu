@@ -1,4 +1,5 @@
 export interface Ride {
+  _id?: object;
   driver: string;
   riders?: string;
   destination: string;

@@ -18,6 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -140,5 +141,61 @@ public class RideControllerSpec {
       .map(RideControllerSpec::getDestination)
       .collect(Collectors.toList());
     assertTrue("Should contain newly added destination", destinations.contains("Far, Far Away"));
+  }
+  @Test
+  public void deleteRide(){
+    Map<String, String[]> emptyMap = new HashMap<>();
+    //Deletion
+    Boolean resp = rideController.deleteRide(knownId.toString());
+    //Post-deletion testing
+    assertTrue("Successful deletion should return true", resp);
+    String result = rideController.getRides(emptyMap);
+    BsonArray docs = parseJsonArray(result);
+    assertEquals("Should have 3 riders after deletion", 3, docs.size());
+    List<String> drivers = docs
+      .stream()
+      .map(RideControllerSpec::getDriver)
+      .sorted()
+      .collect(Collectors.toList());
+    List<String> expectedDrivers = Arrays.asList("Boyer Kramer", "Marci Sears", "Millie Flores");
+    assertEquals("Drivers should match after deletion", expectedDrivers, drivers);
+    //Bad Deletion
+    Boolean badResp = rideController.deleteRide(new ObjectId().toString());
+    assertFalse("Unsuccessful deletion should return false", badResp);
+    result = rideController.getRides(emptyMap);
+    docs = parseJsonArray(result);
+    assertEquals("Should still have 3 riders after bad deletion", 3, docs.size());
+
+  }
+  @Test
+  public void updateRide(){
+    Map<String, String[]> emptyMap = new HashMap<>();
+    //Test good update
+    Boolean resp = rideController.updateRide(knownId.toString(), "Christian", "Milwaukee", "Arizona", false, "March 28", "Lets Go!");
+    assertTrue("Successful update should return true",resp);
+    String result = rideController.getRides(emptyMap);
+    BsonArray docs = parseJsonArray(result);
+    assertEquals("Should have 4 riders after update", 4, docs.size());
+    List<String> drivers = docs
+      .stream()
+      .map(RideControllerSpec::getDriver)
+      .sorted()
+      .collect(Collectors.toList());
+    List<String> expectedDrivers = Arrays.asList("Boyer Kramer", "Christian", "Marci Sears", "Millie Flores");
+    assertEquals("Drivers should match after update", expectedDrivers, drivers);
+    String singleResultJson = rideController.getRide(knownId.toString());
+    Document singleResult = Document.parse(singleResultJson);
+    assertEquals("Driver should match", "Christian", singleResult.get("driver"));
+    assertEquals("Destination should match", "Milwaukee", singleResult.get("destination"));
+    assertEquals("Origin should match", "Arizona", singleResult.get("origin"));
+    assertEquals("Round Trip should match", false, singleResult.get("roundTrip"));
+    assertEquals("Departure Time should match", "March 28", singleResult.get("departureTime"));
+    assertEquals("Notes should match", "Lets Go!", singleResult.get("notes"));
+    //Test bad update
+    Boolean badResp = rideController.updateRide(new ObjectId().toString(), "Christian2", "Milwaukee", "Arizona", false, "March 28", "Lets Go!");
+    assertFalse("Unsuccessful update should return false", badResp);
+    assertEquals("Should have 4 riders after failed update", 4, docs.size());
+    assertEquals("Drivers should match after failed update", expectedDrivers, drivers);
+
   }
 }

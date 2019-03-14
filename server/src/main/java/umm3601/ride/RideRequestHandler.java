@@ -1,7 +1,7 @@
 package umm3601.ride;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import spark.Request;
 import spark.Response;
 
@@ -83,9 +83,38 @@ public class RideRequestHandler {
     String notes = newRide.getString("notes");
 
 
-
-
     System.err.println("Adding new ride [driver=" + driver + " destination=" + destination + " origin=" + origin + " roundTrip=" + roundTrip + " departureTime=" + departureTime + " notes=" + notes + ']');
     return rideController.addNewRide(driver, destination, origin, roundTrip, departureTime, notes);
   }
+
+  public Boolean updateRide(Request req, Response res) {
+    res.type("application/json");
+
+    Document editRide = Document.parse(req.body());
+
+    String id = editRide.getObjectId("_id").toHexString();
+    String driver = editRide.getString("driver");
+    String destination = editRide.getString("destination");
+    String origin = editRide.getString("origin");
+    Boolean roundTrip = editRide.getBoolean("roundTrip");
+    String departureTime = editRide.getString("departureTime");
+    String notes = editRide.getString("notes");
+
+
+    System.err.println("Editing ride [id=" + id + " driver=" + driver + " destination=" + destination + " origin=" + origin + " roundTrip=" + roundTrip + " departureTime=" + departureTime + " notes=" + notes + ']');
+    return rideController.updateRide(id, driver, destination, origin, roundTrip, departureTime, notes);
+  }
+
+  public Boolean deleteRide(Request req, Response res){
+    res.type("application/json");
+
+    Document deleteRide = Document.parse(req.body());
+
+    String id = deleteRide.getString("_id");
+    System.err.println("Deleting ride id=" + id);
+    return rideController.deleteRide(id);
+  }
+
+
+
 }

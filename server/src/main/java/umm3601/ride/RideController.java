@@ -1,18 +1,20 @@
 package umm3601.ride;
 
-  import com.mongodb.MongoException;
-  import com.mongodb.client.FindIterable;
-  import com.mongodb.client.MongoCollection;
-  import com.mongodb.client.MongoDatabase;
-  import org.bson.Document;
-  import org.bson.types.ObjectId;
+import com.mongodb.MongoException;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
-  import java.util.Iterator;
-  import java.util.Map;
-  import java.util.stream.Collectors;
-  import java.util.stream.StreamSupport;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-  import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.eq;
 
 
 
@@ -89,4 +91,37 @@ public class RideController {
     }
   }
 
+  Boolean deleteRide(String id){
+    ObjectId objId = new ObjectId(id);
+    try{
+      DeleteResult out = rideCollection.deleteOne(new Document("_id", objId));
+      //Returns true if at least 1 document was deleted
+      return out.getDeletedCount() != 0;
+    }
+    catch(MongoException e){
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  Boolean updateRide(String id, String driver, String destination, String origin, Boolean roundTrip, String departureTime, String notes){
+    ObjectId objId = new ObjectId(id);
+    Document filter = new Document("_id", objId);
+    Document updateFields = new Document();
+    updateFields.append("driver", driver);
+    updateFields.append("destination", destination);
+    updateFields.append("origin", origin);
+    updateFields.append("roundtrip", roundTrip);
+    updateFields.append("departureTime", departureTime);
+    updateFields.append("notes", notes);
+    Document updateDoc = new Document("$set", updateFields);
+    try{
+      UpdateResult out = rideCollection.updateOne(filter, updateDoc);
+      //returns false if no documents were modified, true otherwise
+      return out.getModifiedCount() != 0;
+    }catch(MongoException e){
+      e.printStackTrace();
+      return false;
+    }
+  }
 }
