@@ -25,7 +25,54 @@ describe('Ride List', () => {
     page = new RidePage();
     page.navigateTo();
   });
+
   it('should have a Rides title', () => {
     expect(page.getTitle()).toEqual('Rides');
-  })
+  });
+
+  it('should type something in Filter by Destination box and check that it returned correct element', () => {
+    page.typeADestination('d');
+    expect(page.getUniqueRide('Duluth')).toEqual('Duluth');
+    page.backspace();
+    page.typeADestination('Alexandria');
+    expect(page.getUniqueRide('Alexandria')).toEqual('Alexandria');
+  });
+
+  it('Should have an add ride button', () => {
+    page.navigateTo();
+    expect(page.elementExistsWithId('addNewRide')).toBeTruthy();
+  });
+
+  it('Should open a dialog box when add ride button is clicked', () => {
+    page.navigateTo();
+    expect(page.elementExistsWithCss('add-ride')).toBeFalsy('There should not be a modal window yet');
+    page.click('addNewRide');
+    expect(page.elementExistsWithCss('add-ride')).toBeTruthy('There should be a modal window now');
+  });
+
+  describe('Add Ride', () => {
+
+    beforeEach(() => {
+      page.click('addNewRide');
+    });
+
+    it('Should actually add the ride with the information we put in the fields', () => {
+      page.click('addNewRide');
+      page.field('destinationField').sendKeys('New York');
+      page.field('roundTripField').sendKeys('true');
+      page.field('departureTimeField').sendKeys('In the morning');
+      page.field('originField').sendKeys('Morris');
+      page.field('notesField').sendKeys('I do not pick up my trash');
+      expect(page.button('confirmAddRideButton').isEnabled()).toBe(true);
+      page.click('confirmAddRideButton');
+
+      const new_york_element = element(by.id('I do not pick up my trash'));
+      browser.wait(protractor.ExpectedConditions.presenceOf(new_york_element), 10000);
+
+      expect(page.getUniqueRide('I do not pick up my trash')).toMatch('New York.*');
+    });
+
+
+  });
+
 });
