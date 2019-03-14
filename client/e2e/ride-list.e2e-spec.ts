@@ -75,4 +75,4 @@ describe('Ride List', () => {
 
   });
 
-});
+}); 
