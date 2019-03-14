@@ -119,6 +119,53 @@ describe( 'Ride list service: ', () => {
     req.flush(targetRide);
   });
 
+  it('editing a ride calls api/rides/update', () => {
+    const editedTeacherDestination = 'editedTeacherDestination';
+    const editedRide: Ride = {
+      driver: 'Teacher',
+      destination: 'Morris',
+      origin: 'Home',
+      roundTrip: false,
+      departureTime: 'Year Round',
+      notes: 'There is no escaping Morris'
+    };
+
+    rideListService.editRide(editedRide).subscribe(
+      destination => {
+        expect(destination).toBe(editedTeacherDestination);
+      }
+    );
+
+    const expectedUrl: string = rideListService.baseUrl + '/update';
+    const req = httpTestingController.expectOne(expectedUrl);
+    expect(req.request.method).toEqual('POST');
+    req.flush(editedTeacherDestination);
+  });
+
+
+/*
+  it('deleting a ride calls api/rides/remove', () => {
+    const deletedTeacherDestination = 'deletedTeacherDestination';
+    const deletedRide: Ride = {
+      driver: 'Teacher',
+      destination: 'Office',
+      origin: 'Lab',
+      roundTrip: false,
+      departureTime: 'never',
+      notes: 'There is no escaping the lab'
+    };
+
+    rideListService.deleteRide(deletedRide).subscribe(
+      destination => {
+        expect(destination).toBe(deletedTeacherDestination);
+      }
+    );
+
+    const expectedUrl: string = rideListService.baseUrl + '/remove';
+    const req = httpTestingController.expectOne(expectedUrl);
+    expect(req.request.method).toEqual('POST');
+    req.flush(deletedTeacherDestination);
+  });*/
 
 
 });

@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
+import {EditRideComponent} from "./edit-ride.component";
 
 describe('Ride list', () => {
 
@@ -278,9 +279,80 @@ describe('Adding a ride',()=> {
     });
   }));
 
-  it('calls RideListService.addRide', () => {
+  it('calls RideListService.addNewRide', () => {
     expect(calledRide).toBeNull();
     rideList.openDialog();
     expect(calledRide).toEqual(newRide);
+  });
+});
+
+describe('Editing a ride',()=> {
+  let rideList: RideListComponent;
+  let fixture: ComponentFixture<RideListComponent>;
+  const currentRide: Ride = {
+    driver: 'Danial Donald',
+    destination: 'Becker',
+    origin: 'Morris',
+    roundTrip: true,
+    departureTime: '5:00pm',
+    notes: 'I do not like the smell of smoke.'
+  };
+  const newId = 'Danial_id';
+
+  let calledRide: Ride;
+
+  let rideListServiceStub: {
+    getRides: () => Observable<Ride[]>,
+    editRide: (currentRide: Ride) => Observable<{ '$oid': string}>
+  };
+  let mockMatDialog: {
+    open: (EditRideComponent, any) => {
+      afterClosed: () => Observable<Ride>
+    };
+  };
+
+  beforeEach(() => {
+    calledRide = null;
+    rideListServiceStub = {
+      getRides: () => Observable.of([]),
+      editRide: (currentRide: Ride) => {
+        calledRide = currentRide;
+        return Observable.of({
+          '$oid': newId
+        });
+      }
+    };
+    mockMatDialog = {
+      open: () => {
+        return {
+          afterClosed: () => {
+            return Observable.of(currentRide);
+          }
+        };
+      }
+    };
+
+    TestBed.configureTestingModule({
+      imports: [FormsModule, CustomModule],
+      declarations: [RideListComponent],
+      providers: [
+        {provide: RideListService, useValue: rideListServiceStub},
+        {provide: MatDialog, useValue: mockMatDialog},
+      ]
+    });
+  });
+
+  beforeEach(async(()=> {
+    TestBed.compileComponents().then(()=> {
+      fixture = TestBed.createComponent(RideListComponent);
+      rideList = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+  }));
+
+  it('calls RideListService.editRide', () => {
+    expect(calledRide).toBeNull();
+    rideList.openEditDialog(currentRide._id, currentRide.driver, currentRide.destination, currentRide.origin, currentRide.roundTrip, currentRide.departureTime, currentRide.notes);
+    expect(calledRide).toEqual(currentRide);
   });
 });

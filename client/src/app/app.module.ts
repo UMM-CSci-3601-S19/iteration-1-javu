@@ -14,6 +14,7 @@ import {RideComponent} from "./rides/ride.component";
 import {RideListComponent} from "./rides/ride-list.component";
 import {RideListService} from "./rides/ride-list.service";
 import {AddRideComponent} from "./rides/add-ride.component";
+import {EditRideComponent} from "./rides/edit-ride.component";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import {CustomModule} from './custom.module';
@@ -37,6 +38,7 @@ import {CustomModule} from './custom.module';
     RideComponent,
     RideListComponent,
     AddRideComponent,
+    EditRideComponent,
   ],
   providers: [
     UserListService,
@@ -46,6 +48,7 @@ import {CustomModule} from './custom.module';
   entryComponents: [
     AddUserComponent,
     AddRideComponent,
+    EditRideComponent,
   ],
   bootstrap: [AppComponent]
 })

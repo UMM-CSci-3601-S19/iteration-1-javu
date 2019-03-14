@@ -20,6 +20,29 @@ dependencies {
   testCompile 'junit:junit:4.12'
 }
 
+distributions {
+  main {
+    contents {
+      // Put the client artifacts (HTML, CSS, and JS generated
+      // by Angular) in the `lib/client/public` directory. This
+      // plus putting `client` in the classpath (next in this
+      // file) and setting `public` as the place where static files
+      // will be served from by Spark (in `Server.java`) allows
+      // the generated static files to be successfully served from
+      // Spark when run from the gradle generated startup script
+      // in the gradle generated tarball.
+      into('lib/client/public') {
+        from { project(':client').build.outputs.files }
+        fileMode = 0755
+      }
+    }
+  }
+}
+
+startScripts {
+  classpath += files('client')
+}
+
 //Only server tests
 task runServerTests {
   group = "application"

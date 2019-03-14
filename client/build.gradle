@@ -41,3 +41,19 @@ task runClientTests(type: Exec, dependsOn: yarn_install) {
   executable = "ng"
   args = ["test", "--watch=false"]
 }
+
+task build(type: NodeTask, dependsOn: yarn_install) {
+  group = 'application'
+  description = 'Builds the client side of the application using ng build'
+
+  // Delete the old build directory (if there is one) to ensure we
+  // rebuild the client
+  delete 'build'
+  def build = file("build")
+  outputs.dir(build)
+
+  // We need this on the droplet because we haven't installed `ng` as a standalone
+  // tool there.
+  script = file("node_modules/@angular/cli/bin/ng")
+  args = ["build", "--output-path=build", "--configuration=production"]
+}
