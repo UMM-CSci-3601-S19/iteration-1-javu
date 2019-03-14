@@ -1,5 +1,5 @@
 <div>
-  <button id="addNewRide" mat-raised-button (click)="openDialog()"> <mat-icon >add</mat-icon> Add New Ride</button>
+  <button id="addNewRide" mat-raised-button (click)="openDialog()"> <mat-icon id="plus">add</mat-icon> Add New Ride</button>
 </div>
 
 
@@ -22,13 +22,14 @@
               <mat-panel-title>{{ride.destination}}</mat-panel-title>
 
             </mat-expansion-panel-header>
-            <mat-panel-description>Driver: {{ride.driver}}</mat-panel-description>
+            <mat-panel-description>Name: {{ride.driver}}</mat-panel-description>
             <mat-panel-description>Round Trip: {{ride.roundTrip}}</mat-panel-description>
             <mat-panel-description>Departure Time: {{ride.departureTime}}</mat-panel-description>
             <mat-panel-description>Pickup at: {{ride.origin}}</mat-panel-description>
+            <mat-panel-description>Driving: {{ride.driving}}</mat-panel-description>
             <mat-panel-description>Notes: {{ride.notes}}</mat-panel-description>
             <div>
-              <button id="editRide" mat-raised-button (click)="openEditDialog(ride._id, ride.driver, ride.destination, ride.origin, ride.roundTrip, ride.departureTime, ride.notes)">Edit Ride</button>
+              <button id="editRide" mat-raised-button (click)="openEditDialog(ride._id, ride.driver, ride.destination, ride.origin, ride.roundTrip, ride.driving,ride.departureTime, ride.notes)">Edit Ride</button>
               <button id="deleteRide" mat-raised-button (click)="openDeleteDialog(ride._id)">Delete Ride</button>
             </div>
 

@@ -69,13 +69,14 @@ public class RideController {
       .collect(Collectors.joining(", ", "[", "]"));
   }
 
-  String addNewRide(String driver, String destination, String origin, Boolean roundTrip, String departureTime, String notes) {
+  String addNewRide(String driver, String destination, String origin, Boolean roundTrip, Boolean driving, String departureTime, String notes) {
 
     Document newRide = new Document();
     newRide.append("driver", driver);
     newRide.append("destination", destination);
     newRide.append("origin", origin);
     newRide.append("roundTrip", roundTrip);
+    newRide.append("driving", driving);
     newRide.append("departureTime", departureTime);
     newRide.append("notes", notes);
 
@@ -83,7 +84,7 @@ public class RideController {
     try {
       rideCollection.insertOne(newRide);
       ObjectId _id = newRide.getObjectId("_id");
-      System.err.println("Successfully added new ride [_id=" + _id + ", driver=" + driver + ", destination=" + destination + ", origin=" + origin + ", roundTrip=" + roundTrip + " departureTime=" + departureTime + " notes=" + notes + ']');
+      System.err.println("Successfully added new ride [_id=" + _id + ", driver=" + driver + ", destination=" + destination + ", origin=" + origin + ", roundTrip=" + roundTrip + ", driving=" + driving + " departureTime=" + departureTime + " notes=" + notes + ']');
       return _id.toHexString();
     } catch (MongoException me) {
       me.printStackTrace();
@@ -104,13 +105,14 @@ public class RideController {
     }
   }
 
-  Boolean updateRide(String id, String driver, String destination, String origin, Boolean roundTrip, String departureTime, String notes){
+  Boolean updateRide(String id, String driver, String destination, String origin, Boolean roundTrip, Boolean driving,String departureTime, String notes){
     ObjectId objId = new ObjectId(id);
     Document filter = new Document("_id", objId);
     Document updateFields = new Document();
     updateFields.append("driver", driver);
     updateFields.append("destination", destination);
     updateFields.append("origin", origin);
+    updateFields.append("driving", driving);
     updateFields.append("roundTrip", roundTrip);
     updateFields.append("departureTime", departureTime);
     updateFields.append("notes", notes);

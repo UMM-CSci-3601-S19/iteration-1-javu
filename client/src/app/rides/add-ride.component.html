@@ -13,7 +13,7 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field flex>
-        <input matInput #input id="driverField" placeholder="Driver" [(ngModel)]="data.ride.driver" formControlName="driver"
+        <input matInput #input id="driverField" placeholder="Name" [(ngModel)]="data.ride.driver" formControlName="driver"
                required>
         <mat-error *ngFor="let validation of add_ride_validation_messages.driver">
           <mat-error class="error-message" id="driver-error"
@@ -54,6 +54,9 @@
       </mat-form-field>
       <div>
         <mat-checkbox id="roundTripCheckBox" name ="roundTripStatus" ngDefaultControl [(ngModel)]="data.ride.roundTrip" [ngModelOptions]="{standalone: true}" >Round Trip</mat-checkbox>
+      </div>
+      <div>
+        <mat-checkbox name ="drivingStatus" ngDefaultControl [(ngModel)]="data.ride.driving" [ngModelOptions]="{standalone: true}" >Driving</mat-checkbox>
       </div>
 
 

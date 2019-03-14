@@ -295,6 +295,7 @@ describe('Editing a ride',()=> {
     destination: 'Becker',
     origin: 'Morris',
     roundTrip: true,
+    driving: true,
     departureTime: '5:00pm',
     notes: 'I do not like the smell of smoke.'
   };
@@ -353,7 +354,7 @@ describe('Editing a ride',()=> {
 
   it('calls RideListService.editRide', () => {
     expect(calledRide).toBeNull();
-    rideList.openEditDialog(currentRide._id, currentRide.driver, currentRide.destination, currentRide.origin, currentRide.roundTrip, currentRide.departureTime, currentRide.notes);
+    rideList.openEditDialog(currentRide._id, currentRide.driver, currentRide.destination, currentRide.origin, currentRide.roundTrip, currentRide.driving,currentRide.departureTime, currentRide.notes);
     expect(calledRide).toEqual(currentRide);
   });
 });
