@@ -3,9 +3,9 @@
   color:green;
 }
 
-#userNav{
-  color:gold;
-}
+/*#userNav{*/
+  /*color:gold;*/
+/*}*/
 
 #carNav{
   color:slateblue;
@@ -16,10 +16,10 @@
   color: white;
 }
 
-#navUsers:hover {
-  background-color: salmon;
-  color: white;
-}
+/*#navUsers:hover {*/
+  /*background-color: salmon;*/
+  /*color: white;*/
+/*}*/
 
 #navRides:hover {
   background-color: salmon;
