@@ -53,7 +53,7 @@
         </mat-error>
       </mat-form-field>
       <div>
-        <mat-checkbox name ="roundTripStatus" ngDefaultControl [(ngModel)]="data.ride.roundTrip" [ngModelOptions]="{standalone: true}" >Round Trip</mat-checkbox>
+        <mat-checkbox id="roundTripCheckBox" name ="roundTripStatus" ngDefaultControl [(ngModel)]="data.ride.roundTrip" [ngModelOptions]="{standalone: true}" >Round Trip</mat-checkbox>
       </div>
 
 
@@ -61,7 +61,7 @@
 
     </mat-dialog-content>
     <mat-dialog-actions layout="row">
-      <button mat-raised-button id="confirmAddRideButon" [mat-dialog-close]="data.ride" type="button" color="primary"
+      <button mat-raised-button id="confirmAddRideButton" [mat-dialog-close]="data.ride" type="button" color="primary"
               [disabled]="!addRideForm.valid">Add Ride
       </button>
 
