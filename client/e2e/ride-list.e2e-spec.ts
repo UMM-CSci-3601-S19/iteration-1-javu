@@ -57,19 +57,19 @@ describe('Ride List', () => {
     });
 
     it('Should actually add the ride with the information we put in the fields', () => {
-      page.click('addNewRide');
       page.field('destinationField').sendKeys('New York');
-      page.field('roundTripField').sendKeys('true');
+      page.field('driverField').sendKeys('Bobbbo Billy');
       page.field('departureTimeField').sendKeys('In the morning');
       page.field('originField').sendKeys('Morris');
       page.field('notesField').sendKeys('I do not pick up my trash');
+      page.click('roundTripCheckBox');
       expect(page.button('confirmAddRideButton').isEnabled()).toBe(true);
       page.click('confirmAddRideButton');
 
-      const new_york_element = element(by.id('I do not pick up my trash'));
+      const new_york_element = element(by.id('New York'));
       browser.wait(protractor.ExpectedConditions.presenceOf(new_york_element), 10000);
 
-      expect(page.getUniqueRide('I do not pick up my trash')).toMatch('New York.*');
+      expect(page.getUniqueRide('New York')).toMatch('New York.*');
     });
 
 
