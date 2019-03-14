@@ -13,7 +13,7 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field flex>
-        <input matInput #input id="driverField" placeholder="Driver" [(ngModel)]="data.ride.driver" formControlName="driver"
+        <input matInput #input id="driverField" placeholder="Name" [(ngModel)]="data.ride.driver" formControlName="driver"
                required>
         <mat-error *ngFor="let validation of edit_ride_validation_messages.driver">
           <mat-error class="error-message" id="driver-error"
