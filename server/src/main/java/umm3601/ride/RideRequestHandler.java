@@ -105,6 +105,16 @@ public class RideRequestHandler {
     return rideController.updateRide(id, driver, destination, origin, roundTrip, departureTime, notes);
   }
 
+  public Boolean deleteRide(Request req, Response res){
+    res.type("application/json");
+
+    Document deleteRide = Document.parse(req.body());
+
+    String id = deleteRide.getString("_id");
+    System.err.println("Deleting ride id=" + id);
+    return rideController.deleteRide(id);
+  }
+
 
 
 }
