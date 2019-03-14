@@ -79,12 +79,13 @@ public class RideRequestHandler {
     String destination = newRide.getString("destination");
     String origin = newRide.getString("origin");
     Boolean roundTrip = newRide.getBoolean("roundTrip");
+    Boolean driving = newRide.getBoolean("driving");
     String departureTime = newRide.getString("departureTime");
     String notes = newRide.getString("notes");
 
 
-    System.err.println("Adding new ride [driver=" + driver + " destination=" + destination + " origin=" + origin + " roundTrip=" + roundTrip + " departureTime=" + departureTime + " notes=" + notes + ']');
-    return rideController.addNewRide(driver, destination, origin, roundTrip, departureTime, notes);
+    System.err.println("Adding new ride [driver=" + driver + " destination=" + destination + " origin=" + origin + " roundTrip=" + roundTrip + " driving=" + driving + " departureTime=" + departureTime + " notes=" + notes + ']');
+    return rideController.addNewRide(driver, destination, origin, roundTrip, driving,departureTime, notes);
   }
 
   public Boolean updateRide(Request req, Response res) {
@@ -97,12 +98,13 @@ public class RideRequestHandler {
     String destination = editRide.getString("destination");
     String origin = editRide.getString("origin");
     Boolean roundTrip = editRide.getBoolean("roundTrip");
+    Boolean driving = editRide.getBoolean("driving");
     String departureTime = editRide.getString("departureTime");
     String notes = editRide.getString("notes");
 
 
-    System.err.println("Editing ride [id=" + id + " driver=" + driver + " destination=" + destination + " origin=" + origin + " roundTrip=" + roundTrip + " departureTime=" + departureTime + " notes=" + notes + ']');
-    return rideController.updateRide(id, driver, destination, origin, roundTrip, departureTime, notes);
+    System.err.println("Editing ride [id=" + id + " driver=" + driver + " destination=" + destination + " origin=" + origin + " roundTrip=" + roundTrip + " driving=" + driving + " departureTime=" + departureTime + " notes=" + notes + ']');
+    return rideController.updateRide(id, driver, destination, origin, roundTrip, driving,departureTime, notes);
   }
 
 

@@ -33,7 +33,7 @@ export class RideListComponent implements OnInit {
 
 
   openDialog(): void {
-    const newRide: Ride = {driver: '', destination: '', origin: '', roundTrip: false, departureTime: '', notes: ''};
+    const newRide: Ride = {driver: '', destination: '', origin: '', roundTrip: false, driving: false, departureTime: '', notes: ''};
     const dialogRef = this.dialog.open(AddRideComponent, {
       width: '500px',
       data: {ride: newRide}
@@ -57,13 +57,14 @@ export class RideListComponent implements OnInit {
     });
   }
 
-  openEditDialog(currentId: object,currentDriver: string, currentDestination: string, currentOrigin: string, currentRoundTrip: boolean, currentDepartureTime: string, currentNotes: string): void {
+  openEditDialog(currentId: object,currentDriver: string, currentDestination: string, currentOrigin: string, currentRoundTrip: boolean, currentDriving: boolean,currentDepartureTime: string, currentNotes: string): void {
     const currentRide: Ride = {
       _id: currentId,
       driver: currentDriver,
       destination: currentDestination,
       origin: currentOrigin,
       roundTrip: currentRoundTrip,
+      driving: currentDriving,
       departureTime: currentDepartureTime,
       notes: currentNotes
     };
