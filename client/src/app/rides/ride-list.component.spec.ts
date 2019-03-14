@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import {EditRideComponent} from "./edit-ride.component";
+import {DeleteRideComponent} from "./delete-ride.component";
 
 describe('Ride list', () => {
 
@@ -353,6 +354,77 @@ describe('Editing a ride',()=> {
   it('calls RideListService.editRide', () => {
     expect(calledRide).toBeNull();
     rideList.openEditDialog(currentRide._id, currentRide.driver, currentRide.destination, currentRide.origin, currentRide.roundTrip, currentRide.departureTime, currentRide.notes);
+    expect(calledRide).toEqual(currentRide);
+  });
+});
+
+describe('Deleting a ride',()=> {
+  let rideList: RideListComponent;
+  let fixture: ComponentFixture<RideListComponent>;
+  const currentRide: Ride = {
+    driver: 'Danial Donald',
+    destination: 'Becker',
+    origin: 'Morris',
+    roundTrip: true,
+    departureTime: '5:00pm',
+    notes: 'I do not like the smell of smoke.'
+  };
+  const newId = 'Danial_id';
+
+  let calledRide: Ride;
+
+  let rideListServiceStub: {
+    getRides: () => Observable<Ride[]>,
+    deleteRide: (currentRide: Ride) => Observable<{ '$oid': string}>
+  };
+  let mockMatDialog: {
+    open: (DeleteRideComponent, any) => {
+      afterClosed: () => Observable<Ride>
+    };
+  };
+
+  beforeEach(() => {
+    calledRide = null;
+    rideListServiceStub = {
+      getRides: () => Observable.of([]),
+      deleteRide: (currentRide: Ride) => {
+        calledRide = currentRide;
+        return Observable.of({
+          '$oid': newId
+        });
+      }
+    };
+    mockMatDialog = {
+      open: () => {
+        return {
+          afterClosed: () => {
+            return Observable.of(currentRide);
+          }
+        };
+      }
+    };
+
+    TestBed.configureTestingModule({
+      imports: [FormsModule, CustomModule],
+      declarations: [RideListComponent],
+      providers: [
+        {provide: RideListService, useValue: rideListServiceStub},
+        {provide: MatDialog, useValue: mockMatDialog},
+      ]
+    });
+  });
+
+  beforeEach(async(()=> {
+    TestBed.compileComponents().then(()=> {
+      fixture = TestBed.createComponent(RideListComponent);
+      rideList = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+  }));
+
+  it('calls RideListService.deleteRide', () => {
+    expect(calledRide).toBeNull();
+    rideList.openDeleteDialog(currentRide);
     expect(calledRide).toEqual(currentRide);
   });
 });

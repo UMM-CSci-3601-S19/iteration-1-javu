@@ -111,7 +111,7 @@ public class RideController {
     updateFields.append("driver", driver);
     updateFields.append("destination", destination);
     updateFields.append("origin", origin);
-    updateFields.append("roundtrip", roundTrip);
+    updateFields.append("roundTrip", roundTrip);
     updateFields.append("departureTime", departureTime);
     updateFields.append("notes", notes);
     Document updateDoc = new Document("$set", updateFields);
