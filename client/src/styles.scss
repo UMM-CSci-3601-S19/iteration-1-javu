@@ -9,8 +9,16 @@
   color: mat-color($accent) !important;
 }
 
-/*.mat-card {
-  background-color: darkorange;
-}*/
+ride-list-component{
+  background-color: lightgrey;
+}
 
+.mat-card{
+  background-color: #4caf50;
+  color: white;
+}
+
+.mat-expansion-panel{
+  background-color: lightgrey;
+}
 
