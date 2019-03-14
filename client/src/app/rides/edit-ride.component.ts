@@ -38,9 +38,8 @@ export class EditRideComponent implements OnInit {
     'departureTime': [
       {type: 'required', message: 'Departure Time is required'},
       {type: 'minlength', message: 'Departure Time must be at least 2 characters long'},
-      {type: 'maxlength', message: 'Departure Time cannot be more than 100 characters long'},
-      {type: 'pattern', message: 'Departure time must contain only numbers, letters, dashes, underscores, colons, and dots'}
-    ],
+      {type: 'maxlength', message: 'Departure Time cannot be more than 100 characters long'}
+      ],
     'notes': [
       {type: 'required', message: 'Notes is required'},
       {type: 'minlength', message: 'Notes must be at least 2 characters long'},
@@ -73,8 +72,7 @@ export class EditRideComponent implements OnInit {
       departureTime: new FormControl('departureTime', Validators.compose([
         Validators.minLength(2),
         Validators.maxLength(100),
-        Validators.required,
-        Validators.pattern('^[ a-zA-Z0-9:._-]+$')
+        Validators.required
       ])),
       notes: new FormControl('notes', Validators.compose([
         Validators.minLength(2),
